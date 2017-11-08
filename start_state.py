@@ -14,7 +14,7 @@ alpha = 0.0
 def enter():
     global image
     global background_img
-    open_canvas()
+    open_canvas('X-Blade')
     image = load_image('Logo/Logo.png')
     background_img= load_image('Logo/LogoOr.png')
 

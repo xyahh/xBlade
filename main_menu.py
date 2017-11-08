@@ -1,7 +1,7 @@
 import pFramework
 from pico2d import *
 
-import game_play
+import map_select
 
 name = "MainMenu"
 title_img, border_img, xyah_txt, menu_txt = None, None, None, None
@@ -17,7 +17,7 @@ def enter():
     title_img = load_image('Menu/Title.png')
     border_img = load_image('Menu/border.png')
     background_img = load_image('Menu/menu_back.png')
-    xyah_txt, menu_txt = load_font('Menu/lotr_font.ttf', 15), load_font('Menu/lotr_font.ttf', 30)
+    xyah_txt, menu_txt = load_image('Menu/xyah_txt.png'), load_font('Menu/lotr_font.ttf', 30)
     options.append("Solo Play")
     options.append("P v P")
     options.append("Exit")
@@ -43,7 +43,7 @@ def draw():
     clear_canvas()
     background_img.draw(400, 300)
     title_img.draw(400, 400)
-    xyah_txt.draw(180, 500, 'XYAH ENTERTAINMENT PRESENTS')
+    xyah_txt.draw(410, 500)
     if show_menu: drawMenu()
     elif time%100 > 50: menu_txt.draw(180, 200, 'Press Enter to Start')
     update_canvas()
@@ -62,10 +62,8 @@ def handle_events():
             if (selected_option > 2): selected_option = 0
         elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_RETURN):
             if show_menu:
-                if selected_option==0:
-                    pass
-                elif selected_option==1:
-                    pass
+                if selected_option==0 or selected_option==1:
+                    pFramework.push_state(map_select)
                 elif selected_option==2:
                     pFramework.quit()
             else: show_menu = True
