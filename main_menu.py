@@ -32,12 +32,12 @@ def update():
     delay(0.01)
 
 def drawMenu():
-    border_img.draw(200, 110)
+    border_img.draw(400, 110)
     count = 0
     for i in options:
-        menu_txt.draw(100, 200 - (count * 70), i)
+        menu_txt.draw(300, 200 - (count * 70), i)
         count += 1
-    draw_rectangle(80, 230 - (selected_option * 70), 325, 170 - (selected_option * 70))
+    draw_rectangle(280, 230 - (selected_option * 70), 525, 170 - (selected_option * 70))
 
 def draw():
     clear_canvas()
