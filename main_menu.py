@@ -1,7 +1,7 @@
 import pFramework
 from pico2d import *
 
-import map_select
+import char_select
 
 name = "MainMenu"
 title_img, border_img, xyah_txt, menu_txt = None, None, None, None
@@ -63,7 +63,7 @@ def handle_events():
         elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_RETURN):
             if show_menu:
                 if selected_option==0 or selected_option==1:
-                    pFramework.push_state(map_select)
+                    pFramework.push_state(char_select)
                 elif selected_option==2:
                     pFramework.quit()
             else: show_menu = True
