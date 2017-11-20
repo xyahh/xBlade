@@ -14,10 +14,6 @@ show_menu = False
 song = None
 player = None
 
-
-#import os
-#os.system("start Menu\\menu_theme.wav")
-
 def enter():
     global title_img, side_img, background_img, border_img, song, player
     global xyah_txt, menu_txt
@@ -39,10 +35,10 @@ def enter():
 
 
 def exit():
-    del(title_img, background_img, border_img, xyah_txt, menu_txt, options, main_theme)
-    close_canvas()
+    global title_img, background_img, border_img, xyah_txt, menu_txt, options
+    del(title_img, background_img, border_img, xyah_txt, menu_txt, options)
 
-def update():
+def update(frame_time):
     global timer
     timer += 1
     delay(0.01)
@@ -55,7 +51,7 @@ def drawMenu():
         count += 1
     draw_rectangle(280, 230 - (selected_option * 70), 525, 170 - (selected_option * 70))
 
-def draw():
+def draw(frame_time):
     clear_canvas()
     background_img.draw(400, 300)
     title_img.draw(400, 400)
@@ -65,7 +61,7 @@ def draw():
     update_canvas()
 
 
-def handle_events():
+def handle_events(frame_time):
     global selected_option
     global show_menu
     events = get_events()

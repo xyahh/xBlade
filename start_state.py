@@ -20,11 +20,12 @@ def enter():
 
 
 def exit():
+    global image
     del(image)
     close_canvas()
 
 
-def update():
+def update(frame_time):
     global logo_time
     global alpha
     global fade_in
@@ -46,7 +47,7 @@ def update():
         alpha-=0.01
 
 
-def draw():
+def draw(frame_time):
     clear_canvas()
     background_img.draw(400,300)
     image.opacify(alpha)
@@ -54,7 +55,7 @@ def draw():
     update_canvas()
 
 
-def handle_events():
+def handle_events(frame_time):
     global logo_time
     events = get_events()
 
