@@ -8,7 +8,7 @@ class Character:
     RUN_SPEED_MPS = (RUN_SPEED_KMPH * 1000.0 / 3600.0)
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
-    GRAVITY_M2PS = 2.0
+    GRAVITY_M2PS = 1.2
     GRAVITY_P2PS = GRAVITY_M2PS * PIXEL_PER_METER * PIXEL_PER_METER
 
     JUMP_SPEED_KMPH = 100.0
@@ -32,7 +32,6 @@ class Character:
         self.x, self.y = 100, 100
         self.sprite_state = Character.Move
         self.total_frames = 0.0
-
         if len(Character.char)==0:
             chars_file = open('Characters/characters.txt', 'r')
             char_info= json.load(chars_file)
@@ -61,6 +60,8 @@ class Character:
 
     def update(self, frame_time):
         f = None
+        def clamp(minimum, x, maximum):
+            return max(minimum, min(x, maximum))
         if self.state == Character.StandR or self.state == Character.StandL:
             f = 'SFrames'
         elif self.state == Character.RunR or self.state == Character.RunL:
@@ -71,6 +72,7 @@ class Character:
                              * Character.ACTION_PER_TIME * frame_time
         self.frame = int(self.total_frames) % Character.char[self.id]['spr'][self.sprite_state][f]
         self.move(frame_time)
+        self.x = clamp(0, self.x, 800)
 
     def move(self, frame_time):
         distance = Character.RUN_SPEED_PPS * frame_time

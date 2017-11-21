@@ -1,6 +1,6 @@
 {
-"Airship Battle" :	    	{"dsp_img": "Map/airship_battle.png", "map_img": "Map/airship_battle/airship_back.png"},
-"The Duel Hall": 	    	{"dsp_img": "Map/duel_hall.png", "map_img": "Map/duel_hall/duel_hall.png"},
-"The Mysterious Forest"  : 	{"dsp_img": "Map/mysterious_forest.png", "map_img": "Map/mysterious_forest/mysterious_forest.png"},
-"Game Center"     : 		{"dsp_img": "Map/game_center.png", "map_img": "Map/game_center/game_center.png"}
+"Airship Battle" :	    	{"dsp_img": "Map/airship_battle.png", "map_img": "Map/airship_battle/airship_back.png", "objects":"Map/airship_battle/objects.txt"},
+"The Duel Hall": 	    	{"dsp_img": "Map/duel_hall.png", "map_img": "Map/duel_hall/duel_hall.png", "objects":"Map/airship_battle/objects.txt"},
+"The Mysterious Forest"  : 	{"dsp_img": "Map/mysterious_forest.png", "map_img": "Map/mysterious_forest/mysterious_forest.png", "objects":"Map/airship_battle/objects.txt"},
+"Game Center"     : 		{"dsp_img": "Map/game_center.png", "map_img": "Map/game_center/game_center.png", "objects":"Map/airship_battle/objects.txt"}
 }

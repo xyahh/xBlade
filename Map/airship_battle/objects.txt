@@ -1,0 +1,6 @@
+{
+"platform" :{"img": "Map/airship_battle/platform.png", 
+		"start_x":400, "start_y":300, "dir_x": -0.2, "dir_y": 0,
+		"limit_x1": 100,  "limit_x2": 600, "limit_y1": 0, "limit_y2": 0,
+		"new": 0, "factor_x": -1, "factor_y": 1}
+}

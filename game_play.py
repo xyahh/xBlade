@@ -20,6 +20,7 @@ def exit(): pass
 def update(frame_time):
     char_select.char1.update(frame_time)
     char_select.char2.update(frame_time)
+    map_select.maps.update_objects()
 
 def char_draw():
     char_select.char1.draw_sprite()
@@ -33,6 +34,7 @@ def char_draw():
 def draw(frame_time):
     clear_canvas()
     map_select.maps.draw(400, 300, 'map_img')
+    map_select.maps.draw_objects()
     char_draw()
     update_canvas()
 
