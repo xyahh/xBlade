@@ -34,13 +34,13 @@ def back_design_draw():
     gen_txt.draw(385, 450, 'vs')
 
 def character_info_draw():
-    gen_txt.draw(200, 450, char_select.char1.getName())
-    if main_menu.selected_option == 1: gen_txt.draw(450, 450, char_select.char2.getName())
+    gen_txt.draw(200, 450, char_select.char1.get_name())
+    if main_menu.selected_option == 1: gen_txt.draw(450, 450, char_select.char2.get_name())
     else: gen_txt.draw(450, 450, 'CPU')
 
 def map_draw():
     maps.draw(400, 250, 'dsp_img')
-    gen_txt.draw(200, 70, maps.getName(), (255, 255, 255))
+    gen_txt.draw(200, 70, maps.get_name(), (255, 255, 255))
     border_img.draw(400, 250)
 
 def draw(frame_time):

@@ -1,10 +1,11 @@
 from pico2d import *
 name = "CharacterClass"
 
+
 class Character:
     # CONSTANTS
     PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-    RUN_SPEED_KMPH = 25.0  # Km / Hour
+    RUN_SPEED_KMPH = 40.0  # Km / Hour
     RUN_SPEED_MPS = (RUN_SPEED_KMPH * 1000.0 / 3600.0)
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
@@ -26,7 +27,6 @@ class Character:
         self.jump_start_time, self.jump_start_y, self.jump_time = 0.0, 0.0, 0.0
         self.id = 0
         self.sprite = []
-        self.JumpR_move, self.JumpL_move = False, False
         self.frame, self.state = 0, Character.StandR
         self.jmp, self.left, self.right = False, False, False
         self.x, self.y = 100, 100
@@ -62,6 +62,7 @@ class Character:
         f = None
         def clamp(minimum, x, maximum):
             return max(minimum, min(x, maximum))
+
         if self.state == Character.StandR or self.state == Character.StandL:
             f = 'SFrames'
         elif self.state == Character.RunR or self.state == Character.RunL:
@@ -98,7 +99,7 @@ class Character:
             if self.state == Character.RunR or self.state== Character.JumpR: self.state = Character.StandR
             elif self.state == Character.RunL or self.state== Character.JumpL: self.state = Character.StandL
 
-    def getName(self):
+    def get_name(self):
         return Character.char[self.id]['name']
 
     def size(self):

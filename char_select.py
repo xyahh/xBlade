@@ -37,10 +37,10 @@ def draw(frame_time):
     back_design_draw()
     char1.draw_all_chars()
     blue_arrow.draw(115+(char1.id%3)*250, 450-int(char1.id/3)*200)
-    p_txt.draw(20, 30, char1.getName(), (0, 0, 255))
+    p_txt.draw(20, 30, char1.get_name(), (0, 0, 255))
     if(main_menu.selected_option==1):
         red_arrow.draw(175+(char2.id%3)*250, 450-int(char2.id/3)*200)
-        p_txt.draw(650, 30,  char2.getName(), (255, 0, 0))
+        p_txt.draw(650, 30,  char2.get_name(), (255, 0, 0))
     update_canvas()
 
 def handle_arrow1(event):

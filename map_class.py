@@ -36,10 +36,10 @@ class Map:
         self.map[self.id][string].draw(x, y)
 
     def draw_objects(self):
-        count = 0
-        while count < len(self.objects):
+        count = len(self.objects)-1
+        while count >= 0:
             self.objects[count]['img'].draw(self.objects[count]['pos_x'], self.objects[count]['pos_y'])
-            count+=1
+            count-=1
 
     def update_objects(self):
         count = 0
@@ -61,7 +61,7 @@ class Map:
 
             count+=1
 
-    def getName(self):
+    def get_name(self):
         return self.map[self.id]['name']
 
     def size(self):
