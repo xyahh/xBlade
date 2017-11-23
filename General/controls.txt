@@ -1,0 +1,18 @@
+{
+"1": 	{	
+	"up": "W", 
+	"left": "A", 
+	"down": "S", 
+	"right": "D", 
+	"pause": "ESC", 
+	"submit": "SPACE"
+	},
+"2": 	{
+	"up": "UP", 
+	"left": "LEFT", 
+	"down": "DOWN",
+	"right": "RIGHT",  
+	"pause": "DEL", 
+	"submit": "ENTER"
+	}
+}
