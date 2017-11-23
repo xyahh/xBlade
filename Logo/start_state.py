@@ -1,6 +1,7 @@
-import pFramework
 from pico2d import *
-import main_menu
+
+from General import pFramework
+from Menu import main_menu
 
 file_name = "StartState"
 

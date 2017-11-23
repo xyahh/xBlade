@@ -1,10 +1,9 @@
-import pFramework
 from pico2d import *
 
 import pyglet  # 3rd party audio player
+from Characters import char_select
+from General import pFramework, key_mapping
 from pyglet.media import Player
-import char_select
-import key_mapping
 
 file_name = "MainMenu"
 

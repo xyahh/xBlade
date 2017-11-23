@@ -1,11 +1,9 @@
-import pFramework
 from pico2d import *
 
-from map_class import Map
-
-import main_menu
-import char_select
-import game_play
+from Characters import char_select
+from General import game_play, pFramework
+from Map.map_class import Map
+from Menu import main_menu
 
 file_name = "MapSelect"
 back_img, map_sel, border_img = None, None, None

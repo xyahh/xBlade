@@ -1,10 +1,7 @@
-import pFramework
 from pico2d import *
 
-import map_select
-import main_menu
-from char_class import Character
-import key_mapping
+from General import pFramework, key_mapping
+from Menu import main_menu
 
 file_name = "CharSelect"
 

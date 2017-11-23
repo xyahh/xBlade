@@ -1,9 +1,9 @@
-import pFramework
 from pico2d import *
 
-import main_menu
-import map_select
-import char_select
+from Characters import char_select
+from General import pFramework
+from Map import map_select
+from Menu import main_menu
 
 file_name = "Gameplay"
 pause_game = None
