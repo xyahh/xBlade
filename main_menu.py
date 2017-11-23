@@ -1,21 +1,35 @@
 import pFramework
 from pico2d import *
 
-import pyglet #3rd party audio player
+import pyglet  # 3rd party audio player
 from pyglet.media import Player
 import char_select
+import key_mapping
 
 file_name = "MainMenu"
 
-images = None
-font = None
-menu_txt = None
-options = []
-timer = 0
-num_of_players = 0
-show_menu = False
-song = None
-player = None
+RECT_W, RECT_H = None, None
+images, font = None, None
+song, player = None, None
+options, controls = None, None
+num_of_players = None
+
+
+def init_controls():
+    global controls
+    control_file = open('General/controls.txt', 'r')
+    control_info = json.load(control_file)
+    control_file.close()
+
+    controls = []
+    for id in control_info:
+        controls.append({"player_id":int(id),
+                         "up":    key_mapping.map_key(control_info[id]['up']),
+                         "down":  key_mapping.map_key(control_info[id]['down']),
+                         "left":  key_mapping.map_key(control_info[id]['left']),
+                         "right": key_mapping.map_key(control_info[id]['right']),
+                         "pause": key_mapping.map_key(control_info[id]['pause']),
+                         "submit": key_mapping.map_key(control_info[id]['submit'])})
 
 
 def init_images():
@@ -40,33 +54,39 @@ def init_pyglet():
 
 
 def init_menu():
-    global font, options
+    global font, options, RECT_H, RECT_W, num_of_players
     menu_file = open('Menu/menu.txt', 'r')
     menu_info = json.load(menu_file)
     menu_file.close()
 
+    num_of_players = 2  # default is PvP mode
+
     font = load_font(menu_info['font']['path'], menu_info['font']['size'])
+    RECT_W = menu_info['rect_size']['width']
+    RECT_H = menu_info['rect_size']['height']
+
+    options = []
+
     for name in menu_info['options']:
         y = menu_info['options'][name]['start_y'] + \
             menu_info['options'][name]['diff_y'] * menu_info['options'][name]['priority']
-        options.append({"name": name, "x":menu_info['options'][name]['x'], "y":y})
+        options.append({"name": name, "x": menu_info['options'][name]['x'], "y": y})
 
 
 def enter():
     init_images()
     init_menu()
     init_pyglet()
+    init_controls()
 
 
 def exit():
-    global menu_txt, options
-    del(menu_txt, options)
+    global images, options
+    del images, options
 
 
 def update(frame_time):
-    global timer
-    timer += 1
-    delay(0.01)
+    pass
 
 
 def draw(frame_time):
@@ -75,29 +95,27 @@ def draw(frame_time):
         images[i]['img'].draw(images[i]['x'], images[i]['y'])
     for i in options:
         font.draw(i['x'], i['y'], i['name'])
-
-    #draw_rectangle(280, 230 - (selected_option * 70), 525, 170 - (selected_option * 70))
+    draw_rectangle(options[num_of_players]['x'], options[num_of_players]['y']-RECT_H/2,
+                   options[num_of_players]['x']+RECT_W, options[num_of_players]['y']+RECT_H/2)
     update_canvas()
 
 
 def handle_events(frame_time):
-    global selected_option
-    global show_menu
+    global num_of_players
     events = get_events()
     for event in events:
-        if (event.type, event.key) == (SDL_KEYDOWN, SDLK_w):
-            selected_option-=1
-            if(selected_option<0): selected_option=2
-        elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_s):
-            selected_option += 1
-            if (selected_option > 2): selected_option = 0
-        elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_RETURN):
-            if show_menu:
-                if selected_option==0 or selected_option==1:
-                    pFramework.push_state(char_select)
-                elif selected_option==2:
-                    pFramework.quit()
-            else: show_menu = True
+        if event.type == SDL_KEYDOWN:
+            for i in range(len(controls)):  # can add the control id check if only one player needs to control menu
+                if event.key == controls[i]['up']:
+                    num_of_players = (num_of_players + 1) % 3
+                elif event.key == controls[i]['down']:
+                    num_of_players = (num_of_players - 1) % 3
+                elif event.key == controls[i]['submit']:
+                    if num_of_players > 0:
+                        pFramework.push_state(char_select)
+                    else:
+                        pFramework.quit()
+
         elif event.type==SDL_QUIT:
             pFramework.quit()
 

@@ -42,7 +42,7 @@ def handle_events(frame_time):
     global pause_game
     events = get_events()
     for event in events:
-        char_select.char1.handle_events(frame_time, event, SDLK_a, SDLK_d, SDLK_w)
+        char_select.char1.handle_events(char_select.char1.id, frame_time, event, SDLK_a, SDLK_d, SDLK_w)
         if main_menu.selected_option == 1: char_select.char2.handle_events(frame_time, event, SDLK_LEFT, SDLK_RIGHT, SDLK_UP)
         if event.type == SDL_KEYDOWN:
             if event.key == SDLK_ESCAPE:

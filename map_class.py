@@ -1,6 +1,7 @@
 from pico2d import *
 file_name = "MapClass"
 
+
 class Map:
     def __init__(self):
         self.id = 0
@@ -34,16 +35,11 @@ class Map:
 
     def draw(self, x, y, string):
         self.map[self.id][string].draw(x, y)
-
-    def draw_objects(self):
-        count = len(self.objects)-1
-        while count >= 0:
+        for count in range(len(self.objects)):
             self.objects[count]['img'].draw(self.objects[count]['pos_x'], self.objects[count]['pos_y'])
-            count-=1
 
-    def update_objects(self):
-        count = 0
-        while count < len(self.objects):
+    def update(self):
+        for count in range(len(self.objects)):
             def reset():
                 self.objects[count]['pos_x'] = self.objects[count]['start_x']
                 self.objects[count]['pos_y'] = self.objects[count]['start_y']
@@ -58,8 +54,6 @@ class Map:
             if self.objects[count]['pos_y'] <= self.objects[count]['limit_y1'] or self.objects[count]['pos_y'] >= self.objects[count]['limit_y2']:
                 if self.objects[count]['new']: reset()
                 else: self.objects[count]['dir_y'] *= self.objects[count]['factor_y']
-
-            count+=1
 
     def get_name(self):
         return self.map[self.id]['name']

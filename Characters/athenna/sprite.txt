@@ -1,3 +1,4 @@
 {
-"Move": {"path": "Characters/athenna/athenna_move_sprite.png","SFrames": 4, "RFrames": 11, "JFrames": 7, "x":45, "y":45}  
+"Move": {"path": "Characters/athenna/athenna_move_sprite.png",
+	"SFrames": 4, "RFrames": 11, "JFrames": 7, "w":45, "h":45}
 }
