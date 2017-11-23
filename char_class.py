@@ -19,8 +19,8 @@ class Character:
     TIME_PER_ACTION = 0.5
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 
-    StandR, StandL, RunR, RunL, JumpR, JumpL = 0, 1, 2, 3, 4, 5
-    Move, Attack1 = 0, 1
+    STAND_R, STAND_L, RUN_R, RUN_L, JUMP_R, JUMP_L = 0, 1, 2, 3, 4, 5
+    MOVE, ATTACK1 = 0, 1
     # END CONSTANTS
 
     char = []
@@ -29,11 +29,12 @@ class Character:
         self.jump_start_time, self.jump_start_y, self.jump_time = 0.0, 0.0, 0.0
         self.id = 0
         self.sprite = []
-        self.frame, self.state = 0, Character.StandR
+        #state hard-coded for now. Will add the Starting state later through JSON
+        self.frame, self.state = 0, Character.STAND_R
         self.jmp, self.left, self.right = False, False, False
-        # Coordinates are hard-coded for now. Will add the Starting Spawn Coordinates to the Map_class later
+        # Coordinates are hard-coded for now. Will add the Starting Spawn Coordinates through JSON
         self.x, self.y = 100, 100
-        self.sprite_state = Character.Move
+        self.sprite_state = Character.MOVE
         self.total_frames = 0.0
         if len(Character.char)==0:
             chars_file = open('Characters/characters.txt', 'r')
@@ -66,11 +67,11 @@ class Character:
         def clamp(minimum, x, maximum):
             return max(minimum, min(x, maximum))
 
-        if self.state == Character.StandR or self.state == Character.StandL:
+        if self.state == Character.STAND_R or self.state == Character.STAND_L:
             state_frames = 'SFrames'
-        elif self.state == Character.RunR or self.state == Character.RunL:
+        elif self.state == Character.RUN_R or self.state == Character.RUN_L:
             state_frames = 'RFrames'
-        elif self.state == Character.JumpR or self.state == Character.JumpL:
+        elif self.state == Character.JUMP_R or self.state == Character.JUMP_L:
             state_frames = 'JFrames'
         self.total_frames += Character.char[self.id]['spr'][self.sprite_state][state_frames] \
                              * Character.ACTION_PER_TIME * frame_time
@@ -91,16 +92,16 @@ class Character:
 
         if self.left:
             self.x -= distance
-            if self.jmp: self.state = Character.JumpL
-            else: self.state = Character.RunL
+            if self.jmp: self.state = Character.JUMP_L
+            else: self.state = Character.RUN_L
         if self.right:
             self.x += distance
-            if self.jmp: self.state = Character.JumpR
-            else: self.state = Character.RunR
+            if self.jmp: self.state = Character.JUMP_R
+            else: self.state = Character.RUN_R
 
         if not self.right and not self.left and not self.jmp:
-            if self.state == Character.RunR or self.state== Character.JumpR: self.state = Character.StandR
-            elif self.state == Character.RunL or self.state== Character.JumpL: self.state = Character.StandL
+            if self.state == Character.RUN_R or self.state== Character.JUMP_R: self.state = Character.STAND_R
+            elif self.state == Character.RUN_L or self.state== Character.JUMP_L: self.state = Character.STAND_L
 
     def get_name(self):
         return Character.char[self.id]['name']
@@ -115,8 +116,10 @@ class Character:
             count += 1
 
     def handle_events(self, frame_time, event, key_left, key_right, key_jump):
-        if event.key == key_left: self.left = event.type == SDL_KEYDOWN
-        if event.key == key_right: self.right = event.type == SDL_KEYDOWN
+        if event.key == key_left:
+            self.left = event.type == SDL_KEYDOWN
+        if event.key == key_right:
+            self.right = event.type == SDL_KEYDOWN
         if event.key == key_jump and not self.jmp:
             self.jump_start_time = frame_time
             self.jump_time = frame_time
@@ -124,5 +127,5 @@ class Character:
             self.frame = 0
             self.jmp = True
             if not self.right and not self.left:
-                if self.state == Character.StandR: self.state = Character.JumpR
-                elif self.state == Character.StandL: self.state = Character.JumpL
+                if self.state == Character.STAND_R: self.state = Character.JUMP_R
+                elif self.state == Character.STAND_L: self.state = Character.JUMP_L
