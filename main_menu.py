@@ -6,27 +6,32 @@ from pyglet.media import Player
 import char_select
 
 file_name = "MainMenu"
-title_img, border_img, xyah_txt, menu_txt = None, None, None, None
+
+images = None
+font = None
+menu_txt = None
 options = []
 timer = 0
-selected_option = 0
+num_of_players = 0
 show_menu = False
 song = None
 player = None
 
-def enter():
-    global title_img, side_img, background_img, border_img, song, player
-    global xyah_txt, menu_txt
-    global options, main_theme
-    title_img = load_image('Menu/Title.png')
-    border_img = load_image('Menu/border.png')
-    background_img = load_image('Menu/menu_back.png')
-    xyah_txt, menu_txt = load_image('Menu/xyah_txt.png'), load_font('Menu/lotr_font.ttf', 30)
 
-    options.append("Solo Play")
-    options.append("P v P")
-    options.append("Exit")
+def init_images():
+    global images
+    image_file = open('Menu/image.txt', 'r')
+    image_info = json.load(image_file)
+    image_file.close()
 
+    images = []
+    for name in image_info:
+        images.append({"img": load_image(image_info[name]['path']),
+                       "x": image_info[name]['x'], "y": image_info[name]['y']})
+
+
+def init_pyglet():
+    global song, player, main_theme
     song = pyglet.media.load('Menu/menu_theme.mp3')
     player = Player()
     player.queue(song)
@@ -34,30 +39,44 @@ def enter():
     player.play()
 
 
+def init_menu():
+    global font, options
+    menu_file = open('Menu/menu.txt', 'r')
+    menu_info = json.load(menu_file)
+    menu_file.close()
+
+    font = load_font(menu_info['font']['path'], menu_info['font']['size'])
+    for name in menu_info['options']:
+        y = menu_info['options'][name]['start_y'] + \
+            menu_info['options'][name]['diff_y'] * menu_info['options'][name]['priority']
+        options.append({"name": name, "x":menu_info['options'][name]['x'], "y":y})
+
+
+def enter():
+    init_images()
+    init_menu()
+    init_pyglet()
+
+
 def exit():
-    global title_img, background_img, border_img, xyah_txt, menu_txt, options
-    del(title_img, background_img, border_img, xyah_txt, menu_txt, options)
+    global menu_txt, options
+    del(menu_txt, options)
+
 
 def update(frame_time):
     global timer
     timer += 1
     delay(0.01)
 
-def drawMenu():
-    border_img.draw(400, 110)
-    count = 0
-    for i in options:
-        menu_txt.draw(300, 200 - (count * 70), i)
-        count += 1
-    draw_rectangle(280, 230 - (selected_option * 70), 525, 170 - (selected_option * 70))
 
 def draw(frame_time):
     clear_canvas()
-    background_img.draw(400, 300)
-    title_img.draw(400, 400)
-    xyah_txt.draw(410, 500)
-    if show_menu: drawMenu()
-    elif timer%100 > 50: menu_txt.draw(180, 200, 'Press Enter to Start')
+    for i in range(len(images)):
+        images[i]['img'].draw(images[i]['x'], images[i]['y'])
+    for i in options:
+        font.draw(i['x'], i['y'], i['name'])
+
+    #draw_rectangle(280, 230 - (selected_option * 70), 525, 170 - (selected_option * 70))
     update_canvas()
 
 
@@ -81,8 +100,6 @@ def handle_events(frame_time):
             else: show_menu = True
         elif event.type==SDL_QUIT:
             pFramework.quit()
-
-
 
 
 def pause(): pass

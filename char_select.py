@@ -47,10 +47,10 @@ def handle_arrow1(event):
     global char1
     if (event.type, event.key) == (SDL_KEYDOWN, SDLK_a):
         if (char1.id  % 3 == 0):char1.id  += 2
-        else: char1.id  = (char1.id - 1) % char1.size()
+        else: char1.id  = (char1.id - 1) % char1.num_of_chars()
     elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_d):
         if ((char1.id  + 1) % 3 == 0): char1.id -= 2
-        else: char1.id  = (char1.id  + 1) % char1.size()
+        else: char1.id  = (char1.id  + 1) % char1.num_of_chars()
     elif event.type == SDL_KEYDOWN and (event.key == SDLK_w or event.key == SDLK_s):
         if (char1.id < 3): char1.id  += 3
         else: char1.id  -= 3

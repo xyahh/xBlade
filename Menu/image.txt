@@ -1,0 +1,6 @@
+{
+	"background": {"path": "Menu/Background.png", "x":400, "y":300},
+	"title": {"path": "Menu/Title.png", "x":400, "y":400},
+	"border": {"path": "Menu/Border.png", "x":400, "y":100},
+	"presentation": {"path":"Menu/Presentation.png", "x":400, "y":500}
+}

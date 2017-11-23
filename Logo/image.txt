@@ -1,0 +1,4 @@
+{
+	"background": {"path": "Logo/Background.png", "x":400, "y":300, "opacify": 0},
+	"logo": {"path": "Logo/Logo.png", "x":400, "y":300, "opacify": 1}
+}

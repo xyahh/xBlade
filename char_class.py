@@ -63,10 +63,11 @@ class Character:
                                                                            w, h, self.x, self.y, w*2, h*2)
 
     def update(self, frame_time):
-        state_frames = None
-        def clamp(minimum, x, maximum):
-            return max(minimum, min(x, maximum))
+        self.update_frames(frame_time)
+        self.move(frame_time)
 
+    def update_frames(self, frame_time):
+        state_frames = None
         if self.state == Character.STAND_R or self.state == Character.STAND_L:
             state_frames = 'SFrames'
         elif self.state == Character.RUN_R or self.state == Character.RUN_L:
@@ -76,17 +77,19 @@ class Character:
         self.total_frames += Character.char[self.id]['spr'][self.sprite_state][state_frames] \
                              * Character.ACTION_PER_TIME * frame_time
         self.frame = int(self.total_frames) % Character.char[self.id]['spr'][self.sprite_state][state_frames]
-        self.move(frame_time)
-        self.x = clamp(0, self.x, 800)
 
     def move(self, frame_time):
+        def clamp(minimum, x, maximum):
+            return max(minimum, min(x, maximum))
+
         distance = Character.RUN_SPEED_PPS * frame_time
 
         if self.jmp:
             self.jump_time += frame_time
-            t = self.jump_time - self.jump_start_time
-            self.y = self.jump_start_y + Character.JUMP_SPEED_PPS*t - Character.GRAVITY_P2PS*t*t
-            if self.y <= self.jump_start_y: # change to collision boxes after
+            dt = self.jump_time - self.jump_start_time
+            self.y = self.jump_start_y + Character.JUMP_SPEED_PPS*dt - Character.GRAVITY_P2PS*dt*dt
+            # change to collision boxes after
+            if self.y <= self.jump_start_y:
                 self.y = self.jump_start_y
                 self.jmp = False
 
@@ -94,19 +97,24 @@ class Character:
             self.x -= distance
             if self.jmp: self.state = Character.JUMP_L
             else: self.state = Character.RUN_L
+
         if self.right:
             self.x += distance
             if self.jmp: self.state = Character.JUMP_R
             else: self.state = Character.RUN_R
 
+        self.x = clamp(0, self.x, 800)
+
         if not self.right and not self.left and not self.jmp:
-            if self.state == Character.RUN_R or self.state== Character.JUMP_R: self.state = Character.STAND_R
-            elif self.state == Character.RUN_L or self.state== Character.JUMP_L: self.state = Character.STAND_L
+            if self.state == Character.RUN_R or self.state== Character.JUMP_R:
+                self.state = Character.STAND_R
+            elif self.state == Character.RUN_L or self.state== Character.JUMP_L:
+                self.state = Character.STAND_L
 
     def get_name(self):
         return Character.char[self.id]['name']
 
-    def size(self):
+    def num_of_chars(self):
         return len(Character.char)
 
     def draw_all_chars(self):
@@ -127,5 +135,7 @@ class Character:
             self.frame = 0
             self.jmp = True
             if not self.right and not self.left:
-                if self.state == Character.STAND_R: self.state = Character.JUMP_R
-                elif self.state == Character.STAND_L: self.state = Character.JUMP_L
+                if self.state == Character.STAND_R:
+                    self.state = Character.JUMP_R
+                elif self.state == Character.STAND_L:
+                    self.state = Character.JUMP_L

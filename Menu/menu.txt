@@ -1,0 +1,9 @@
+{
+"font": {"path":"Menu/lotr_font.ttf", "size":30},
+"options":
+	{
+		"Solo Play":{"x": 300, "start_y": 190, "diff_y": -70, "priority": 0},
+		"P v P": {"x": 300, "start_y": 190, "diff_y": -70, "priority": 1},
+		"Exit": {"x": 300, "start_y": 190, "diff_y": -70, "priority": 2}
+	}
+}
