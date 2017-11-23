@@ -1,5 +1,5 @@
 from pico2d import *
-name = "MapClass"
+file_name = "MapClass"
 
 class Map:
     def __init__(self):
@@ -52,11 +52,11 @@ class Map:
             self.objects[count]['pos_y'] += self.objects[count]['dir_y']
 
             if self.objects[count]['pos_x'] <= self.objects[count]['limit_x1'] or self.objects[count]['pos_x'] >= self.objects[count]['limit_x2']:
-                if self.objects[count]['new'] == True: reset()
+                if self.objects[count]['new']: reset()
                 else: self.objects[count]['dir_x'] *= self.objects[count]['factor_x']
 
             if self.objects[count]['pos_y'] <= self.objects[count]['limit_y1'] or self.objects[count]['pos_y'] >= self.objects[count]['limit_y2']:
-                if self.objects[count]['new'] == True: reset()
+                if self.objects[count]['new']: reset()
                 else: self.objects[count]['dir_y'] *= self.objects[count]['factor_y']
 
             count+=1

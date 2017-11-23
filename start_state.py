@@ -2,7 +2,7 @@ import pFramework
 from pico2d import *
 
 import main_menu
-name = "StartState"
+file_name = "StartState"
 image = None
 background_img = None
 logo_time = 0.0

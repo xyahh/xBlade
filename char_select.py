@@ -4,7 +4,7 @@ from pico2d import *
 import map_select
 import main_menu
 from char_class import Character
-name = "CharSelect"
+file_name = "CharSelect"
 back_img, char_sel, red_arrow, blue_arrow = None, None, None, None
 p_txt = None
 char1, char2 = None, None

@@ -1,5 +1,5 @@
 from pico2d import *
-name = "CharacterClass"
+file_name = "CharacterClass"
 
 
 class Character:
@@ -22,13 +22,16 @@ class Character:
     StandR, StandL, RunR, RunL, JumpR, JumpL = 0, 1, 2, 3, 4, 5
     Move, Attack1 = 0, 1
     # END CONSTANTS
+
     char = []
+
     def __init__(self):
         self.jump_start_time, self.jump_start_y, self.jump_time = 0.0, 0.0, 0.0
         self.id = 0
         self.sprite = []
         self.frame, self.state = 0, Character.StandR
         self.jmp, self.left, self.right = False, False, False
+        # Coordinates are hard-coded for now. Will add the Starting Spawn Coordinates to the Map_class later
         self.x, self.y = 100, 100
         self.sprite_state = Character.Move
         self.total_frames = 0.0
@@ -59,19 +62,19 @@ class Character:
                                                                            w, h, self.x, self.y, w*2, h*2)
 
     def update(self, frame_time):
-        f = None
+        state_frames = None
         def clamp(minimum, x, maximum):
             return max(minimum, min(x, maximum))
 
         if self.state == Character.StandR or self.state == Character.StandL:
-            f = 'SFrames'
+            state_frames = 'SFrames'
         elif self.state == Character.RunR or self.state == Character.RunL:
-            f = 'RFrames'
+            state_frames = 'RFrames'
         elif self.state == Character.JumpR or self.state == Character.JumpL:
-            f = 'JFrames'
-        self.total_frames += Character.char[self.id]['spr'][self.sprite_state][f] \
+            state_frames = 'JFrames'
+        self.total_frames += Character.char[self.id]['spr'][self.sprite_state][state_frames] \
                              * Character.ACTION_PER_TIME * frame_time
-        self.frame = int(self.total_frames) % Character.char[self.id]['spr'][self.sprite_state][f]
+        self.frame = int(self.total_frames) % Character.char[self.id]['spr'][self.sprite_state][state_frames]
         self.move(frame_time)
         self.x = clamp(0, self.x, 800)
 

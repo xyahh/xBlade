@@ -5,7 +5,7 @@ import main_menu
 import map_select
 import char_select
 
-name = "Gameplay"
+file_name = "Gameplay"
 pause_game = None
 p1, p2 = None, None
 

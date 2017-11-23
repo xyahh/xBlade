@@ -5,7 +5,7 @@ import pyglet #3rd party audio player
 from pyglet.media import Player
 import char_select
 
-name = "MainMenu"
+file_name = "MainMenu"
 title_img, border_img, xyah_txt, menu_txt = None, None, None, None
 options = []
 timer = 0

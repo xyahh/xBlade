@@ -7,10 +7,11 @@ import main_menu
 import char_select
 import game_play
 
-name = "MapSelect"
+file_name = "MapSelect"
 back_img, map_sel, border_img = None, None, None
 maps = None
 gen_txt = None
+
 
 def enter():
     global back_img, map_sel, gen_txt, maps, border_img
@@ -19,7 +20,6 @@ def enter():
     border_img = load_image('Map/map_border.png')
     map_sel = load_image('Map/map_sel.png')
     gen_txt = load_font('Menu/lotr_font.ttf')
-
 
 def exit():
     global back_img, map_sel, gen_txt, maps, border_img
