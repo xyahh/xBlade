@@ -1,9 +1,8 @@
 from pico2d import *
-
 import pyglet  # 3rd party audio player
+from pyglet.media import Player
 from Characters import char_select
 from General import pFramework, key_mapping
-from pyglet.media import Player
 
 file_name = "MainMenu"
 
@@ -58,7 +57,7 @@ def init_menu():
     menu_info = json.load(menu_file)
     menu_file.close()
 
-    num_of_players = 2  # default is PvP mode
+    num_of_players = 2  # default is PvP mode. 2 players
 
     font = load_font(menu_info['font']['path'], menu_info['font']['size'])
     RECT_W = menu_info['rect_size']['width']
@@ -106,9 +105,9 @@ def handle_events(frame_time):
         if event.type == SDL_KEYDOWN:
             for i in range(len(controls)):  # can add the control id check if only one player needs to control menu
                 if event.key == controls[i]['up']:
-                    num_of_players = (num_of_players + 1) % 3
+                    num_of_players = (num_of_players + 1) % len(options)
                 elif event.key == controls[i]['down']:
-                    num_of_players = (num_of_players - 1) % 3
+                    num_of_players = (num_of_players - 1) % len(options)
                 elif event.key == controls[i]['submit']:
                     if num_of_players > 0:
                         pFramework.push_state(char_select)

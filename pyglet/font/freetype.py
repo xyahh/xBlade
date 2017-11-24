@@ -231,7 +231,7 @@ class FreeTypeMemoryFont(object):
 class FreeTypeFont(base.Font):
     glyph_renderer_class = FreeTypeGlyphRenderer
 
-    # Map font (name, bold, italic) to FreeTypeMemoryFont
+    # Maps font (name, bold, italic) to FreeTypeMemoryFont
     _memory_fonts = {}
 
     def __init__(self, name, size, bold=False, italic=False, dpi=None):

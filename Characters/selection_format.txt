@@ -1,0 +1,7 @@
+{
+	"chars_per_row":3,
+	"col_dist_diff": 200,
+	"row_dist_diff": -200,
+	"start_x": 200,
+	"start_y": 350
+}

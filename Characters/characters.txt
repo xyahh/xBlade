@@ -1,8 +1,8 @@
 {
-"Athenna" :	{"img": "Characters/athenna_img.png", "sprite": "Characters/athenna/sprite.txt"},
-"Bronker": 		{"img": "Characters/bronker_img.png", "sprite": "Characters/bronker/sprite.txt"},
-"Clyde"  : 		{"img": "Characters/clyde_img.png", "sprite": "Characters/clyde/sprite.txt"},
-"Xyan"     : 	{"img": "Characters/xyan_img.png", "sprite": "Characters/xyan/sprite.txt"},
-"Yggdrasil" :	{"img": "Characters/yggdrasil_img.png", "sprite": "Characters/yggdrasil/sprite.txt"},
-"Zero" : 		{"img": "Characters/zero_img.png", "sprite": "Characters/zero/sprite.txt"}
+"Athenno" :	{"img": "Characters/athenna/athenna_img.png", "sprite": "Characters/athenna/sprite.txt"},
+"Bronker": 		{"img": "Characters/bronker/bronker_img.png", "sprite": "Characters/bronker/sprite.txt"},
+"Clyde"  : 		{"img": "Characters/clyde/clyde_img.png", "sprite": "Characters/clyde/sprite.txt"},
+"Xyan"     : 	{"img": "Characters/xyan/xyan_img.png", "sprite": "Characters/xyan/sprite.txt"},
+"Yggdrasil" :	{"img": "Characters/yggdrasil/yggdrasil_img.png", "sprite": "Characters/yggdrasil/sprite.txt"},
+"Zero" : 		{"img": "Characters/zero/zero_img.png", "sprite": "Characters/zero/sprite.txt"}
 }

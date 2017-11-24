@@ -1,22 +1,22 @@
 {
-"static": 	{
-	"background": {"path": "Map/SelectionBackground.png", 
+"images": 	{
+	"background": {"path": "Maps/SelectionBackground.png", 
 		"x":400, "y":300},
 	"title": {"path": "Characters/Title.png", 
 		"x":400, "y":550}
 	},
 
-"dynamic": { 
-	"red_arrow": {"path": "Characters/red_arrow.png", 
-		"x":175, "y": 450, "player_id": 1},
-	"blue_arrow": {"path":"Characters/blue_arrow.png", 
-		"x":115, "y":450, "player_id": 2}
+"arrows": { 
+	"red_arrow": {"path": "Characters/red_arrow.png",  "player_id": 1,
+		"x_offset": -30, "y_offset":100},
+	"blue_arrow": {"path": "Characters/blue_arrow.png",  "player_id": 2,
+		"x_offset":  30, "y_offset":100}
 	},
 
 "font": "General/lotr_font.ttf",
 
 "text": 	{	
-	"left": {"player_id": 1, "x": 20, "y": 30, "red": 0, "green": 0, "blue": 255},
-	"right": {"player_id": 2, "x": 650, "y": 30, "red": 255, "green": 0, "blue": 0}
+	"left": 	{"player_id": 1, "x": 50,   "y": 60, "red": 255, "green": 50, "blue": 50},
+	"right": 	{"player_id": 2, "x": 50, "y":   30, "red": 50, "green": 50, "blue": 255}
 	}
 }

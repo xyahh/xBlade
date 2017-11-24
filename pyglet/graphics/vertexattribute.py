@@ -306,7 +306,7 @@ class AbstractAttribute(object):
         raise NotImplementedError('abstract')
 
     def get_region(self, buffer, start, count):
-        '''Map a buffer region using this attribute as an accessor.
+        '''Maps a buffer region using this attribute as an accessor.
 
         The returned region can be modified as if the buffer was a contiguous
         array of this attribute (though it may actually be interleaved or

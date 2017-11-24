@@ -123,7 +123,7 @@ class HTMLDecoder(html.parser.HTMLParser, structured.StructuredTextDecoder):
         'margin_bottom': '12pt',
     }
 
-    #: Map HTML font sizes to actual font sizes, in points.
+    #: Maps HTML font sizes to actual font sizes, in points.
     #: 
     #: :type: dict
     font_sizes = {

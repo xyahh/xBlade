@@ -5,7 +5,7 @@ file_name = "MapClass"
 class Map:
     def __init__(self):
         self.id = 0
-        maps_file = open('Map/maps.txt', 'r')
+        maps_file = open('Maps/maps.txt', 'r')
         map_info= json.load(maps_file)
         maps_file.close()
         self.map = []

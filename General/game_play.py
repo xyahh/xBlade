@@ -2,7 +2,7 @@ from pico2d import *
 
 from Characters import char_select
 from General import pFramework
-from Map import map_select
+from Maps import map_select
 from Menu import main_menu
 
 file_name = "Gameplay"
@@ -11,8 +11,8 @@ p1, p2 = None, None
 
 def enter():
     global pause_game, p1, p2
-    p1 = load_image('Characters/p1.png')
-    p2 = load_image('Characters/p2.png')
+    p1 = load_image('Characters/player1.png')
+    p2 = load_image('Characters/player2.png')
     pause_game = False
 
 def exit(): pass

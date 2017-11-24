@@ -2,32 +2,48 @@ from pico2d import *
 
 from General import pFramework, key_mapping
 from Menu import main_menu
-
+from Characters.char_class import CharacterSelect
+from Maps import map_select
 file_name = "CharSelect"
 
 images, arrows = None, None
 controls, font = None, None
+char_sel, text = None, None
+choices = None
 
 
 def init_media():
-    global images, arrows, font
+    global images, arrows, font, char_sel, text, choices
+
+    char_sel = CharacterSelect(main_menu.num_of_players)
 
     media_file = open('Characters/media.txt', 'r')
     media_info = json.load(media_file)
     media_file.close()
 
     font = load_font(media_info['font'])
+    choices = []
+
+    text = []
+    for name in media_info['text']:
+        if media_info['text'][name]['player_id'] <= main_menu.num_of_players:
+            text.append({"player_id": media_info['text'][name]['player_id'],
+                         "x": media_info['text'][name]['x'],
+                         "y": media_info['text'][name]['y'],
+                         "RGB": (media_info['text'][name]['red'], media_info['text'][name]['green'],
+                                 media_info['text'][name]['blue'])})
 
     images = []
-    for name in media_info['static']:
-        images.append({"img": load_image(media_info['static'][name]['path']),
-                       "x": media_info['static'][name]['x'], "y": media_info['static'][name]['y']})
+    for name in media_info['images']:
+        images.append({"img": load_image(media_info['images'][name]['path']),
+                       "x": media_info['images'][name]['x'], "y": media_info['images'][name]['y']})
     arrows = []
-    for name in media_info['dynamic']:
-        if media_info['dynamic'][name]['player_id'] <= main_menu.num_of_players:
-            arrows.append({"img": load_image(media_info['dynamic'][name]['path']),
-                           "x": media_info['dynamic'][name]['x'], "y": media_info['dynamic'][name]['y'],
-                           "player_id": media_info['dynamic'][name]['player_id']})
+    for name in media_info['arrows']:
+        if media_info['arrows'][name]['player_id'] <= main_menu.num_of_players:
+            arrows.append({"img": load_image(media_info['arrows'][name]['path']),
+                           "player_id": media_info['arrows'][name]['player_id'],
+                           "x_offset": media_info['arrows'][name]['x_offset'],
+                           "y_offset" : media_info['arrows'][name]['y_offset']})
 
 
 def init_controls():
@@ -51,41 +67,63 @@ def enter():
     init_media()
     init_controls()
 
+
 def exit():
-    global images, arrows, font
-    del images, arrows, font
+    global images, arrows, font, char_sel, choices, text
+    del images, arrows, font, char_sel, choices, text
 
 
 def update(frame_time):
     pass
 
 
-def draw(frame_time):
-    clear_canvas()
-    #blue_arrow.draw(115+(char1.id%3)*250, 450-int(char1.id/3)*200)
-    #p_txt.draw(20, 30, char1.get_name(), (0, 0, 255))
+def draw_media():
     for i in range(len(images)):
         images[i]['img'].draw(images[i]['x'], images[i]['y'])
 
     for i in range(len(arrows)):
-        arrows[i]['img'].draw( arrows[i]['x'],  arrows[i]['y'])
+        if i < main_menu.num_of_players:
+            arrows[i]['img'].draw((char_sel.player_choice[i] % char_sel.chars_per_row) * char_sel.col_dist_diff
+                                  + char_sel.start_x + arrows[i]['x_offset'],
+                                  int(char_sel.player_choice[i] / char_sel.chars_per_row) * char_sel.row_dist_diff
+                                  + char_sel.start_y + arrows[i]['y_offset'])
+    for i in range(main_menu.num_of_players):
+        font.draw(text[i]['x'], text[i]['y'], char_sel.chars[char_sel.player_choice[i]]['name'], text[i]['RGB'])
+
+
+def draw(frame_time):
+    clear_canvas()
+    draw_media()
+    char_sel.draw()
     update_canvas()
 
+
 def handle_events(frame_time):
+    global choices
     events = get_events()
     for event in events:
         if event.type == SDL_KEYDOWN:
             for i in range(len(controls)):
-                #Character.handle_events(frame_time, event, controls[i]['player_id'],
-                #                        controls[i]['left'], controls[i]['right'], controls[i]['up'])
+                char_sel.handle_events(frame_time, event, controls[i]['player_id'],
+                                       controls[i]['left'], controls[i]['right'],
+                                       controls[i]['up'], controls[i]['down'])
                 if event.key == controls[i]['pause']:
-                        pFramework.pop_state()
-                        break
+                    pFramework.pop_state()
+                    break
+                if event.key == controls[i]['submit']:
+                    if len(choices) > 0:
+                        del choices
+                        choices = []
+                    for i in range(main_menu.num_of_players):
+                        choices.append({"player_id": i+1, "choice": char_sel.player_choice[i]})
+                    pFramework.push_state(map_select)
         elif event.type == SDL_QUIT:
             pFramework.quit()
 
+
 def resume():
     pass
+
 
 def pause():
     pass

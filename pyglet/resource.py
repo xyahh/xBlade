@@ -305,7 +305,7 @@ class Loader(object):
         self._script_home = script_home
         self._index = None
 
-        # Map bin size to list of atlases
+        # Maps bin size to list of atlases
         self._texture_atlas_bins = {}
 
     def _require_index(self):

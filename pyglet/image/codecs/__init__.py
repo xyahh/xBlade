@@ -56,11 +56,11 @@ import os.path
 from pyglet import compat_platform
 
 _decoders = []              # List of registered ImageDecoders
-_decoder_extensions = {}    # Map str -> list of matching ImageDecoders
+_decoder_extensions = {}    # Maps str -> list of matching ImageDecoders
 _decoder_animation_extensions = {}    
-                            # Map str -> list of matching ImageDecoders
+                            # Maps str -> list of matching ImageDecoders
 _encoders = []              # List of registered ImageEncoders
-_encoder_extensions = {}    # Map str -> list of matching ImageEncoders
+_encoder_extensions = {}    # Maps str -> list of matching ImageEncoders
 
 class ImageDecodeException(Exception):
     exception_priority = 10

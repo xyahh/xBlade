@@ -57,7 +57,7 @@ from pyglet.libs.darwin.quartzkey import keymap, charmap
 
 from pyglet.event import EventDispatcher
 
-# Map symbol,modifiers -> motion
+# Maps symbol,modifiers -> motion
 # Determined by experiment with TextEdit.app
 _motion_map = {
     (key.UP, False):                    key.MOTION_UP,

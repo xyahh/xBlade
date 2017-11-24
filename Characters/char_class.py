@@ -13,18 +13,14 @@ class Character:
     RUN_L, JUMP_R, JUMP_L = None, None, None
 
     MOVE, ATTACK1 = None, None
-
-    NUMBER_OF_CHARACTERS = None
     CHAR_SCALE = None
     # END CONSTANTS
 
     def init_const(self):
-        global PIXEL_PER_METER, GRAVITY_M2PS, GRAVITY_P2PS
-        global RUN_SPEED_KMPH, RUN_SPEED_MPS, RUN_SPEED_PPS
-        global JUMP_SPEED_KMPH, JUMP_SPEED_MPS, JUMP_SPEED_PPS
-        global TIME_PER_ACTION, ACTION_PER_TIME
-        global STAND_R, STAND_L, RUN_R, RUN_L, JUMP_R, JUMP_L
-        global MOVE, ATTACK1, CHAR_SCALE
+        # all constants named global
+        global PIXEL_PER_METER, GRAVITY_M2PS, GRAVITY_P2PS, RUN_SPEED_KMPH, RUN_SPEED_MPS, RUN_SPEED_PPS
+        global JUMP_SPEED_KMPH, JUMP_SPEED_MPS, JUMP_SPEED_PPS, TIME_PER_ACTION, ACTION_PER_TIME
+        global STAND_R, STAND_L, RUN_R, RUN_L, JUMP_R, JUMP_L, MOVE, ATTACK1, CHAR_SCALE
 
         constants_file = open('Characters/constants.txt', 'r')
         constants = json.load(constants_file)
@@ -59,26 +55,22 @@ class Character:
         CHAR_SCALE = constants['Char_Scale']
 
     def init_vars(self, id):
-        self.id, = id
-        self.jump_start_time
-        self.jump_start_y, self.jump_curr_time = 0, 0
         self.jump_key_down, self.left_key_down, self.right_key_down = False, False, False
-        self.frame, self.state = 0, Character.STAND_R
+        self.jump_start_y, self.jump_curr_time = 0, 0
+        self.frame, self.total_frames = 0, 0
         self.sprite_state = Character.MOVE
-        self.x, self.y = 100, 100
-        self.total_frames = 0.0
+        self.jump_start_time = 0
+        self.id, = id
 
     def init_chars(self, char_name):
-        global NUMBER_OF_CHARACTERS
-        NUMBER_OF_CHARACTERS = 0
         self.sprite = {}
-        self.chars = {}
+        self.char = {}
+
         chars_file = open('Characters/characters.txt', 'r')
         char_info = json.load(chars_file)
         chars_file.close()
 
         for name in char_info:
-            NUMBER_OF_CHARACTERS += 1
             if name == char_name:
                 sprite_file = open(char_info[name]['sprite'], 'r')
                 sprite_info = json.load(sprite_file)
@@ -91,18 +83,14 @@ class Character:
                                     "JFrames": sprite_info[action]['JFrames'],
                                     "w": sprite_info[action]["w"],
                                     "h": sprite_info[action]["h"] }
-                self.char = {"name": name, "img": load_image(char_info[name]['img']), "sprite": self.sprite }
-                break
+                self.char = {"name": name, "sprite": self.sprite }
 
     def __init__(self, char_name, id : int):
         self.init_const()
         self.init_vars(id)
         self.init_chars(char_name)
 
-    def draw_img(self, x, y):
-        self.char['img'].draw(x, y)
-
-    def draw_sprite(self):
+    def draw(self):
         h = self.char['sprite'][self.sprite_state]['h']
         w = self.char['sprite'][self.sprite_state]['w']
         self.char['sprite'][self.sprite_state]['img'].clip_draw(self.frame*w, self.state*h,
@@ -161,16 +149,6 @@ class Character:
     def get_name(self):
         return self.char['name']
 
-    def num_of_chars(self):
-        return Character.NUMBER_OF_CHARACTERS
-
-    def draw_all_chars(self):
-        # count = 0
-        #  while count < len(Character.char):
-        #    Character.char[count]['img'].draw(145 + (count % 3) * 250, 350 - int(count / 3) * 200)
-        #    count += 1
-        pass
-
     def handle_events(self, frame_time, event, player_id, left_key, right_key, jump_key):
         if player_id == self.id:
             if event.key == left_key:
@@ -187,3 +165,68 @@ class Character:
                     self.state = Character.JUMP_R
                 elif self.state in (Character().STAND_L, Character().RUN_L):
                     self.state = Character.JUMP_L
+
+
+class CharacterSelect:
+
+    def init_chars(self):
+        self.chars = []
+        chars_file = open('Characters/characters.txt', 'r')
+        char_info = json.load(chars_file)
+        chars_file.close()
+        for name in char_info:
+            self.chars .append({"name": name, "img": load_image(char_info[name]['img'])})
+
+    def init_selection_format(self):
+        selection_file = open('Characters/selection_format.txt', 'r')
+        selection_info = json.load(selection_file)
+        selection_file.close()
+
+        self.chars_per_row = selection_info['chars_per_row']
+        self.col_dist_diff = selection_info['col_dist_diff']
+        self.row_dist_diff = selection_info['row_dist_diff']
+        self.start_x = selection_info['start_x']
+        self.start_y = selection_info['start_y']
+
+    def init_players(self, player_num):
+        self.player_choice = []
+        if len(self.player_choice) > 0: del self.player_choice
+        for i in range(player_num):
+            self.player_choice.append(0)
+
+    def __init__(self, player_num):
+        self.init_chars()
+        self.init_selection_format()
+        self.init_players(player_num)
+
+    def size(self):
+        return len(self.chars)
+
+    def draw(self):
+        for i in range(self.size()):
+            self.chars[i]['img'].draw(self.start_x+(i%self.chars_per_row)*self.col_dist_diff,
+                                        self.start_y+int(i/self.chars_per_row)*self.row_dist_diff)
+
+    def handle_events(self, frame_time, event, player_id, left_key, right_key, up_key, down_key):
+        if player_id <= len(self.player_choice):
+            i = player_id - 1
+            if event.key == left_key:
+                if self.player_choice[i] % self.chars_per_row == 0:
+                    self.player_choice[i] += self.chars_per_row - 1
+                else:
+                    self.player_choice[i] -= 1
+            if event.key == right_key:
+                if self.player_choice[i] % self.chars_per_row == self.chars_per_row - 1:
+                    self.player_choice[i] -= self.chars_per_row -  1
+                else:
+                    self.player_choice[i] += 1
+            if event.key == down_key:
+                if int(self.player_choice[i] / self.chars_per_row) ==  int(self.size() / self.chars_per_row) - 1:
+                    self.player_choice[i] = (self.player_choice[i] % self.chars_per_row)
+                else:
+                    self.player_choice[i] += self.chars_per_row
+            if event.key == up_key:
+                if int(self.player_choice[i] / self.chars_per_row) ==  0:
+                    self.player_choice[i] = self.size() - self.chars_per_row + self.player_choice[i]
+                else:
+                    self.player_choice[i] -= self.chars_per_row

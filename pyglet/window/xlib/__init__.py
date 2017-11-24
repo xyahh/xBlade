@@ -406,7 +406,7 @@ class XlibWindow(BaseWindow):
         if self._mapped:
             return
 
-        # Map the window, wait for map event before continuing.
+        # Maps the window, wait for map event before continuing.
         xlib.XSelectInput(
             self._x_display, self._window, xlib.StructureNotifyMask)
         xlib.XMapRaised(self._x_display, self._window)

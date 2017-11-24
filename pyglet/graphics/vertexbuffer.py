@@ -169,7 +169,7 @@ class AbstractBuffer(object):
         raise NotImplementedError('abstract')
 
     def map(self, invalidate=False):
-        '''Map the entire buffer into system memory.
+        '''Maps the entire buffer into system memory.
 
         The mapped region must be subsequently unmapped with `unmap` before
         performing any other operations on the buffer.
@@ -203,7 +203,7 @@ class AbstractBuffer(object):
 
 class AbstractMappable(object):
     def get_region(self, start, size, ptr_type):
-        '''Map a region of the buffer into a ctypes array of the desired
+        '''Maps a region of the buffer into a ctypes array of the desired
         type.  This region does not need to be unmapped, but will become
         invalid if the buffer is resized.
 
@@ -354,7 +354,7 @@ class VertexBufferObject(AbstractBuffer):
         self.id = None
 
     def resize(self, size):
-        # Map, create a copy, then reinitialize.
+        # Maps, create a copy, then reinitialize.
         temp = (ctypes.c_byte * size)()
 
         glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT)
