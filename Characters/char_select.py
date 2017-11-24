@@ -9,11 +9,10 @@ file_name = "CharSelect"
 images, arrows = None, None
 controls, font = None, None
 char_sel, text = None, None
-choices = None
 
 
 def init_media():
-    global images, arrows, font, char_sel, text, choices
+    global images, arrows, font, char_sel, text
 
     char_sel = CharacterSelect(main_menu.num_of_players)
 
@@ -22,7 +21,6 @@ def init_media():
     media_file.close()
 
     font = load_font(media_info['font'])
-    choices = []
 
     text = []
     for name in media_info['text']:
@@ -69,8 +67,8 @@ def enter():
 
 
 def exit():
-    global images, arrows, font, char_sel, choices, text
-    del images, arrows, font, char_sel, choices, text
+    global images, arrows, font, char_sel, text
+    del images, arrows, font, char_sel, text
 
 
 def update(frame_time):
@@ -99,7 +97,6 @@ def draw(frame_time):
 
 
 def handle_events(frame_time):
-    global choices
     events = get_events()
     for event in events:
         if event.type == SDL_KEYDOWN:
@@ -111,11 +108,6 @@ def handle_events(frame_time):
                     pFramework.pop_state()
                     break
                 if event.key == controls[i]['submit']:
-                    if len(choices) > 0:
-                        del choices
-                        choices = []
-                    for i in range(main_menu.num_of_players):
-                        choices.append({"player_id": i+1, "choice": char_sel.player_choice[i]})
                     pFramework.push_state(map_select)
         elif event.type == SDL_QUIT:
             pFramework.quit()

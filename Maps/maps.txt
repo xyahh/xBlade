@@ -1,6 +1,20 @@
 {
-"Airship Battle" :	    	{"dsp_img": "Map/airship_battle/display.png", "map_img": "Map/airship_battle/background.png", "objects":"Map/airship_battle/objects.txt"},
-"The Duel Hall": 	    	{"dsp_img": "Map/airship_battle/display.png", "map_img": "Map/airship_battle/background.png", "objects":"Map/airship_battle/objects.txt"},
-"The Mysterious Forest"  : 	{"dsp_img": "Map/airship_battle/display.png", "map_img": "Map/airship_battle/background.png", "objects":"Map/airship_battle/objects.txt"},
-"Game Center"     : 		{"dsp_img": "Map/airship_battle/display.png", "map_img": "Map/airship_battle/background.png", "objects":"Map/airship_battle/objects.txt"}
+"Airship Battle" :	{		
+		"dsp_img": "Maps/airship_battle/display.png", 
+		"map_img": "Maps/airship_battle/background.png", 
+		"objects":"Maps/airship_battle/objects.txt",
+		"x": 400, "y": 300
+		},
+"The Duel Hall": 	{		
+		"dsp_img": "Maps/airship_battle/display.png", 
+		"map_img": "Maps/airship_battle/background.png", 
+		"objects":"Maps/airship_battle/objects.txt",
+		"x": 400, "y": 300
+		},
+"The Forest"  : 	{		
+		"dsp_img": "Maps/airship_battle/display.png", 
+		"map_img": "Maps/airship_battle/background.png", 
+		"objects":"Maps/airship_battle/objects.txt",
+		"x": 400, "y": 300
+		}	
 }

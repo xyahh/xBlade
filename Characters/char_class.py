@@ -54,18 +54,19 @@ class Character:
 
         CHAR_SCALE = constants['Char_Scale']
 
-    def init_vars(self, id):
+    def init_vars(self, player_id):
         self.jump_key_down, self.left_key_down, self.right_key_down = False, False, False
         self.jump_start_y, self.jump_curr_time = 0, 0
         self.frame, self.total_frames = 0, 0
-        self.sprite_state = Character.MOVE
+        self.state = STAND_R  # hard_coded for now
+        self.x, self.y = (100, 100)  # hard_coded for now
+        self.sprite_state = MOVE
         self.jump_start_time = 0
-        self.id, = id
+        self.player_id = player_id
 
     def init_chars(self, char_name):
-        self.sprite = {}
         self.char = {}
-
+        self.sprite = []
         chars_file = open('Characters/characters.txt', 'r')
         char_info = json.load(chars_file)
         chars_file.close()
@@ -76,18 +77,18 @@ class Character:
                 sprite_info = json.load(sprite_file)
                 sprite_file.close()
                 for action in sprite_info:
-                    self.sprite = { "action": action,
+                    self.sprite.append({"action": action,
                                     "img": load_image(sprite_info[action]['path']),
                                     "SFrames": sprite_info[action]['SFrames'],
                                     "RFrames": sprite_info[action]['RFrames'],
                                     "JFrames": sprite_info[action]['JFrames'],
-                                    "w": sprite_info[action]["w"],
-                                    "h": sprite_info[action]["h"] }
+                                    "w": sprite_info[action]['w'],
+                                    "h": sprite_info[action]['h']})
                 self.char = {"name": name, "sprite": self.sprite }
 
-    def __init__(self, char_name, id : int):
+    def __init__(self, char_name, player_id : int):
         self.init_const()
-        self.init_vars(id)
+        self.init_vars(player_id)
         self.init_chars(char_name)
 
     def draw(self):
@@ -107,26 +108,25 @@ class Character:
 
     def update_frames(self, frame_time):
         state_frames = None
-        if self.state in (Character().STAND_R, Character().STAND_L):
+        if self.state in (STAND_R, STAND_L):
             state_frames = 'SFrames'
-        elif self.state in (Character().RUN_R, Character().RUN_L):
+        elif self.state in (RUN_R, RUN_L):
             state_frames = 'RFrames'
-        elif self.state in (Character().JUMP_R, Character().JUMP_L):
+        elif self.state in (JUMP_R, JUMP_L):
             state_frames = 'JFrames'
-        self.total_frames += self.char['sprite'][self.sprite_state][state_frames] \
-                             * Character.ACTION_PER_TIME * frame_time
+        self.total_frames += self.char['sprite'][self.sprite_state][state_frames] * ACTION_PER_TIME * frame_time
         self.frame = int(self.total_frames) % self.char['sprite'][self.sprite_state][state_frames]
 
     def move(self, frame_time):
         def clamp(minimum, x, maximum):
             return max(minimum, min(x, maximum))
 
-        distance = Character.RUN_SPEED_PPS * frame_time
+        distance = RUN_SPEED_PPS * frame_time
 
         if self.jump_key_down:
             self.jump_time += frame_time
             dt = self.jump_time - self.jump_start_time
-            self.y = self.jump_start_y + Character.JUMP_SPEED_PPS * dt - Character.GRAVITY_P2PS * dt * dt
+            self.y = self.jump_start_y + JUMP_SPEED_PPS * dt - GRAVITY_P2PS * dt * dt
             # change to collision boxes after
             if self.y <= self.jump_start_y:
                 self.y = self.jump_start_y
@@ -140,17 +140,11 @@ class Character:
 
         self.x = clamp(0, self.x, 800)
 
-        if not self.right and not self.left and not self.jmp:
-            if self.state == Character.RUN_R or self.state== Character.JUMP_R:
-                self.state = Character.STAND_R
-            elif self.state == Character.RUN_L or self.state== Character.JUMP_L:
-                self.state = Character.STAND_L
-
     def get_name(self):
         return self.char['name']
 
     def handle_events(self, frame_time, event, player_id, left_key, right_key, jump_key):
-        if player_id == self.id:
+        if player_id == self.player_id:
             if event.key == left_key:
                 self.left_key_down = event.type == SDL_KEYDOWN
             if event.key == right_key:
@@ -161,10 +155,6 @@ class Character:
                 self.jump_time = frame_time
                 self.jump_start_y = self.y
                 self.frame = 0
-                if self.state in (Character().STAND_R, Character().RUN_R):
-                    self.state = Character.JUMP_R
-                elif self.state in (Character().STAND_L, Character().RUN_L):
-                    self.state = Character.JUMP_L
 
 
 class CharacterSelect:

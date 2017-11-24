@@ -1,0 +1,14 @@
+{
+"font": "General/lotr_font.ttf",
+
+"player_text": 	{
+		"left": 	{"player_id": 1, "x": 200,   "y": 450, "red": 255, "green": 50, "blue": 50},
+		"right": 	{"player_id": 2, "x": 500,  "y":  450, "red": 50, "green": 50, "blue": 255}
+	  	},
+"custom_text": 	{
+		"vs": 	{"string":"vs", "x": 350, "y": 450, "red": 0, "green": 0, "blue": 0}
+		},
+"map_text":	{
+		"map_name": {"x": 200, "y": 50,  "red": 0, "green": 0, "blue": 0}
+		}
+}
