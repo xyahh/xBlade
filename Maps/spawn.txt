@@ -1,6 +1,6 @@
 {
 "Airship Battle": 	{	
-		"1":{"x": 400, "y": 500, "state": 0},
-	 	"2":{"x": 100, "y": 100, "state": 1}
+		"1":{"x": 400, "y": 500, "state": 0, "action": "Move"},
+	 	"2":{"x": 100, "y": 100, "state": 1, "action": "Move"}
 		}
 }

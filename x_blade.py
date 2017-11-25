@@ -1,4 +1,4 @@
 from General import pFramework
-from Logo import start_state
+from Logo import logo
 
-pFramework.run(start_state)
+pFramework.run(logo)

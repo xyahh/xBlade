@@ -7,6 +7,6 @@
 "States":	{"STAND_R": 0,  "STAND_L": 1,
 	"RUN_R": 2, "RUN_L": 3,
 	"JUMP_R": 4, "JUMP_L": 5},
-"Actions": 	{"MOVE": 0, "ATTACK1": 1},
+"Actions": 	{"MOVE": "Move", "ATTACK1": "Attack1"},
 "Char_Scale": 2
 }

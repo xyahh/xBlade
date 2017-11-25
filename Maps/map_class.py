@@ -33,10 +33,18 @@ class Map:
                                              "new": object_info[obj_name]['new'],
                                              "factor_x": object_info[obj_name]['factor_x'],
                                              "factor_y": object_info[obj_name]['factor_y'],
+                                             "has_bbox": object_info[obj_name]['has_bbox'],
+                                             "bounding_box": (object_info[obj_name]['bounding_box']['left'],
+                                                               object_info[obj_name]['bounding_box']['top'],
+                                                               object_info[obj_name]['bounding_box']['right'],
+                                                               object_info[obj_name]['bounding_box']['bottom'])
                                              })
-                self.map = {"name": name, "dsp_img": load_image(map_info[name]['dsp_img']),
-                            "x": map_info[name]['x'], "y": map_info[name]['y'],
-                            "map_img": load_image(map_info[name]['map_img']), "objects": self.map_objects}
+                self.map = {"name": name,
+                            "dsp_img": load_image(map_info[name]['dsp_img']),
+                            "x": map_info[name]['x'],
+                            "y": map_info[name]['y'],
+                            "map_img": load_image(map_info[name]['map_img']),
+                            "objects": self.map_objects}
 
     def init_spawn(self, map_name, num_of_players):
         spawn_file = open('Maps/spawn.txt', 'r')
@@ -46,12 +54,13 @@ class Map:
         self.spawn = []
         
         for name in spawn_info:
-            if name == map_name and len(spawn_info[name]) == num_of_players:
+            if name == map_name and len(spawn_info[name]) >= num_of_players:
                 for i in spawn_info[name]:
                     self.spawn.append({"player_id": int(i),
                                        "x": spawn_info[name][i]['x'],
                                        "y": spawn_info[name][i]['y'],
-                                       "state": spawn_info[name][i]['state']})
+                                       "state": spawn_info[name][i]['state'],
+                                       "action": spawn_info[name][i]['action']})
 
     def __init__(self, map_name, num_of_players):
         self.init_map(map_name)
@@ -84,6 +93,7 @@ class Map:
 
     def size(self):
         return len(self.map)
+
 
 class MapSelect:
     def __init__(self):

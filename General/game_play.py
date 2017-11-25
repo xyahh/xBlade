@@ -3,6 +3,7 @@ from pico2d import *
 from Characters.char_class import Character
 from Maps.map_class import Map
 from General import pFramework, key_mapping
+from General.bounding_box import  BoundingBox
 from Maps import map_select
 from Menu import main_menu
 from Characters import char_select
@@ -10,7 +11,7 @@ from Characters import char_select
 file_name = "Gameplay"
 pause_game, controls = None, None
 char, map = None, None
-
+boxes = None
 
 def init_controls():
     global controls
@@ -30,15 +31,14 @@ def init_controls():
 
 
 def init_map_and_chars():
-    global char, map
+    global char, map, boxes
     char = []
     map = Map(map_select.map_sel.get_curr_map_name(), main_menu.num_of_players)
     for i in range(main_menu.num_of_players):
         name = char_select.char_sel.chars[char_select.char_sel.player_choice[i]]['name']
         char.append(Character(name, map.spawn[i]['player_id'], map.spawn[i]['x'],
-                              map.spawn[i]['y'], map.spawn[i]['state']))
-
-
+                              map.spawn[i]['y'], map.spawn[i]['state'], map.spawn[i]['action']))
+    boxes = BoundingBox(char, map)
 
 def enter():
    init_map_and_chars()
@@ -49,9 +49,10 @@ def exit(): pass
 
 
 def update(frame_time):
+    map.update(frame_time)
     for i in range(len(char)):
         char[i].update(frame_time)
-    map.update(frame_time)
+    boxes.update()
 
 
 def draw(frame_time):
@@ -59,6 +60,7 @@ def draw(frame_time):
     map.draw()
     for i in range(len(char)):
         char[i].draw()
+    boxes.draw()
     update_canvas()
 
 
