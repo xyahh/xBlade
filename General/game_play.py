@@ -32,10 +32,12 @@ def init_controls():
 def init_map_and_chars():
     global char, map
     char = []
+    map = Map(map_select.map_sel.get_curr_map_name(), main_menu.num_of_players)
     for i in range(main_menu.num_of_players):
         name = char_select.char_sel.chars[char_select.char_sel.player_choice[i]]['name']
-        char.append(Character(name, i + 1))
-    map = Map(map_select.map_sel.get_curr_map_name())
+        char.append(Character(name, map.spawn[i]['player_id'], map.spawn[i]['x'],
+                              map.spawn[i]['y'], map.spawn[i]['state']))
+
 
 
 def enter():
@@ -68,6 +70,7 @@ def handle_events(frame_time):
                                   controls[i]['left'], controls[i]['right'], controls[i]['up'])
         if event.type == SDL_QUIT:
             pFramework.quit()
+
 
 def pause(): pass
 

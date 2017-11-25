@@ -54,15 +54,15 @@ class Character:
 
         CHAR_SCALE = constants['Char_Scale']
 
-    def init_vars(self, player_id):
+    def init_vars(self, player_id, spawn_x, spawn_y, spawn_state):
         self.jump_key_down, self.left_key_down, self.right_key_down = False, False, False
         self.jump_start_y, self.jump_curr_time = 0, 0
         self.frame, self.total_frames = 0, 0
-        self.state = STAND_R  # hard_coded for now
-        self.x, self.y = (100, 100)  # hard_coded for now
+        self.x, self.y = (spawn_x, spawn_y)
+        self.player_id = player_id
         self.sprite_state = MOVE
         self.jump_start_time = 0
-        self.player_id = player_id
+        self.state = spawn_state
 
     def init_chars(self, char_name):
         self.char = {}
@@ -86,9 +86,9 @@ class Character:
                                     "h": sprite_info[action]['h']})
                 self.char = {"name": name, "sprite": self.sprite }
 
-    def __init__(self, char_name, player_id : int):
+    def __init__(self, char_name, player_id: int, spawn_x: int, spawn_y: int, spawn_state: int):
         self.init_const()
-        self.init_vars(player_id)
+        self.init_vars(player_id, spawn_x, spawn_y, spawn_state)
         self.init_chars(char_name)
 
     def draw(self):
@@ -105,6 +105,7 @@ class Character:
     def update(self, frame_time):
         self.update_frames(frame_time)
         self.move(frame_time)
+        self.update_state()
 
     def update_frames(self, frame_time):
         state_frames = None
@@ -143,18 +144,38 @@ class Character:
     def get_name(self):
         return self.char['name']
 
+    def handle_moves(self, frame_time, event, left_key, right_key, jump_key):
+        if event.key == left_key:
+            self.left_key_down = event.type == SDL_KEYDOWN
+        if event.key == right_key:
+            self.right_key_down = event.type == SDL_KEYDOWN
+        if event.key == jump_key and not self.jump_key_down:
+            self.jump_key_down = True
+            self.jump_start_time = frame_time
+            self.jump_time = frame_time
+            self.jump_start_y = self.y
+            self.frame = 0
+
+    def update_state(self):
+        if self.jump_key_down:
+            if self.state in (RUN_L, STAND_L) or (self.left_key_down and not self.right_key_down):
+                self.state = JUMP_L
+            elif self.state in (RUN_R, STAND_R) or (self.right_key_down and not self.left_key_down):
+                self.state = JUMP_R
+        else:
+            if self.left_key_down and not self.right_key_down:
+                self.state = RUN_L
+            elif self.right_key_down and not self.left_key_down:
+                self.state = RUN_R
+            else:
+                if self.state in (RUN_L, STAND_L, JUMP_L):
+                    self.state = STAND_L
+                elif self.state in (RUN_R, STAND_R, JUMP_R):
+                    self.state = STAND_R
+
     def handle_events(self, frame_time, event, player_id, left_key, right_key, jump_key):
         if player_id == self.player_id:
-            if event.key == left_key:
-                self.left_key_down = event.type == SDL_KEYDOWN
-            if event.key == right_key:
-                self.right_key_down = event.type == SDL_KEYDOWN
-            if event.key == jump_key and not self.jump_key_down:
-                self.jump_key_down = True
-                self.jump_start_time = frame_time
-                self.jump_time = frame_time
-                self.jump_start_y = self.y
-                self.frame = 0
+            self.handle_moves(frame_time, event, left_key, right_key, jump_key)
 
 
 class CharacterSelect:

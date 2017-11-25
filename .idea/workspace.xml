@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f18e53ca-38f0-45e8-96cd-6bee8d631f4e" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Maps/map_border.png" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Characters/char_class.py" afterPath="$PROJECT_DIR$/Characters/char_class.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Characters/char_select.py" afterPath="$PROJECT_DIR$/Characters/char_select.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/General/game_play.py" afterPath="$PROJECT_DIR$/General/game_play.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Maps/airship_battle/objects.txt" afterPath="$PROJECT_DIR$/Maps/airship_battle/objects.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Maps/map_class.py" afterPath="$PROJECT_DIR$/Maps/map_class.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Maps/map_select.py" afterPath="$PROJECT_DIR$/Maps/map_select.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Maps/maps.txt" afterPath="$PROJECT_DIR$/Maps/maps.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Maps/media.txt" afterPath="$PROJECT_DIR$/Maps/media.txt" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -22,46 +13,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="char_class.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Characters/char_class.py">
+      <file leaf-file-name="game_play.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/General/game_play.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="145" column="14" lean-forward="true" selection-start-line="145" selection-start-column="14" selection-end-line="145" selection-end-column="14" />
+            <state relative-caret-position="162">
+              <caret line="39" column="0" lean-forward="true" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
               <folding>
-                <element signature="e#543#2124#0" expanded="false" />
-                <element signature="e#2170#2560#0" expanded="false" />
-                <element signature="e#2607#3621#0" expanded="false" />
-                <element signature="e#3683#3769#0" expanded="false" />
-                <element signature="e#3799#4216#0" expanded="false" />
-                <element signature="e#4255#4284#0" expanded="false" />
-                <element signature="e#4328#4388#0" expanded="false" />
-                <element signature="e#4439#4914#0" expanded="false" />
-                <element signature="e#4956#5640#0" expanded="false" />
-                <element signature="e#5000#5036#0" expanded="false" />
-                <element signature="e#5128#5473#0" expanded="false" />
-                <element signature="e#5674#5698#0" expanded="false" />
-                <element signature="e#5798#6308#0" expanded="false" />
-                <element signature="e#6369#6634#0" expanded="false" />
-                <element signature="e#6681#7106#0" expanded="false" />
-                <element signature="e#7156#7319#0" expanded="false" />
-                <element signature="e#7365#7457#0" expanded="false" />
-                <element signature="e#7487#7509#0" expanded="false" />
-                <element signature="e#7539#7760#0" expanded="false" />
-                <element signature="e#7868#9071#0" expanded="false" />
+                <element signature="e#0#20#0" expanded="true" />
+                <element signature="e#339#1046#0" expanded="false" />
+                <element signature="e#531#1046#0" expanded="false" />
+                <element signature="e#1499#1538#0" expanded="false" />
+                <element signature="e#1588#1676#0" expanded="false" />
+                <element signature="e#1705#1808#0" expanded="false" />
+                <element signature="e#1846#2171#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="game_play.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/General/game_play.py">
+      <file leaf-file-name="map_class.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Maps/map_class.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="67" column="37" lean-forward="false" selection-start-line="67" selection-start-column="37" selection-end-line="67" selection-end-column="37" />
+            <state relative-caret-position="87">
+              <caret line="42" column="42" lean-forward="true" selection-start-line="42" selection-start-column="42" selection-end-line="42" selection-end-column="42" />
               <folding>
-                <element signature="e#0#20#0" expanded="true" />
-                <element signature="e#1079#1342#0" expanded="false" />
-                <element signature="e#1361#1400#0" expanded="false" />
+                <element signature="e#99#2132#0" expanded="false" />
+                <element signature="e#270#2132#0" expanded="false" />
+                <element signature="e#2829#2902#0" expanded="false" />
+                <element signature="e#2932#3165#0" expanded="false" />
+                <element signature="e#3209#4267#0" expanded="false" />
+                <element signature="e#4301#4333#0" expanded="false" />
+                <element signature="e#4363#4383#0" expanded="false" />
+                <element signature="e#4921#5154#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -116,10 +99,10 @@
         <option value="$PROJECT_DIR$/Menu/main_menu.py" />
         <option value="$PROJECT_DIR$/Map/map_select.py" />
         <option value="$PROJECT_DIR$/Characters/char_select.py" />
-        <option value="$PROJECT_DIR$/Maps/map_class.py" />
         <option value="$PROJECT_DIR$/Maps/map_select.py" />
-        <option value="$PROJECT_DIR$/General/game_play.py" />
         <option value="$PROJECT_DIR$/Characters/char_class.py" />
+        <option value="$PROJECT_DIR$/Maps/map_class.py" />
+        <option value="$PROJECT_DIR$/General/game_play.py" />
       </list>
     </option>
   </component>
@@ -154,7 +137,7 @@
             <path>
               <item name="my_game" type="b2602c69:ProjectViewProjectNode" />
               <item name="my_game" type="462c0819:PsiDirectoryNode" />
-              <item name="Maps" type="462c0819:PsiDirectoryNode" />
+              <item name="Characters" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -382,7 +365,28 @@
       <option name="project" value="LOCAL" />
       <updated>1511502825328</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Everything to what I know has been moved to JSON files.&#10;Now everything except the missing features can be worked in JSON files and images only!">
+      <created>1511544094391</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1511544094391</updated>
+    </task>
+    <task id="LOCAL-00015" summary="File for Spawn State and Coordinates for each Map.">
+      <created>1511592621990</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1511592621990</updated>
+    </task>
+    <task id="LOCAL-00016" summary="File for Spawn State and Coordinates for each Map.">
+      <created>1511592774156</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1511592774156</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -392,7 +396,7 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17862372" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.329653" sideWeight="0.50292826" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.329653" sideWeight="0.49707174" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.49707174" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -420,7 +424,9 @@
     <MESSAGE value="Main Menu now fetches the information from a JSON file.&#10;Character Select and Class are still being worked on.&#10;Control flexibility added (not hard_coded)" />
     <MESSAGE value="Restrucutred all .py files into their respective folders" />
     <MESSAGE value="char_select &quot;JSONized&quot;! Loading Character class in char_select was a bit of a waste so now it only loads the necessary resources (main image and name)" />
-    <option name="LAST_COMMIT_MESSAGE" value="char_select &quot;JSONized&quot;! Loading Character class in char_select was a bit of a waste so now it only loads the necessary resources (main image and name)" />
+    <MESSAGE value="Everything to what I know has been moved to JSON files.&#10;Now everything except the missing features can be worked in JSON files and images only!" />
+    <MESSAGE value="File for Spawn State and Coordinates for each Map." />
+    <option name="LAST_COMMIT_MESSAGE" value="File for Spawn State and Coordinates for each Map." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -431,7 +437,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="142" />
+      <option name="time" value="149" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -734,16 +740,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Maps/map_class.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="741">
-          <caret line="39" column="0" lean-forward="true" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-          <folding>
-            <element signature="e#4119#4352#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Maps/map_select.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="94">
@@ -762,43 +758,66 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/General/game_play.py">
+    <entry file="file://$PROJECT_DIR$/Characters/char_class.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="67" column="37" lean-forward="false" selection-start-line="67" selection-start-column="37" selection-end-line="67" selection-end-column="37" />
+        <state relative-caret-position="141">
+          <caret line="37" column="65" lean-forward="true" selection-start-line="37" selection-start-column="65" selection-end-line="37" selection-end-column="65" />
           <folding>
-            <element signature="e#0#20#0" expanded="true" />
-            <element signature="e#1079#1342#0" expanded="false" />
-            <element signature="e#1361#1400#0" expanded="false" />
+            <element signature="e#2201#2559#0" expanded="false" />
+            <element signature="e#2606#3620#0" expanded="false" />
+            <element signature="e#3727#3844#0" expanded="false" />
+            <element signature="e#3874#4291#0" expanded="false" />
+            <element signature="e#4330#4359#0" expanded="false" />
+            <element signature="e#4403#4491#0" expanded="false" />
+            <element signature="e#4542#5017#0" expanded="false" />
+            <element signature="e#5059#5743#0" expanded="false" />
+            <element signature="e#5103#5139#0" expanded="false" />
+            <element signature="e#5231#5576#0" expanded="false" />
+            <element signature="e#5777#5801#0" expanded="false" />
+            <element signature="e#5889#6319#0" expanded="false" />
+            <element signature="e#6357#7083#0" expanded="false" />
+            <element signature="e#7183#7294#0" expanded="false" />
+            <element signature="e#7325#10057#0" expanded="false" />
+            <element signature="e#7355#7620#0" expanded="false" />
+            <element signature="e#7667#8092#0" expanded="false" />
+            <element signature="e#8142#8305#0" expanded="false" />
+            <element signature="e#8351#8443#0" expanded="false" />
+            <element signature="e#8473#8495#0" expanded="false" />
+            <element signature="e#8525#8746#0" expanded="false" />
+            <element signature="e#8854#10057#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Characters/char_class.py">
+    <entry file="file://$PROJECT_DIR$/General/game_play.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="145" column="14" lean-forward="true" selection-start-line="145" selection-start-column="14" selection-end-line="145" selection-end-column="14" />
+        <state relative-caret-position="162">
+          <caret line="39" column="0" lean-forward="true" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
           <folding>
-            <element signature="e#543#2124#0" expanded="false" />
-            <element signature="e#2170#2560#0" expanded="false" />
-            <element signature="e#2607#3621#0" expanded="false" />
-            <element signature="e#3683#3769#0" expanded="false" />
-            <element signature="e#3799#4216#0" expanded="false" />
-            <element signature="e#4255#4284#0" expanded="false" />
-            <element signature="e#4328#4388#0" expanded="false" />
-            <element signature="e#4439#4914#0" expanded="false" />
-            <element signature="e#4956#5640#0" expanded="false" />
-            <element signature="e#5000#5036#0" expanded="false" />
-            <element signature="e#5128#5473#0" expanded="false" />
-            <element signature="e#5674#5698#0" expanded="false" />
-            <element signature="e#5798#6308#0" expanded="false" />
-            <element signature="e#6369#6634#0" expanded="false" />
-            <element signature="e#6681#7106#0" expanded="false" />
-            <element signature="e#7156#7319#0" expanded="false" />
-            <element signature="e#7365#7457#0" expanded="false" />
-            <element signature="e#7487#7509#0" expanded="false" />
-            <element signature="e#7539#7760#0" expanded="false" />
-            <element signature="e#7868#9071#0" expanded="false" />
+            <element signature="e#0#20#0" expanded="true" />
+            <element signature="e#339#1046#0" expanded="false" />
+            <element signature="e#531#1046#0" expanded="false" />
+            <element signature="e#1499#1538#0" expanded="false" />
+            <element signature="e#1588#1676#0" expanded="false" />
+            <element signature="e#1705#1808#0" expanded="false" />
+            <element signature="e#1846#2171#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Maps/map_class.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="87">
+          <caret line="42" column="42" lean-forward="true" selection-start-line="42" selection-start-column="42" selection-end-line="42" selection-end-column="42" />
+          <folding>
+            <element signature="e#99#2132#0" expanded="false" />
+            <element signature="e#270#2132#0" expanded="false" />
+            <element signature="e#2829#2902#0" expanded="false" />
+            <element signature="e#2932#3165#0" expanded="false" />
+            <element signature="e#3209#4267#0" expanded="false" />
+            <element signature="e#4301#4333#0" expanded="false" />
+            <element signature="e#4363#4383#0" expanded="false" />
+            <element signature="e#4921#5154#0" expanded="false" />
           </folding>
         </state>
       </provider>
