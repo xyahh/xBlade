@@ -60,11 +60,10 @@ class Character:
 
     def init_vars(self, player_id, spawn_x, spawn_y, spawn_state, spawn_action):
         self.jump_key_down = self.left_key_down = self.right_key_down = False
-        self.frame = self.total_frames = self.last_key = 0
+        self.frame = self.total_frames = self.last_key = self.accel = 0
         self.last_x, self.last_y = (spawn_x, spawn_y)
         self.curr_time = self.start_time = 0
         self.x, self.y = (spawn_x, spawn_y)
-        self.accel = 0
         self.action = spawn_action
         self.player_id = player_id
         self.state = spawn_state
@@ -89,7 +88,12 @@ class Character:
                                            "w": sprite_info[action]['w'],
                                            "h": sprite_info[action]['h']}
                 self.char = {"name": name, "sprite": self.sprite,
-                             "bounding_boxes": char_info[name]['bounding_boxes']}
+                             "bounding_boxes": char_info[name]['bounding_boxes'],
+                             "hp": {"bar":load_image(char_info[name]['hp']['bar']),
+                                    "red": load_image(char_info[name]['hp']['red']),
+                                    "dx": char_info[name]['hp']['dx'],
+                                    "dy": char_info[name]['hp']['dy']}}
+                self.max_hp = self.hp = char_info[name]['hp']['hp']
 
     def init_bounding_boxes(self):
         self.bounding_box = {}
@@ -116,6 +120,13 @@ class Character:
         self.char['sprite'][self.action]['img'].clip_draw(self.frame * w, self.state * h,
                                                           w, h, self.x, self.y, w * CHAR_SCALE,
                                                           h * CHAR_SCALE)
+        x = self.char['hp']['dx'] + self.x
+        y = self.char['hp']['dy'] + self.y
+        self.char['hp']['bar'].draw(x, y)
+        h_ = self.char['hp']['bar'].h
+        w_ = self.char['hp']['bar'].w
+        dw = w_*(self.hp / self.max_hp)
+        self.char['hp']['red'].draw(x, y, dw, h_)
 
     def update(self, frame_time, boxes):
         self.update_frames(frame_time)
@@ -136,19 +147,22 @@ class Character:
     def move(self, frame_time, boxes):
         self.curr_time += frame_time
         dt = self.curr_time - self.start_time
-        self.y = self.last_y - GRAVITY_P2PS * dt*dt
+        self.y = self.last_y - GRAVITY_P2PS * dt*dt # there's always a force!
+
         if self.jump_key_down:
-            self.y += JUMP_SPEED_PPS * dt
-            self.accel = JUMP_SPEED_PPS - 2*GRAVITY_P2PS*dt
+            self.y += JUMP_SPEED_PPS * dt # only had initial speed if it has jumped
+            self.accel = JUMP_SPEED_PPS - 2*GRAVITY_P2PS*dt # derivative of speed*t - at^2
 
         sd = BoundingBox
         for i in range(len(boxes.map_box)):
-            if sd.collide(sd, boxes.char_box[self.player_id-1], boxes.map_box[i])and self.accel <= 0:
-               if self.y >= boxes.map_box[i][sd.TOP]:
-                self.y = boxes.map_box[i][sd.TOP] - self.bounding_box[self.action][sd.BOTTOM]
-                self.start_time = self.curr_time
-                self.last_y = self.y
-                self.x += boxes.map.map['objects'][boxes.map_object_id[i]]['dir_x']*frame_time
+            # check if it collides and if it is NOT on the first part of a jump (when going up)
+            if sd.collide(sd, boxes.char_box[self.player_id-1], boxes.map_box[i]) and self.accel <= 0:
+               if self.y +self.bounding_box[self.action][sd.BOTTOM] >= boxes.map_box[i][sd.BOTTOM]\
+                       and self.y >= boxes.map_box[i][sd.TOP]: # check if the center is above the platform level and feet are above the lower level
+                self.y = boxes.map_box[i][sd.TOP] - self.bounding_box[self.action][sd.BOTTOM] # update based on feet
+                self.start_time = self.curr_time # update the starting time for the next jump / fall
+                self.last_y = self.y # update position for the next jump / fall
+                self.x += boxes.map.map['objects'][boxes.map_object_id[i]]['dir_x']*frame_time # update direction
                 self.accel = 0
                 self.jump_key_down = False
                break
@@ -157,15 +171,16 @@ class Character:
         distance = RUN_SPEED_PPS * frame_time
         if self.left_key_down and not self.right_key_down or self.last_key == RUN_L:
             self.x -= distance
+
         if self.right_key_down and not self.left_key_down or self.last_key == RUN_R:
             self.x += distance
 
-        self.x = clamp(0, self.x, 800)
+        self.x = clamp(0, self.x, logo.win_width)
 
     def get_name(self):
         return self.char['name']
 
-    def handle_moves(self, frame_time, event, left_key, right_key, jump_key):
+    def handle_moves(self, frame_time, event, left_key, right_key, jump_key, down_key):
         if event.key == left_key:
             self.left_key_down = event.type == SDL_KEYDOWN
             if self.left_key_down: self.last_key = RUN_L
@@ -175,7 +190,7 @@ class Character:
             if self.right_key_down: self.last_key = RUN_R
             else: self.last_key = STAND_R
         if event.key == jump_key and event.type == SDL_KEYDOWN and not self.jump_key_down:
-            self.start_time = self.curr_time = self.frame = 0
+            self.start_time = self.curr_time =  self.total_frames = 0
             self.jump_key_down = True
             self.last_y = self.y
 
@@ -198,9 +213,9 @@ class Character:
                 elif self.state in (RUN_R, STAND_R, JUMP_R):
                     self.state = STAND_R
 
-    def handle_events(self, frame_time, event, player_id, left_key, right_key, jump_key):
+    def handle_events(self, frame_time, event, player_id, left_key, right_key, jump_key, down_key):
         if player_id == self.player_id:
-            self.handle_moves(frame_time, event, left_key, right_key, jump_key)
+            self.handle_moves(frame_time, event, left_key, right_key, jump_key, down_key)
 
 
 class CharacterSelect:
@@ -247,22 +262,14 @@ class CharacterSelect:
         if player_id <= len(self.player_choice):
             i = player_id - 1
             if event.key == left_key:
-                if self.player_choice[i] % self.chars_per_row == 0:
-                    self.player_choice[i] += self.chars_per_row - 1
-                else:
+                if self.player_choice[i] > 0:
                     self.player_choice[i] -= 1
             if event.key == right_key:
-                if self.player_choice[i] % self.chars_per_row == self.chars_per_row - 1:
-                    self.player_choice[i] -= self.chars_per_row -  1
-                else:
+                if self.player_choice[i] < self.size() - 1:
                     self.player_choice[i] += 1
             if event.key == down_key:
-                if int(self.player_choice[i] / self.chars_per_row) ==  int(self.size() / self.chars_per_row) - 1:
-                    self.player_choice[i] = (self.player_choice[i] % self.chars_per_row)
-                else:
+                if self.player_choice[i] < self.size() - self.chars_per_row:
                     self.player_choice[i] += self.chars_per_row
             if event.key == up_key:
-                if int(self.player_choice[i] / self.chars_per_row) ==  0:
-                    self.player_choice[i] = self.size() - self.chars_per_row + self.player_choice[i]
-                else:
+                if self.player_choice[i] > self.chars_per_row - 1:
                     self.player_choice[i] -= self.chars_per_row

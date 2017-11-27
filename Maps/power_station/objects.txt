@@ -1,0 +1,43 @@
+{
+"floor" : 	
+	{		
+	"img": "", "has_img": 0,
+	"start_x": 0, "start_y":0, "dir_x":0, "dir_y":0,
+	"limit_x1":0, "limit_x2": 0, "limit_y1": 0, "limit_y2": 0,
+	"new": 0, "factor_x": 0, "factor_y":0,
+	"has_bbox": 1,
+	"bounding_box": {"left": 0, "top": 25, "right": 800, "bottom": 0}
+	},
+"static_platf1":
+	{		
+	"img": "", "has_img": 0,
+	"start_x": 0, "start_y":0, "dir_x":0, "dir_y":0,
+	"limit_x1":0, "limit_x2": 0, "limit_y1": 0, "limit_y2": 0,
+	"new": 0, "factor_x": 0, "factor_y":0,
+	"has_bbox": 1,
+	"bounding_box": {"left": 68, "top": 127, "right": 278, "bottom": 110}
+	},
+"static_platf2":
+	{		
+	"img": "", "has_img": 0,
+	"start_x": 0, "start_y":0, "dir_x":0, "dir_y":0,
+	"limit_x1":0, "limit_x2": 0, "limit_y1": 0, "limit_y2": 0,
+	"new": 0, "factor_x": 0, "factor_y": 0,
+	"has_bbox": 1,
+	"bounding_box": {"left": 452, "top": 157, "right": 664, "bottom": 142}
+	},
+"platform1" :{"img": "Maps/platform.png", "has_img": 1,
+		"start_x":750, "start_y":250, "dir_x": 0, "dir_y": -80,
+		"limit_x1": 0,  "limit_x2": 0, "limit_y1": 100, "limit_y2": 400,
+		"new": 0, "factor_x": 1, "factor_y": -1,
+	"has_bbox": 1,
+	"bounding_box": {"left": -35, "top": 48, "right": 30, "bottom": 25}
+	},
+"platform2" :{"img": "Maps/platform.png", "has_img": 1,
+		"start_x":100, "start_y":300, "dir_x": 80, "dir_y": 0,
+		"limit_x1": 50,  "limit_x2": 500, "limit_y1": 100, "limit_y2": 400,
+		"new": 0, "factor_x": -1, "factor_y": 1,
+	"has_bbox": 1,
+	"bounding_box": {"left": -35, "top": 48, "right": 30, "bottom": 25}
+	}
+}

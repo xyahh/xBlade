@@ -1,7 +1,7 @@
 {
 "Physics": {"PIXEL_PER_METER": 40,
     	"RUN_SPEED_KMPH": 40,
-	"GRAVITY_M2PS": 1.0,
+	"GRAVITY_M2PS": 1,
     	"JUMP_SPEED_KMPH": 100.0},
 "Events":  	{"TIME_PER_ACTION": 0.5},
 "States":	{"STAND_R": 0,  "STAND_L": 1,

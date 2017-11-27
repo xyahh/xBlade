@@ -10,13 +10,19 @@
 	"red_arrow": {"path": "Characters/red_arrow.png",  "player_id": 1,
 		"x_offset": -30, "y_offset":100},
 	"blue_arrow": {"path": "Characters/blue_arrow.png",  "player_id": 2,
-		"x_offset":  30, "y_offset":100}
+		"x_offset":  30, "y_offset":100},
+	"yellow_arrow": {"path": "Characters/yellow_arrow.png",  "player_id": 3,
+		"x_offset":  -30, "y_offset":-100},
+	"green_arrow": {"path": "Characters/green_arrow.png",  "player_id": 4,
+		"x_offset":  30, "y_offset":-100}
 	},
 
 "font": "General/lotr_font.ttf",
 
 "text": 	{	
-	"left": 	{"player_id": 1, "x": 50,   "y": 60, "red": 255, "green": 50, "blue": 50},
-	"right": 	{"player_id": 2, "x": 50, "y":   30, "red": 50, "green": 50, "blue": 255}
+	"1": 	{"player_id": 1, "x": 50,   "y": 60, "red": 255, "green": 50, "blue": 50},
+	"2": 	{"player_id": 2, "x": 50, "y":   30, "red": 50, "green": 50, "blue": 255},
+	"3": 	{"player_id": 3, "x": 250, "y":   60, "red": 255, "green": 255, "blue": 50},
+	"4":	{"player_id": 4, "x": 250, "y":   30, "red": 50, "green": 255, "blue": 50}
 	}
 }

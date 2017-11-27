@@ -1,6 +1,14 @@
 {
 "Airship Battle": 	{	
-		"1":{"x": 200, "y": 500, "state": 0, "action": "Move"},
-	 	"2":{"x": 600, "y": 200, "state": 1, "action": "Move"}
+		"1":{"x": 200, "y": 600, "state": 0, "action": "Move"},
+	 	"2":{"x": 600, "y": 300, "state": 1, "action": "Move"}
+		},
+"Power Station": 	{	
+		"1":{"x": 200, "y": 300, "state": 0, "action": "Move"},
+	 	"2":{"x": 600, "y": 300, "state": 1, "action": "Move"}
+		},
+"Ancient Valley": 	{	
+		"1":{"x": 200, "y": 300, "state": 0, "action": "Move"},
+	 	"2":{"x": 600, "y": 300, "state": 1, "action": "Move"}
 		}
 }

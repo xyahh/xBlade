@@ -1,8 +1,20 @@
 {
+"Ancient Valley": 	{
+		"dsp_img": "Maps/ancient_valley/display.png",
+		"map_img": "Maps/ancient_valley/background.png",
+		"objects": "Maps/ancient_valley/objects.txt",
+		"x": 400, "y":300
+		},
 "Airship Battle" :	{		
 		"dsp_img": "Maps/airship_battle/display.png", 
 		"map_img": "Maps/airship_battle/background.png", 
 		"objects":"Maps/airship_battle/objects.txt",
 		"x": 400, "y": 300
+		},
+"Power Station":	{
+		"dsp_img": "Maps/power_station/display.png",
+		"map_img": "Maps/power_station/background.png",
+		"objects": "Maps/power_station/objects.txt",
+		"x": 400, "y":300
 		}
 }

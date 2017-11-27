@@ -1,25 +1,8 @@
 {
 "Athenna" :	{"img": "Characters/athenna/athenna_img.png", 
 		"sprite": "Characters/athenna/sprite.txt",
-		"bounding_boxes":"Characters/athenna/bounding_boxes.txt"},
-
-"Bronker": 		{"img": "Characters/bronker/bronker_img.png", 	
-		"sprite": "Characters/bronker/sprite.txt",
-		"bounding_boxes":"Characters/bronker/bounding_boxes.txt"},
-
-"Clyde"  : 		{"img": "Characters/clyde/clyde_img.png", 
-		"sprite": "Characters/clyde/sprite.txt",
-		"bounding_boxes":"Characters/clyde/bounding_boxes.txt"},
-
-"Xyan"     : 	{"img": "Characters/xyan/xyan_img.png", 
-		"sprite": "Characters/xyan/sprite.txt",
-		"bounding_boxes":"Characters/xyan/bounding_boxes.txt"},
-
-"Yggdrasil" :	{"img": "Characters/yggdrasil/yggdrasil_img.png", 
-		"sprite": "Characters/yggdrasil/sprite.txt",
-		"bounding_boxes":"Characters/yggdrasil/bounding_boxes.txt"},
-
-"Zero" : 		{"img": "Characters/zero/zero_img.png", 
-		"sprite": "Characters/zero/sprite.txt",
-		"bounding_boxes":"Characters/zero/bounding_boxes.txt"}
+		"bounding_boxes":"Characters/athenna/bounding_boxes.txt",
+		"hp": {"dx": 0, "dy": 60, "hp": 100,
+			"bar":"Characters/hp_bar.png", 
+			"red":"Characters/hp.png"}}
 }

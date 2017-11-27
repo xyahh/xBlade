@@ -17,9 +17,11 @@ class Map:
                 object_file.close()
 
                 self.map_objects = []
-
                 for obj_name in object_info:
-                    self.map_objects.append({"name": obj_name, "img": load_image(object_info[obj_name]['img']),
+                    img = None
+                    has_img = object_info[obj_name]['has_img']
+                    if has_img: img = load_image(object_info[obj_name]['img'])
+                    self.map_objects.append({"name": obj_name, "img": img, "has_img": has_img,
                                              "start_x": object_info[obj_name]['start_x'],
                                              "start_y": object_info[obj_name]['start_y'],
                                              "pos_x": object_info[obj_name]['start_x'],
@@ -39,7 +41,7 @@ class Map:
                                                                object_info[obj_name]['bounding_box']['right'],
                                                                object_info[obj_name]['bounding_box']['bottom'])
                                              })
-                self.map = {"name": name,
+                    self.map = {"name": name,
                             "dsp_img": load_image(map_info[name]['dsp_img']),
                             "x": map_info[name]['x'],
                             "y": map_info[name]['y'],
@@ -69,7 +71,8 @@ class Map:
     def draw(self):
         self.map['map_img'].draw(self.map['x'], self.map['y'])
         for count in range(len(self.map['objects'])):
-            self.map['objects'][count]['img'].draw(self.map['objects'][count]['pos_x'], self.map['objects'][count]['pos_y'])
+            if self.map['objects'][count]['has_img']:
+                self.map['objects'][count]['img'].draw(self.map['objects'][count]['pos_x'], self.map['objects'][count]['pos_y'])
 
     def update(self, frame_time):
         for count in range(len(self.map_objects)):
@@ -77,22 +80,23 @@ class Map:
                 self.map_objects[count]['pos_x'] = self.map_objects[count]['start_x']
                 self.map_objects[count]['pos_y'] = self.map_objects[count]['start_y']
 
-            self.map_objects[count]['pos_x'] += self.map_objects[count]['dir_x']*frame_time
-            self.map_objects[count]['pos_y'] += self.map_objects[count]['dir_y']*frame_time
+            if self.map_objects[count]['has_img']:
+                self.map_objects[count]['pos_x'] += self.map_objects[count]['dir_x']*frame_time
+                self.map_objects[count]['pos_y'] += self.map_objects[count]['dir_y']*frame_time
 
-            if (self.map_objects[count]['pos_x'] <= self.map_objects[count]['limit_x1'] and
-                        self.map_objects[count]['dir_x'] < 0) or \
-                    (self.map_objects[count]['pos_x'] >= self.map_objects[count]['limit_x2'] and
-                    self.map_objects[count]['dir_x'] > 0):
-                if self.map_objects[count]['new']: reset()
-                else: self.map_objects[count]['dir_x'] *= self.map_objects[count]['factor_x']
+                if (self.map_objects[count]['pos_x'] <= self.map_objects[count]['limit_x1'] and
+                            self.map_objects[count]['dir_x'] < 0) or \
+                        (self.map_objects[count]['pos_x'] >= self.map_objects[count]['limit_x2'] and
+                        self.map_objects[count]['dir_x'] > 0):
+                    if self.map_objects[count]['new']: reset()
+                    else: self.map_objects[count]['dir_x'] *= self.map_objects[count]['factor_x']
 
-            if (self.map_objects[count]['pos_y'] <= self.map_objects[count]['limit_y1'] and
-                    self.map_objects[count]['dir_y'] < 0) \
-                    or (self.map_objects[count]['pos_y'] >= self.map_objects[count]['limit_y2'] and
-                    self.map_objects[count]['dir_y'] > 0):
-                if self.map_objects[count]['new']: reset()
-                else: self.map_objects[count]['dir_y'] *= self.map_objects[count]['factor_y']
+                if (self.map_objects[count]['pos_y'] <= self.map_objects[count]['limit_y1'] and
+                        self.map_objects[count]['dir_y'] < 0) \
+                        or (self.map_objects[count]['pos_y'] >= self.map_objects[count]['limit_y2'] and
+                        self.map_objects[count]['dir_y'] > 0):
+                    if self.map_objects[count]['new']: reset()
+                    else: self.map_objects[count]['dir_y'] *= self.map_objects[count]['factor_y']
 
     def get_name(self):
         return self.map[self.id]['name']

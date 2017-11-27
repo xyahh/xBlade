@@ -10,7 +10,7 @@ RECT_W, RECT_H = None, None
 images, font = None, None
 song, player = None, None
 options, controls = None, None
-num_of_players = None
+num_of_players, num_of_players_choices, choice = None, None, None
 
 
 def init_controls():
@@ -52,23 +52,23 @@ def init_pyglet():
 
 
 def init_menu():
-    global font, options, RECT_H, RECT_W, num_of_players
+    global font, options, RECT_H, RECT_W, num_of_players_choices, choice
     menu_file = open('Menu/menu.txt', 'r')
     menu_info = json.load(menu_file)
     menu_file.close()
 
-    num_of_players = 2  # default is PvP mode. 2 players
-
     font = load_font(menu_info['font']['path'], menu_info['font']['size'])
     RECT_W = menu_info['rect_size']['width']
     RECT_H = menu_info['rect_size']['height']
-
+    num_of_players_choices = []
     options = []
 
     for name in menu_info['options']:
         y = menu_info['options'][name]['start_y'] + \
             menu_info['options'][name]['diff_y'] * menu_info['options'][name]['priority']
         options.append({"name": name, "x": menu_info['options'][name]['x'], "y": y})
+        num_of_players_choices.append(menu_info['options'][name]['num_of_players'])
+    choice = len(num_of_players_choices) - 1 # just as a default value
 
 
 def enter():
@@ -93,23 +93,24 @@ def draw(frame_time):
         images[i]['img'].draw(images[i]['x'], images[i]['y'])
     for i in options:
         font.draw(i['x'], i['y'], i['name'])
-    draw_rectangle(options[num_of_players]['x'], options[num_of_players]['y']-RECT_H/2,
-                   options[num_of_players]['x']+RECT_W, options[num_of_players]['y']+RECT_H/2)
+    draw_rectangle(options[choice]['x'], options[choice]['y']-RECT_H/2,
+                   options[choice]['x']+RECT_W, options[choice]['y']+RECT_H/2)
     update_canvas()
 
 
 def handle_events(frame_time):
-    global num_of_players
+    global num_of_players, choice
     events = get_events()
     for event in events:
         if event.type == SDL_KEYDOWN:
             for i in range(len(controls)):  # can add the control id check if only one player needs to control menu
                 if event.key == controls[i]['up']:
-                    num_of_players = (num_of_players + 1) % len(options)
+                    choice= (choice + 1) % len(options)
                 elif event.key == controls[i]['down']:
-                    num_of_players = (num_of_players - 1) % len(options)
+                    choice = (choice - 1) % len(options)
                 elif event.key == controls[i]['submit']:
-                    if num_of_players > 0:
+                    if choice > 0:
+                        num_of_players = num_of_players_choices[choice]
                         pFramework.push_state(char_select)
                     else:
                         pFramework.quit()

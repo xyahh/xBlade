@@ -13,6 +13,8 @@ pause_game, controls = None, None
 char, map = None, None
 boxes = None
 
+show_boxes = False
+
 def init_controls():
     global controls
     control_file = open('General/controls.txt', 'r')
@@ -26,6 +28,7 @@ def init_controls():
                              "left":  key_mapping.map_key(control_info[id]['left']),
                              "right": key_mapping.map_key(control_info[id]['right']),
                              "up": key_mapping.map_key(control_info[id]['up']),
+                             "down": key_mapping.map_key(control_info[id]['down']),
                              "pause": key_mapping.map_key(control_info[id]['pause']),
                              "submit": key_mapping.map_key(control_info[id]['submit'])})
 
@@ -39,6 +42,7 @@ def init_map_and_chars():
         char.append(Character(name, map.spawn[i]['player_id'], map.spawn[i]['x'],
                               map.spawn[i]['y'], map.spawn[i]['state'], map.spawn[i]['action']))
     boxes = BoundingBox(char, map)
+
 
 def enter():
    init_map_and_chars()
@@ -60,15 +64,24 @@ def draw(frame_time):
     map.draw()
     for i in range(len(char)):
         char[len(char)-i-1].draw()  # reversed drawing. Player 1 drawn at the top
+    if show_boxes: boxes.draw()
     update_canvas()
 
 
 def handle_events(frame_time):
+    global show_boxes
     events = get_events()
     for event in events:
         for i in range(len(controls)):
             char[i].handle_events(frame_time, event, controls[i]['player_id'],
-                                  controls[i]['left'], controls[i]['right'], controls[i]['up'])
+                                  controls[i]['left'], controls[i]['right'],
+                                  controls[i]['up'], controls[i]['down'])
+            if event.key == controls[i]['pause']:
+                pFramework.pop_state()
+
+        if event.key == SDLK_F1 and event.type == SDL_KEYDOWN:
+            if show_boxes: show_boxes = False
+            else: show_boxes = True
         if event.type == SDL_QUIT:
             pFramework.quit()
 
