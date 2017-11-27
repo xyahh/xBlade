@@ -80,11 +80,17 @@ class Map:
             self.map_objects[count]['pos_x'] += self.map_objects[count]['dir_x']*frame_time
             self.map_objects[count]['pos_y'] += self.map_objects[count]['dir_y']*frame_time
 
-            if self.map_objects[count]['pos_x'] <= self.map_objects[count]['limit_x1'] or self.map_objects[count]['pos_x'] >= self.map_objects[count]['limit_x2']:
+            if (self.map_objects[count]['pos_x'] <= self.map_objects[count]['limit_x1'] and
+                        self.map_objects[count]['dir_x'] < 0) or \
+                    (self.map_objects[count]['pos_x'] >= self.map_objects[count]['limit_x2'] and
+                    self.map_objects[count]['dir_x'] > 0):
                 if self.map_objects[count]['new']: reset()
                 else: self.map_objects[count]['dir_x'] *= self.map_objects[count]['factor_x']
 
-            if self.map_objects[count]['pos_y'] <= self.map_objects[count]['limit_y1'] or self.map_objects[count]['pos_y'] >= self.map_objects[count]['limit_y2']:
+            if (self.map_objects[count]['pos_y'] <= self.map_objects[count]['limit_y1'] and
+                    self.map_objects[count]['dir_y'] < 0) \
+                    or (self.map_objects[count]['pos_y'] >= self.map_objects[count]['limit_y2'] and
+                    self.map_objects[count]['dir_y'] > 0):
                 if self.map_objects[count]['new']: reset()
                 else: self.map_objects[count]['dir_y'] *= self.map_objects[count]['factor_y']
 

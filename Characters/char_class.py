@@ -1,4 +1,6 @@
 from pico2d import *
+from General.bounding_box import BoundingBox
+from Logo import logo
 file_name = "CharacterClass"
 
 
@@ -58,12 +60,11 @@ class Character:
 
     def init_vars(self, player_id, spawn_x, spawn_y, spawn_state, spawn_action):
         self.jump_key_down = self.left_key_down = self.right_key_down = False
-        self.jump_start_y = self.jump_curr_time = self.jump_start_time = self.jump_time = False
-        self.frame = self.total_frames = self.free_fall_dt = self.last_key = 0
-
+        self.frame = self.total_frames = self.last_key = 0
         self.last_x, self.last_y = (spawn_x, spawn_y)
+        self.curr_time = self.start_time = 0
         self.x, self.y = (spawn_x, spawn_y)
-
+        self.accel = 0
         self.action = spawn_action
         self.player_id = player_id
         self.state = spawn_state
@@ -99,8 +100,8 @@ class Character:
 
         for action in bboxes_info:
             self.bounding_box[action] = (bboxes_info[action]['left'],
-                                  bboxes_info[action]['right'],
                                   bboxes_info[action]['top'],
+                                  bboxes_info[action]['right'],
                                   bboxes_info[action]['bottom'])
 
     def __init__(self, char_name, player_id: int, spawn_x: int, spawn_y: int, spawn_state: int, spawn_action):
@@ -116,19 +117,9 @@ class Character:
                                                           w, h, self.x, self.y, w * CHAR_SCALE,
                                                           h * CHAR_SCALE)
 
-    def check_bounding_boxes(self, frame_time):
-        # IDEA OF BOUNDING BOXES START
-        self.free_fall_dt += frame_time
-        if (self.y > 100):
-            self.y = self.last_y - GRAVITY_P2PS * self.free_fall_dt * self.free_fall_dt
-        else:
-            self.last_y = self.y
-        # END OF IDEA OF BOUNDING BOXES
-
-    def update(self, frame_time):
+    def update(self, frame_time, boxes):
         self.update_frames(frame_time)
-        self.check_bounding_boxes(frame_time)
-        self.move(frame_time)
+        self.move(frame_time,boxes)
         self.update_state()
 
     def update_frames(self, frame_time):
@@ -142,21 +133,30 @@ class Character:
         self.total_frames += self.char['sprite'][self.action][state_frames] * ACTION_PER_TIME * frame_time
         self.frame = int(self.total_frames) % self.char['sprite'][self.action][state_frames]
 
-    def move(self, frame_time):
-        distance = RUN_SPEED_PPS * frame_time
-
+    def move(self, frame_time, boxes):
+        self.curr_time += frame_time
+        dt = self.curr_time - self.start_time
+        self.y = self.last_y - GRAVITY_P2PS * dt*dt
         if self.jump_key_down:
-            self.jump_time += frame_time
-            dt = self.jump_time - self.jump_start_time
-            self.y = self.jump_start_y + JUMP_SPEED_PPS * dt - GRAVITY_P2PS * dt * dt
-            # change to collision boxes after
-            if self.y <= self.jump_start_y:
-                self.y = self.jump_start_y
-                self.jump_key_down = False
+            self.y += JUMP_SPEED_PPS * dt
+            self.accel = JUMP_SPEED_PPS - 2*GRAVITY_P2PS*dt
 
+        sd = BoundingBox
+        for i in range(len(boxes.map_box)):
+            if sd.collide(sd, boxes.char_box[self.player_id-1], boxes.map_box[i])and self.accel <= 0:
+               if self.y >= boxes.map_box[i][sd.TOP]:
+                self.y = boxes.map_box[i][sd.TOP] - self.bounding_box[self.action][sd.BOTTOM]
+                self.start_time = self.curr_time
+                self.last_y = self.y
+                self.x += boxes.map.map['objects'][boxes.map_object_id[i]]['dir_x']*frame_time
+                self.accel = 0
+                self.jump_key_down = False
+               break
+
+
+        distance = RUN_SPEED_PPS * frame_time
         if self.left_key_down and not self.right_key_down or self.last_key == RUN_L:
             self.x -= distance
-
         if self.right_key_down and not self.left_key_down or self.last_key == RUN_R:
             self.x += distance
 
@@ -174,12 +174,10 @@ class Character:
             self.right_key_down = event.type == SDL_KEYDOWN
             if self.right_key_down: self.last_key = RUN_R
             else: self.last_key = STAND_R
-        if event.key == jump_key and not self.jump_key_down:
+        if event.key == jump_key and event.type == SDL_KEYDOWN and not self.jump_key_down:
+            self.start_time = self.curr_time = self.frame = 0
             self.jump_key_down = True
-            self.jump_start_time = frame_time
-            self.jump_time = frame_time
-            self.jump_start_y = self.y
-            self.frame = 0
+            self.last_y = self.y
 
     def update_state(self):
         if self.jump_key_down:

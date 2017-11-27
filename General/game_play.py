@@ -51,7 +51,7 @@ def exit(): pass
 def update(frame_time):
     map.update(frame_time)
     for i in range(len(char)):
-        char[i].update(frame_time)
+        char[i].update(frame_time, boxes)
     boxes.update()
 
 
@@ -59,8 +59,7 @@ def draw(frame_time):
     clear_canvas()
     map.draw()
     for i in range(len(char)):
-        char[i].draw()
-    boxes.draw()
+        char[len(char)-i-1].draw()  # reversed drawing. Player 1 drawn at the top
     update_canvas()
 
 

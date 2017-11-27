@@ -21,24 +21,24 @@
 	"bounding_box": {"left": 0, "top": 0, "right": 0, "bottom": 0}
 	},
 "airship1" : {"img": "Maps/airship_battle/airship1.png",
-		"start_x": 200, "start_y": 400, "dir_x": 0, "dir_y": -10,
-		"limit_x1": 0, "limit_x2": 600, "limit_y1": 390, "limit_y2": 410,
+		"start_x": 200, "start_y": 420, "dir_x": 0, "dir_y": -10,
+		"limit_x1": 0, "limit_x2": 600, "limit_y1": 410, "limit_y2": 430,
 		"new": 0, "factor_x":1, "factor_y": -1,
 	"has_bbox": 1,
-	"bounding_box": {"left": -185, "top": 15, "right": 195, "bottom": -20}
+	"bounding_box": {"left": -180, "top": 13, "right": 195, "bottom": -20}
 	},
 "airship2" : {"img": "Maps/airship_battle/airship2.png",
-		"start_x": 600, "start_y": 100, "dir_x": 0, "dir_y": -10,
-		"limit_x1": 0, "limit_x2": 700, "limit_y1": 90, "limit_y2": 110,
+		"start_x": 600, "start_y": 140, "dir_x": 0, "dir_y": -10,
+		"limit_x1": 0, "limit_x2": 700, "limit_y1": 130, "limit_y2": 150,
 		"new": 0, "factor_x":1, "factor_y": -1,
 	"has_bbox": 1,
-	"bounding_box": {"left": -180, "top": 3, "right": 190, "bottom": -30}
+	"bounding_box": {"left": -180, "top": 1, "right": 190, "bottom": -30}
 	},
 "platform" :{"img": "Maps/airship_battle/platform.png", 
 		"start_x":400, "start_y":250, "dir_x": -80, "dir_y": 0,
 		"limit_x1": 100,  "limit_x2": 600, "limit_y1": 0, "limit_y2": 800,
 		"new": 0, "factor_x": -1, "factor_y": 1,
 	"has_bbox": 1,
-	"bounding_box": {"left": -40, "top": 50, "right": 40, "bottom": 5}
+	"bounding_box": {"left": -35, "top": 48, "right": 30, "bottom": 5}
 	}
 }
