@@ -16,5 +16,11 @@
 		"map_img": "Maps/power_station/background.png",
 		"objects": "Maps/power_station/objects.txt",
 		"x": 400, "y":300
+		},
+"Space Frontier":	{
+		"dsp_img": "Maps/space_frontier/display.png",
+		"map_img": "Maps/space_frontier/background.png",
+		"objects": "Maps/space_frontier/objects.txt",
+		"x": 400, "y":300
 		}
 }

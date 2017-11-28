@@ -10,7 +10,7 @@ file_name = "MapSelect"
 controls, images, map_text = None, None, None
 player_text, custom_text = None, None
 font, choices, map_sel = None, None, None
-
+player_colors = None
 
 def init_media():
     global images, choices, map_sel
@@ -31,25 +31,31 @@ def init_media():
 
 
 def init_text():
-    global font, map_text, player_text, custom_text
+    global font, map_text, player_text, custom_text, player_colors
 
     text_file = open('Maps/text.txt', 'r')
     text_info = json.load(text_file)
     text_file.close()
 
-    font = load_font(text_info['font'])
+    font_path = open('General/font.txt', 'r')
+    font_info = json.load(font_path)
+    font_path.close()
+    font = load_font(font_info['font']['path'], font_info['font']['size'])
 
     player_text = []
     custom_text = []
     map_text = {}
 
+    player_colors = {}
+    for id in font_info['player_colors']:
+        player_colors[int(id)] = (font_info['player_colors'][id]['R'],
+                                  font_info['player_colors'][id]['G'],
+                                  font_info['player_colors'][id]['B'])
+
     for name in text_info['player_text']:
         player_text.append({"player_id": text_info['player_text'][name]['player_id'],
                             "x": text_info['player_text'][name]['x'],
-                            "y": text_info['player_text'][name]['y'],
-                            "RGB": (text_info['player_text'][name]['red'],
-                                    text_info['player_text'][name]['green'],
-                                    text_info['player_text'][name]['blue'])})
+                            "y": text_info['player_text'][name]['y']})
 
     for name in text_info['custom_text']:
         custom_text.append({"string": text_info['custom_text'][name]['string'],
@@ -108,8 +114,9 @@ def draw(frame_time):
 
     for i in range(len(player_text)):
         if i < main_menu.num_of_players:
+            id = player_text[i]['player_id']
             char_name = char_select.char_sel.chars[char_select.char_sel.player_choice[i]]['name']
-            font.draw(player_text[i]['x'], player_text[i]['y'], char_name, player_text[i]['RGB'])
+            font.draw(player_text[i]['x'], player_text[i]['y'], char_name, player_colors[id])
 
     font.draw(map_text['x'], map_text['y'], map_sel.get_curr_map_name(), map_text['RGB'])
     update_canvas()

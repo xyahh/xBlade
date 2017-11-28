@@ -1,6 +1,4 @@
 {
-"font": "General/lotr_font.ttf",
-
 "player_text": 	{
 		"left": 	{"player_id": 1, "x": 200,   "y": 450, "red": 255, "green": 50, "blue": 50},
 		"right": 	{"player_id": 2, "x": 500,  "y":  450, "red": 50, "green": 50, "blue": 255}

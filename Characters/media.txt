@@ -17,8 +17,6 @@
 		"x_offset":  30, "y_offset":-100}
 	},
 
-"font": "General/lotr_font.ttf",
-
 "text": 	{	
 	"1": 	{"player_id": 1, "x": 50,   "y": 60, "red": 255, "green": 50, "blue": 50},
 	"2": 	{"player_id": 2, "x": 50, "y":   30, "red": 50, "green": 50, "blue": 255},

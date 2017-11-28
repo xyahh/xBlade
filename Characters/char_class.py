@@ -95,6 +95,17 @@ class Character:
                                     "dy": char_info[name]['hp']['dy']}}
                 self.max_hp = self.hp = char_info[name]['hp']['hp']
 
+    def init_font(self):
+        font_path = open('General/font.txt', 'r')
+        font_info = json.load(font_path)
+        font_path.close()
+        self.font = load_font(font_info['font']['path'], font_info['font']['size'])
+        self.player_colors = {}
+        for id in font_info['player_colors']:
+            self.player_colors[int(id)] = (font_info['player_colors'][id]['R'],
+                                      font_info['player_colors'][id]['G'],
+                                      font_info['player_colors'][id]['B'])
+
     def init_bounding_boxes(self):
         self.bounding_box = {}
 
@@ -112,6 +123,7 @@ class Character:
         self.init_const()
         self.init_vars(player_id, spawn_x, spawn_y, spawn_state, spawn_action)
         self.init_chars(char_name)
+        self.init_font()
         self.init_bounding_boxes()
 
     def draw(self):
@@ -127,6 +139,8 @@ class Character:
         w_ = self.char['hp']['bar'].w
         dw = w_*(self.hp / self.max_hp)
         self.char['hp']['red'].draw(x, y, dw, h_)
+        self.font.draw(x-w_, y+h_, str(self.player_id),
+                       color=self.player_colors[self.player_id])
 
     def update(self, frame_time, boxes):
         self.update_frames(frame_time)

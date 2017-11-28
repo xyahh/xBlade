@@ -9,10 +9,10 @@ file_name = "CharSelect"
 images, arrows = None, None
 controls, font = None, None
 char_sel, text = None, None
-
+player_colors = None
 
 def init_media():
-    global images, arrows, font, char_sel, text
+    global images, arrows, font, char_sel, text, player_colors
 
     char_sel = CharacterSelect(main_menu.num_of_players)
 
@@ -20,16 +20,23 @@ def init_media():
     media_info = json.load(media_file)
     media_file.close()
 
-    font = load_font(media_info['font'])
+    font_path = open('General/font.txt', 'r')
+    font_info = json.load(font_path)
+    font_path.close()
+    font = load_font(font_info['font']['path'], font_info['font']['size'])
+
+    player_colors = {}
+    for id in font_info['player_colors']:
+        player_colors[int(id)] = (font_info['player_colors'][id]['R'],
+                                       font_info['player_colors'][id]['G'],
+                                       font_info['player_colors'][id]['B'])
 
     text = []
     for name in media_info['text']:
         if media_info['text'][name]['player_id'] <= main_menu.num_of_players:
             text.append({"player_id": media_info['text'][name]['player_id'],
                          "x": media_info['text'][name]['x'],
-                         "y": media_info['text'][name]['y'],
-                         "RGB": (media_info['text'][name]['red'], media_info['text'][name]['green'],
-                                 media_info['text'][name]['blue'])})
+                         "y": media_info['text'][name]['y']})
 
     images = []
     for name in media_info['images']:
@@ -86,7 +93,9 @@ def draw_media():
                                   int(char_sel.player_choice[i] / char_sel.chars_per_row) * char_sel.row_dist_diff
                                   + char_sel.start_y + arrows[i]['y_offset'])
     for i in range(main_menu.num_of_players):
-        font.draw(text[i]['x'], text[i]['y'], char_sel.chars[char_sel.player_choice[i]]['name'], text[i]['RGB'])
+        id = text[i]['player_id']
+        font.draw(text[i]['x'], text[i]['y'], char_sel.chars[char_sel.player_choice[i]]['name'],
+                  player_colors[id])
 
 
 def draw(frame_time):
