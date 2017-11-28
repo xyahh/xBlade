@@ -161,26 +161,32 @@ class Character:
     def move(self, frame_time, boxes):
         self.curr_time += frame_time
         dt = self.curr_time - self.start_time
+
+        temp_y = self.y
+
         self.y = self.last_y - GRAVITY_P2PS * dt*dt # there's always a force!
 
         if self.jump_key_down:
             self.y += JUMP_SPEED_PPS * dt # only had initial speed if it has jumped
             self.accel = JUMP_SPEED_PPS - 2*GRAVITY_P2PS*dt # derivative of speed*t - at^2
 
+
         sd = BoundingBox
         for i in range(len(boxes.map_box)):
-            # check if it collides and if it is NOT on the first part of a jump (when going up)
-            if sd.collide(sd, boxes.char_box[self.player_id-1], boxes.map_box[i]) and self.accel <= 0:
-               if self.y +self.bounding_box[self.action][sd.BOTTOM] >= boxes.map_box[i][sd.BOTTOM]\
-                       and self.y >= boxes.map_box[i][sd.TOP]: # check if the center is above the platform level and feet are above the lower level
-                self.y = boxes.map_box[i][sd.TOP] - self.bounding_box[self.action][sd.BOTTOM] # update based on feet
-                self.start_time = self.curr_time # update the starting time for the next jump / fall
-                self.last_y = self.y # update position for the next jump / fall
-                self.x += boxes.map.map['objects'][boxes.map_object_id[i]]['dir_x']*frame_time # update direction
+            is_there_collision = sd.collide(sd, boxes.char_box[self.player_id-1], boxes.map_box[i]) and self.accel <= 0
+            is_above_level = self.y +self.bounding_box[self.action][sd.BOTTOM] >= boxes.map_box[i][sd.BOTTOM]\
+                       and self.y >= boxes.map_box[i][sd.TOP]
+            time_delay_condition = boxes.map_box[i][sd.LEFT] <= self.x <= boxes.map_box[i][sd.RIGHT] and \
+                            self.y < boxes.map_box[i][sd.TOP] and temp_y >= boxes.map_box[i][sd.TOP]
+
+            if (is_there_collision and is_above_level) or time_delay_condition:
+                self.y = boxes.map_box[i][sd.TOP] - self.bounding_box[self.action][sd.BOTTOM]  # update based on feet
+                self.start_time = self.curr_time  # update the starting time for the next jump / fall
+                self.last_y = self.y  # update position for the next jump / fall
+                self.x += boxes.map.map['objects'][boxes.map_object_id[i]]['dir_x'] * frame_time  # update direction
                 self.accel = 0
                 self.jump_key_down = False
-               break
-
+                break
 
         distance = RUN_SPEED_PPS * frame_time
         if self.left_key_down and not self.right_key_down or self.last_key == RUN_L:
