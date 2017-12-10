@@ -7,16 +7,15 @@ file_name = "CharacterClass"
 def clamp(minimum, value, maximum):
     return max(minimum, min(value, maximum))
 
+
 class Character:
     # CONSTANTS
     PIXEL_PER_METER, GRAVITY_M2PS, GRAVITY_P2PS = None, None, None
     RUN_SPEED_KMPH, RUN_SPEED_MPS, RUN_SPEED_PPS = None, None, None
     JUMP_SPEED_KMPH, JUMP_SPEED_MPS, JUMP_SPEED_PPS = None, None, None
     TIME_PER_ACTION, ACTION_PER_TIME = None, None
-
-    STAND_R, STAND_L, RUN_R = None, None, None
-    RUN_L, JUMP_R, JUMP_L = None, None, None
-
+    STATES = {}
+    ACTIONS = {}
     CHAR_SCALE = None
     # END CONSTANTS
 
@@ -24,7 +23,7 @@ class Character:
         # all constants named global
         global PIXEL_PER_METER, GRAVITY_M2PS, GRAVITY_P2PS, RUN_SPEED_KMPH, RUN_SPEED_MPS, RUN_SPEED_PPS
         global JUMP_SPEED_KMPH, JUMP_SPEED_MPS, JUMP_SPEED_PPS, TIME_PER_ACTION, ACTION_PER_TIME
-        global STAND_R, STAND_L, RUN_R, RUN_L, JUMP_R, JUMP_L, MOVE, ATTACK1, CHAR_SCALE
+        global CHAR_SCALE, STATES, ACTIONS
 
         constants_file = open('Characters/constants.txt', 'r')
         constants = json.load(constants_file)
@@ -46,15 +45,13 @@ class Character:
         TIME_PER_ACTION = constants['Events']['TIME_PER_ACTION']
         ACTION_PER_TIME = 1 / TIME_PER_ACTION
 
-        STAND_R = constants['States']['STAND_R']
-        STAND_L = constants['States']['STAND_L']
-        RUN_R = constants['States']['RUN_R']
-        RUN_L = constants['States']['RUN_L']
-        JUMP_R = constants['States']['JUMP_R']
-        JUMP_L = constants['States']['JUMP_L']
+        STATES = {}
+        for i in constants['States']:
+            STATES.update({i: constants['States'][i]})
 
-        MOVE = constants['Actions']['MOVE']
-        ATTACK1 = constants['Actions']['ATTACK1']
+        ACTIONS = {}
+        for i in constants['Actions']:
+            ACTIONS.update({i: constants['Actions'][i]})
 
         CHAR_SCALE = constants['Char_Scale']
 
@@ -64,9 +61,10 @@ class Character:
         self.last_x, self.last_y = (spawn_x, spawn_y)
         self.curr_time = self.start_time = 0
         self.x, self.y = (spawn_x, spawn_y)
+        self.already_hit = False
         self.action = spawn_action
         self.player_id = player_id
-        self.state = spawn_state
+        self.state = STATES[spawn_state]
 
     def init_chars(self, char_name):
         self.char = {}
@@ -114,10 +112,15 @@ class Character:
         bboxes_file.close()
 
         for action in bboxes_info:
-            self.bounding_box[action] = (bboxes_info[action]['left'],
-                                  bboxes_info[action]['top'],
-                                  bboxes_info[action]['right'],
-                                  bboxes_info[action]['bottom'])
+            bb_states = {}
+            bb_effect = {}
+            for state in bboxes_info[action]:
+                bb_states.update({STATES[state]: (bboxes_info[action][state]['left'],
+                                                     bboxes_info[action][state]['top'],
+                                                     bboxes_info[action][state]['right'],
+                                                     bboxes_info[action][state]['bottom'],
+                                                    bboxes_info[action][state]['damage'])})
+            self.bounding_box.update({action: bb_states})
 
     def __init__(self, char_name, player_id: int, spawn_x: int, spawn_y: int, spawn_state: int, spawn_action):
         self.init_const()
@@ -138,25 +141,41 @@ class Character:
         h_ = self.char['hp']['bar'].h
         w_ = self.char['hp']['bar'].w
         dw = w_*(self.hp / self.max_hp)
-        self.char['hp']['red'].draw(x, y, dw, h_)
+        self.char['hp']['red'].draw(x-0.5*w_+0.5*dw, y, dw, h_)
         self.font.draw(x-w_, y+h_, str(self.player_id),
                        color=self.player_colors[self.player_id])
 
+    def check_hp(self):
+        pass
+
     def update(self, frame_time, boxes):
+        self.check_hp()
         self.update_frames(frame_time)
-        self.move(frame_time,boxes)
+        self.update_attack(frame_time, boxes)
+        self.move(frame_time, boxes)
         self.update_state()
+
+    def update_attack(self, frame_time, boxes):
+        if self.action != ACTIONS['MOVE']:
+            sd = BoundingBox
+            for i in range(len(boxes.char_box)):
+                is_there_collision = sd.collide(sd, boxes.char_box[self.player_id - 1], boxes.char_box[i])
+                if(is_there_collision and boxes.char_id[i] != self.player_id and not self.already_hit):
+                            boxes.char[i].hp -= self.bounding_box[self.action][self.state][sd.DAMAGE]
+                            self.already_hit = True
 
     def update_frames(self, frame_time):
         state_frames = None
-        if self.state in (STAND_R, STAND_L):
+        if self.state in (STATES['STAND_R'], STATES['STAND_L']):
             state_frames = 'SFrames'
-        elif self.state in (RUN_R, RUN_L):
+        elif self.state in (STATES['RUN_R'], STATES['RUN_L']):
             state_frames = 'RFrames'
-        elif self.state in (JUMP_R, JUMP_L):
+        elif self.state in (STATES['JUMP_R'], STATES['JUMP_L']):
             state_frames = 'JFrames'
         self.total_frames += self.char['sprite'][self.action][state_frames] * ACTION_PER_TIME * frame_time
         self.frame = int(self.total_frames) % self.char['sprite'][self.action][state_frames]
+        if(self.action != ACTIONS['MOVE'] and self.total_frames > self.char['sprite'][self.action][state_frames]):
+            self.action = ACTIONS['MOVE']
 
     def move(self, frame_time, boxes):
         self.curr_time += frame_time
@@ -168,19 +187,19 @@ class Character:
 
         if self.jump_key_down:
             self.y += JUMP_SPEED_PPS * dt # only had initial speed if it has jumped
-            self.accel = JUMP_SPEED_PPS - 2*GRAVITY_P2PS*dt # derivative of speed*t - at^2
-
+            self.accel = JUMP_SPEED_PPS - 2*GRAVITY_P2PS*dt  # derivative of speed*t - at^2
 
         sd = BoundingBox
+
         for i in range(len(boxes.map_box)):
             is_there_collision = sd.collide(sd, boxes.char_box[self.player_id-1], boxes.map_box[i]) and self.accel <= 0
-            is_above_level = self.y +self.bounding_box[self.action][sd.BOTTOM] >= boxes.map_box[i][sd.BOTTOM]\
-                       and self.y >= boxes.map_box[i][sd.TOP]
+            is_above_level = self.y +self.bounding_box[self.action][self.state][sd.BOTTOM] >= boxes.map_box[i][sd.BOTTOM]\
+                and self.y >= boxes.map_box[i][sd.TOP]
             time_delay_condition = boxes.map_box[i][sd.LEFT] <= self.x <= boxes.map_box[i][sd.RIGHT] and \
                             self.y < boxes.map_box[i][sd.TOP] and temp_y >= boxes.map_box[i][sd.TOP]
 
             if (is_there_collision and is_above_level) or time_delay_condition:
-                self.y = boxes.map_box[i][sd.TOP] - self.bounding_box[self.action][sd.BOTTOM]  # update based on feet
+                self.y = boxes.map_box[i][sd.TOP] - self.bounding_box[self.action][self.state][sd.BOTTOM]  # update based on feet
                 self.start_time = self.curr_time  # update the starting time for the next jump / fall
                 self.last_y = self.y  # update position for the next jump / fall
                 self.x += boxes.map.map['objects'][boxes.map_object_id[i]]['dir_x'] * frame_time  # update direction
@@ -189,10 +208,10 @@ class Character:
                 break
 
         distance = RUN_SPEED_PPS * frame_time
-        if self.left_key_down and not self.right_key_down or self.last_key == RUN_L:
+        if self.left_key_down and not self.right_key_down or self.last_key == STATES['RUN_L']:
             self.x -= distance
 
-        if self.right_key_down and not self.left_key_down or self.last_key == RUN_R:
+        if self.right_key_down and not self.left_key_down or self.last_key == STATES['RUN_R']:
             self.x += distance
 
         self.x = clamp(0, self.x, logo.win_width)
@@ -200,15 +219,23 @@ class Character:
     def get_name(self):
         return self.char['name']
 
+    def handle_actions(self, frame_time, event, attack1_key):
+        if event.key == attack1_key and event.type == SDL_KEYDOWN and self.action != ACTIONS['ATTACK1']:
+            self.action = ACTIONS['ATTACK1']
+            self.already_hit = False
+            self.total_frames = 0.0
+
     def handle_moves(self, frame_time, event, left_key, right_key, jump_key, down_key):
         if event.key == left_key:
             self.left_key_down = event.type == SDL_KEYDOWN
-            if self.left_key_down: self.last_key = RUN_L
-            else: self.last_key = STAND_L
+            if self.left_key_down:
+                self.last_key = STATES['RUN_L']
+            else:
+                self.last_key = STATES['STAND_L']
         if event.key == right_key:
             self.right_key_down = event.type == SDL_KEYDOWN
-            if self.right_key_down: self.last_key = RUN_R
-            else: self.last_key = STAND_R
+            if self.right_key_down: self.last_key = STATES['RUN_R']
+            else: self.last_key = STATES['STAND_R']
         if event.key == jump_key and event.type == SDL_KEYDOWN and not self.jump_key_down:
             self.start_time = self.curr_time =  self.total_frames = 0
             self.jump_key_down = True
@@ -216,26 +243,27 @@ class Character:
 
     def update_state(self):
         if self.jump_key_down:
-            if self.state in (RUN_L, STAND_L) or (self.left_key_down and not self.right_key_down):
-                self.state = JUMP_L
-            elif self.state in (RUN_R, STAND_R) or (self.right_key_down and not self.left_key_down):
-                self.state = JUMP_R
+            if self.state in (STATES['RUN_L'], STATES['STAND_L']) or (self.left_key_down and not self.right_key_down):
+                self.state = STATES['JUMP_L']
+            elif self.state in (STATES['RUN_R'], STATES['STAND_R']) or (self.right_key_down and not self.left_key_down):
+                self.state = STATES['JUMP_R']
         else:
             if self.left_key_down and not self.right_key_down:
-                self.state = RUN_L
+                self.state = STATES['RUN_L']
             elif self.right_key_down and not self.left_key_down:
-                self.state = RUN_R
+                self.state = STATES['RUN_R']
             elif self.right_key_down and self.left_key_down:
                 self.state = self.last_key
             else:
-                if self.state in (RUN_L, STAND_L, JUMP_L):
-                    self.state = STAND_L
-                elif self.state in (RUN_R, STAND_R, JUMP_R):
-                    self.state = STAND_R
+                if self.state in (STATES['RUN_L'], STATES['STAND_L'], STATES['JUMP_L']):
+                    self.state = STATES['STAND_L']
+                elif self.state in (STATES['RUN_R'], STATES['STAND_R'], STATES['JUMP_R']):
+                    self.state = STATES['STAND_R']
 
-    def handle_events(self, frame_time, event, player_id, left_key, right_key, jump_key, down_key):
+    def handle_events(self, frame_time, event, player_id, left_key, right_key, jump_key, down_key, attack1_key):
         if player_id == self.player_id:
             self.handle_moves(frame_time, event, left_key, right_key, jump_key, down_key)
+            self.handle_actions(frame_time, event, attack1_key)
 
 
 class CharacterSelect:

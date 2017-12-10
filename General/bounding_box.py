@@ -2,11 +2,11 @@ from pico2d import *
 
 
 class BoundingBox:
-    LEFT, TOP, RIGHT, BOTTOM = range(4)
+    LEFT, TOP, RIGHT, BOTTOM, DAMAGE = range(5)
 
     def __init__(self, char, map : object):
-        global LEFT, TOP, RIGHT, BOTTOM
-        LEFT, TOP, RIGHT, BOTTOM = range(4)
+        global LEFT, TOP, RIGHT, BOTTOM, DAMAGE
+        LEFT, TOP, RIGHT, BOTTOM, DAMAGE = range(5)
         self.char = char
         self.map = map
         self.map_object_id = []
@@ -33,7 +33,7 @@ class BoundingBox:
         for i in range(len(self.char)):
             ch = self.char[i]
             self.char_id.append(ch.player_id)
-            bx = ch.bounding_box[ch.action]
+            bx = ch.bounding_box[ch.action][ch.state]
             self.char_box.append((ch.x + bx[LEFT],
                    ch.y + bx[TOP],
                    ch.x + bx[RIGHT],

@@ -46,6 +46,7 @@ def draw(frame_time):
     for i in range(len(char)):
         char[len(char)-i-1].draw()  # reversed drawing. Player 1 drawn at the top
     if show_boxes: boxes.draw()
+    #boxes.draw()
     update_canvas()
 
 
@@ -57,7 +58,8 @@ def handle_events(frame_time):
             if i < main_menu.num_of_players:
                 char[i].handle_events(frame_time, event, key.controls[i]['player_id'],
                                       key.controls[i]['left'], key.controls[i]['right'],
-                                      key.controls[i]['up'], key.controls[i]['down'])
+                                      key.controls[i]['up'], key.controls[i]['down'],
+                                      key.controls[i]['attack1'])
             if event.key == key.controls[i]['pause']:
                 pFramework.pop_state()
 

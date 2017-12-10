@@ -10,6 +10,7 @@ options, main_theme = None, None
 RECT_W, RECT_H = None, None
 images, font = None, None
 
+
 def init_images():
     global images
     image_file = open('Menu/image.txt', 'r')

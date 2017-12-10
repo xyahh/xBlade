@@ -6,7 +6,7 @@
 	"right": "RIGHT",  
 	"pause": "BACK", 
 	"submit": "ENTER",
-	"action1": "O"
+	"attack1": "O"
 	},
 "2": 	{	
 	"up": "W", 
@@ -15,6 +15,6 @@
 	"right": "D", 
 	"pause": "ESC", 
 	"submit": "SPACE",
-	"action1": "T"
+	"attack1": "T"
 	}
 }

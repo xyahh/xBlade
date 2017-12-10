@@ -49,4 +49,5 @@ def bind_keys():
                          "left": map_key(control_info[id]['left']),
                          "right": map_key(control_info[id]['right']),
                          "pause": map_key(control_info[id]['pause']),
-                         "submit": map_key(control_info[id]['submit'])})
+                         "submit": map_key(control_info[id]['submit']),
+                         "attack1": map_key(control_info[id]['attack1'])})
