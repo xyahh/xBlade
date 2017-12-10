@@ -2,35 +2,18 @@ from pico2d import *
 
 from Characters.char_class import Character
 from Maps.map_class import Map
-from General import pFramework, key_mapping
+from General import pFramework
+from General import key_mapping as key
 from General.bounding_box import  BoundingBox
 from Maps import map_select
 from Menu import main_menu
 from Characters import char_select
 
 file_name = "Gameplay"
-pause_game, controls = None, None
+pause_game = None
 char, map = None, None
 boxes = None
-
 show_boxes = False
-
-def init_controls():
-    global controls
-    control_file = open('General/controls.txt', 'r')
-    control_info = json.load(control_file)
-    control_file.close()
-
-    controls = []
-    for id in control_info:
-        if int(id) <= main_menu.num_of_players:
-            controls.append({"player_id":int(id),
-                             "left":  key_mapping.map_key(control_info[id]['left']),
-                             "right": key_mapping.map_key(control_info[id]['right']),
-                             "up": key_mapping.map_key(control_info[id]['up']),
-                             "down": key_mapping.map_key(control_info[id]['down']),
-                             "pause": key_mapping.map_key(control_info[id]['pause']),
-                             "submit": key_mapping.map_key(control_info[id]['submit'])})
 
 
 def init_map_and_chars():
@@ -46,8 +29,6 @@ def init_map_and_chars():
 
 def enter():
    init_map_and_chars()
-   init_controls()
-
 
 def exit(): pass
 
@@ -72,11 +53,12 @@ def handle_events(frame_time):
     global show_boxes
     events = get_events()
     for event in events:
-        for i in range(len(controls)):
-            char[i].handle_events(frame_time, event, controls[i]['player_id'],
-                                  controls[i]['left'], controls[i]['right'],
-                                  controls[i]['up'], controls[i]['down'])
-            if event.key == controls[i]['pause']:
+        for i in range(len(key.controls)):
+            if i < main_menu.num_of_players:
+                char[i].handle_events(frame_time, event, key.controls[i]['player_id'],
+                                      key.controls[i]['left'], key.controls[i]['right'],
+                                      key.controls[i]['up'], key.controls[i]['down'])
+            if event.key == key.controls[i]['pause']:
                 pFramework.pop_state()
 
         if event.key == SDLK_F1 and event.type == SDL_KEYDOWN:

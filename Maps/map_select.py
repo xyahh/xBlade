@@ -1,16 +1,18 @@
 from pico2d import *
 
-from General import game_play, pFramework, key_mapping
+from General import game_play, pFramework
+from General import key_mapping as key
 from Maps.map_class import MapSelect
 from Characters import char_select
 from Menu import main_menu
 
 file_name = "MapSelect"
 
-controls, images, map_text = None, None, None
+images, map_text = None, None
 player_text, custom_text = None, None
 font, choices, map_sel = None, None, None
 player_colors = None
+
 
 def init_media():
     global images, choices, map_sel
@@ -72,30 +74,14 @@ def init_text():
                          text_info['map_text']['map_name']['blue'])}
 
 
-def init_controls():
-    global controls
-    control_file = open('General/controls.txt', 'r')
-    control_info = json.load(control_file)
-    control_file.close()
-
-    controls = []
-    for id in control_info:
-        controls.append({"player_id":int(id),
-                         "left":  key_mapping.map_key(control_info[id]['left']),
-                         "right": key_mapping.map_key(control_info[id]['right']),
-                         "pause": key_mapping.map_key(control_info[id]['pause']),
-                         "submit": key_mapping.map_key(control_info[id]['submit'])})
-
-
 def enter():
     init_media()
-    init_controls()
     init_text()
 
 
 def exit():
-    global controls, images, custom_text, font, choices, map_text, player_text
-    del controls, images, custom_text, font, choices, map_text, player_text
+    global images, custom_text, font, choices, map_text, player_text
+    del images, custom_text, font, choices, map_text, player_text
 
 
 def update(frame_time):
@@ -127,12 +113,12 @@ def handle_events(frame_time):
     events = get_events()
     for event in events:
         if event.type == SDL_KEYDOWN:
-            for i in range(len(controls)):
-                map_sel.handle_events(event, controls[i]['left'], controls[i]['right'])
-                if event.key == controls[i]['pause']:
+            for i in range(len(key.controls)):
+                map_sel.handle_events(event, key.controls[i]['left'], key.controls[i]['right'])
+                if event.key == key.controls[i]['pause']:
                     pFramework.pop_state()
                     break
-                if event.key == controls[i]['submit']:
+                if event.key == key.controls[i]['submit']:
                     pFramework.push_state(game_play)
         elif event.type == SDL_QUIT:
             pFramework.quit()

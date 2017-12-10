@@ -89,7 +89,7 @@ class Character:
                                            "h": sprite_info[action]['h']}
                 self.char = {"name": name, "sprite": self.sprite,
                              "bounding_boxes": char_info[name]['bounding_boxes'],
-                             "hp": {"bar":load_image(char_info[name]['hp']['bar']),
+                             "hp": {"bar": load_image(char_info[name]['hp']['bar']),
                                     "red": load_image(char_info[name]['hp']['red']),
                                     "dx": char_info[name]['hp']['dx'],
                                     "dy": char_info[name]['hp']['dy']}}

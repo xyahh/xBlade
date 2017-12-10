@@ -1,13 +1,14 @@
 from pico2d import *
 
-from General import pFramework, key_mapping
+from General import pFramework
+from General import key_mapping as key
 from Menu import main_menu
 from Characters.char_class import CharacterSelect
 from Maps import map_select
 file_name = "CharSelect"
 
 images, arrows = None, None
-controls, font = None, None
+font = None
 char_sel, text = None, None
 player_colors = None
 
@@ -50,27 +51,8 @@ def init_media():
                            "x_offset": media_info['arrows'][name]['x_offset'],
                            "y_offset" : media_info['arrows'][name]['y_offset']})
 
-
-def init_controls():
-    global controls
-    control_file = open('General/controls.txt', 'r')
-    control_info = json.load(control_file)
-    control_file.close()
-
-    controls = []
-    for id in control_info:
-        controls.append({"player_id":int(id),
-                         "up":    key_mapping.map_key(control_info[id]['up']),
-                         "down":  key_mapping.map_key(control_info[id]['down']),
-                         "left":  key_mapping.map_key(control_info[id]['left']),
-                         "right": key_mapping.map_key(control_info[id]['right']),
-                         "pause": key_mapping.map_key(control_info[id]['pause']),
-                         "submit": key_mapping.map_key(control_info[id]['submit'])})
-
-
 def enter():
     init_media()
-    init_controls()
 
 
 def exit():
@@ -109,14 +91,14 @@ def handle_events(frame_time):
     events = get_events()
     for event in events:
         if event.type == SDL_KEYDOWN:
-            for i in range(len(controls)):
-                char_sel.handle_events(frame_time, event, controls[i]['player_id'],
-                                       controls[i]['left'], controls[i]['right'],
-                                       controls[i]['up'], controls[i]['down'])
-                if event.key == controls[i]['pause']:
+            for i in range(len(key.controls)):
+                char_sel.handle_events(frame_time, event, key.controls[i]['player_id'],
+                                       key.controls[i]['left'], key.controls[i]['right'],
+                                       key.controls[i]['up'], key.controls[i]['down'])
+                if event.key == key.controls[i]['pause']:
                     pFramework.pop_state()
                     break
-                if event.key == controls[i]['submit']:
+                if event.key == key.controls[i]['submit']:
                     pFramework.push_state(map_select)
         elif event.type == SDL_QUIT:
             pFramework.quit()

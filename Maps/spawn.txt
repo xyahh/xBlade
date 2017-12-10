@@ -10,9 +10,5 @@
 "Ancient Valley": 	{	
 		"1":{"x": 200, "y": 300, "state": 0, "action": "Move"},
 	 	"2":{"x": 600, "y": 300, "state": 1, "action": "Move"}
-		},
-"Space Frontier": 	{	
-		"1":{"x": 50, "y": 450, "state": 0, "action": "Move"},
-	 	"2":{"x": 750, "y": 450, "state": 1, "action": "Move"}
 		}
 }

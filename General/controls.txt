@@ -4,8 +4,9 @@
 	"left": "LEFT", 
 	"down": "DOWN",
 	"right": "RIGHT",  
-	"pause": "DEL", 
-	"submit": "ENTER"
+	"pause": "BACK", 
+	"submit": "ENTER",
+	"action1": "O"
 	},
 "2": 	{	
 	"up": "W", 
@@ -13,6 +14,7 @@
 	"down": "S", 
 	"right": "D", 
 	"pause": "ESC", 
-	"submit": "SPACE"
+	"submit": "SPACE",
+	"action1": "T"
 	}
 }

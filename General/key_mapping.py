@@ -29,6 +29,24 @@ KEY_MAP = \
     "9": SDLK_9, "F10": SDLK_F10, "F20": SDLK_F20
 }
 
+controls = None
 
 def map_key(string):
     return KEY_MAP[string]
+
+
+def bind_keys():
+    global controls
+    control_file = open('General/controls.txt', 'r')
+    control_info = json.load(control_file)
+    control_file.close()
+
+    controls = []
+    for id in control_info:
+        controls.append({"player_id": int(id),
+                         "up": map_key(control_info[id]['up']),
+                         "down": map_key(control_info[id]['down']),
+                         "left": map_key(control_info[id]['left']),
+                         "right": map_key(control_info[id]['right']),
+                         "pause": map_key(control_info[id]['pause']),
+                         "submit": map_key(control_info[id]['submit'])})

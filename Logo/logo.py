@@ -9,14 +9,14 @@ images = None
 logo_time, alpha = 0.0, 0.0
 fade_in, fade_out = None, None
 
-win_width, win_height, win_title = None, None, None
+win_width, win_height, win_caption = None, None, None
 
 FADE_TIME_CONSTRAINT, LOGO_SHOW_TIME_CONSTRAINT, MAX_ALPHA_VALUE = None, None, None
 alpha_change_rate = None
 
 
 def init_window():
-    global win_width, win_height, win_title
+    global win_width, win_height, win_caption
 
     window_file = open('Logo/window.txt', 'r')
     window_info = json.load(window_file)
@@ -24,9 +24,9 @@ def init_window():
 
     win_width = window_info['width']
     win_height = window_info['height']
-    win_title = window_info['title']
+    win_caption = window_info['title']
 
-    open_canvas(w=win_width, h=win_height, title=win_title)
+    open_canvas(w=win_width, h=win_height, title=win_caption)
 
 
 def init_images():

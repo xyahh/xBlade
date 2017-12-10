@@ -1,34 +1,14 @@
 from pico2d import *
-import pyglet  # 3rd party audio player
-from pyglet.media import Player
 from Characters import char_select
-from General import pFramework, key_mapping
+from General import pFramework
+from General import key_mapping as key
 
 file_name = "MainMenu"
 
+num_of_players, num_of_players_choices, choice = None, None, None
+options, main_theme = None, None
 RECT_W, RECT_H = None, None
 images, font = None, None
-song, player = None, None
-options, controls = None, None
-num_of_players, num_of_players_choices, choice = None, None, None
-
-
-def init_controls():
-    global controls
-    control_file = open('General/controls.txt', 'r')
-    control_info = json.load(control_file)
-    control_file.close()
-
-    controls = []
-    for id in control_info:
-        controls.append({"player_id":int(id),
-                         "up":    key_mapping.map_key(control_info[id]['up']),
-                         "down":  key_mapping.map_key(control_info[id]['down']),
-                         "left":  key_mapping.map_key(control_info[id]['left']),
-                         "right": key_mapping.map_key(control_info[id]['right']),
-                         "pause": key_mapping.map_key(control_info[id]['pause']),
-                         "submit": key_mapping.map_key(control_info[id]['submit'])})
-
 
 def init_images():
     global images
@@ -42,17 +22,16 @@ def init_images():
                        "x": image_info[name]['x'], "y": image_info[name]['y']})
 
 
-def init_pyglet():
-    global song, player, main_theme
-    song = pyglet.media.load('Menu/menu_theme.mp3')
-    player = Player()
-    player.queue(song)
-    player.eos_action = player.EOS_LOOP
-    player.play()
+def init_sounds():
+    global main_theme
+    main_theme = load_music('Menu/menu_theme.mp3')
+    main_theme.set_volume(64)
+    #main_theme.repeat_play()
 
 
 def init_menu():
     global font, options, RECT_H, RECT_W, num_of_players_choices, choice
+    key.bind_keys()
     menu_file = open('Menu/menu.txt', 'r')
     menu_info = json.load(menu_file)
     menu_file.close()
@@ -72,15 +51,14 @@ def init_menu():
 
 
 def enter():
+    init_sounds()
     init_images()
     init_menu()
-    init_pyglet()
-    init_controls()
 
 
 def exit():
-    global images, options
-    del images, options
+    global images, options, main_theme
+    del images, options, main_theme
 
 
 def update(frame_time):
@@ -103,12 +81,12 @@ def handle_events(frame_time):
     events = get_events()
     for event in events:
         if event.type == SDL_KEYDOWN:
-            for i in range(len(controls)):  # can add the control id check if only one player needs to control menu
-                if event.key == controls[i]['up']:
+            for i in range(len(key.controls)):  # can add the control id check if only one player needs to control menu
+                if event.key == key.controls[i]['up']:
                     choice= (choice + 1) % len(options)
-                elif event.key == controls[i]['down']:
+                elif event.key == key.controls[i]['down']:
                     choice = (choice - 1) % len(options)
-                elif event.key == controls[i]['submit']:
+                elif event.key == key.controls[i]['submit']:
                     if choice > 0:
                         num_of_players = num_of_players_choices[choice]
                         pFramework.push_state(char_select)
