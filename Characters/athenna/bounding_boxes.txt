@@ -12,5 +12,12 @@
 	"RUN_L": {"damage": 10,"left":-60, "right": 15, "top":40, "bottom": -45},
 	"JUMP_R": {"damage": 7,"left":-15, "right": 75, "top":30, "bottom": -75},
 	"JUMP_L": {"damage": 7,"left":-75, "right": 15, "top":30, "bottom": -75}		
+	},
+"Im_Hit": {"STAND_R": {"damage": 0,"left":-70, "right": 70, "top":70, "bottom": -45},
+	"STAND_L": {"damage": 0,"left":-70, "right": 70, "top":70, "bottom": -45},
+	"RUN_R": {"damage": 0,"left":-15, "right": 60, "top":40, "bottom": -45},
+	"RUN_L": {"damage": 0,"left":-60, "right": 15, "top":40, "bottom": -45},
+	"JUMP_R": {"damage": 0,"left":-15, "right": 75, "top":30, "bottom": -75},
+	"JUMP_L": {"damage": 0,"left":-75, "right": 15, "top":30, "bottom": -75}		
 	}	
 }

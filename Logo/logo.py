@@ -28,7 +28,6 @@ def init_window():
 
     open_canvas(w=win_width, h=win_height, title=win_caption)
 
-
 def init_images():
     global images
     image_file = open('Logo/image.txt', 'r')

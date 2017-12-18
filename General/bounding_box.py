@@ -23,9 +23,9 @@ class BoundingBox:
             if obj['has_bbox']:
                 self.map_object_id.append(i)
                 self.map_box.append((obj['pos_x'] + obj['bounding_box'][LEFT],
-                                obj['pos_y'] + obj['bounding_box'][TOP],
-                                obj['pos_x'] + obj['bounding_box'][RIGHT],
-                                obj['pos_y'] + obj['bounding_box'][BOTTOM]))
+                                     obj['pos_y'] + obj['bounding_box'][TOP],
+                                     obj['pos_x'] + obj['bounding_box'][RIGHT],
+                                     obj['pos_y'] + obj['bounding_box'][BOTTOM]))
 
     def update_char_box(self):
         self.char_box.clear()

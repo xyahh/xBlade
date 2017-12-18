@@ -34,7 +34,7 @@
 	"bounding_box": {"left": -35, "top": 48, "right": 35, "bottom": 25}
 	},
 "platform2" :{"img": "Maps/platform.png", "has_img": 1,
-		"start_x":100, "start_y":280, "dir_x": 80, "dir_y": 0,
+		"start_x":100, "start_y":280, "dir_x": 160, "dir_y": 0,
 		"limit_x1": 50,  "limit_x2": 500, "limit_y1": 100, "limit_y2": 400,
 		"new": 0, "factor_x": -1, "factor_y": 1,
 	"has_bbox": 1,

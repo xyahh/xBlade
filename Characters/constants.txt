@@ -2,11 +2,15 @@
 "Physics": {"PIXEL_PER_METER": 40,
     	"RUN_SPEED_KMPH": 40,
 	"GRAVITY_M2PS": 1,
-    	"JUMP_SPEED_KMPH": 100.0},
+    	"JUMP_SPEED_KMPH": 100.0,
+	"DEPTH_SIZE": 800.0},
 "Events":  	{"TIME_PER_ACTION": 0.5},
 "States":	{"STAND_R": 0,  "STAND_L": 1,
 	"RUN_R": 2, "RUN_L": 3,
 	"JUMP_R": 4, "JUMP_L": 5},
-"Actions": 	{"MOVE": "Move", "ATTACK1": "Attack1"},
-"Char_Scale": 2
+"Actions": 	{"MOVE": {"name":"Move", "is_attack": 0}, 
+	  "ATTACK1": {"name":"Attack1", "is_attack": 1}, 
+	  "IM_HIT": {"name": "Im_Hit", "is_attack": 0}},
+"Char_Scale": 2,
+"Char_Lives": 3
 }

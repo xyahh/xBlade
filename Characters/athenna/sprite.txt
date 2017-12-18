@@ -1,6 +1,11 @@
 {
 "Move": {"path": "Characters/athenna/move_sprite.png",
-	"SFrames": 4, "RFrames": 11, "JFrames": 6, "w":45, "h":45},
+	"SFrames": 4, "RFrames": 11, "JFrames": 6, "w":45, "h":45,
+	"SLoop": 1, "RLoop": 1, "JLoop": 1},
 "Attack1": {"path": "Characters/athenna/basicatk_sprite.png",
-	"SFrames": 10, "RFrames":9, "JFrames":9, "w": 80, "h": 80}
+	"SFrames": 10, "RFrames":9, "JFrames":9, "w": 80, "h": 80,
+	"SLoop": 0, "RLoop": 0, "JLoop": 0},
+"Im_Hit": {"path": "Characters/athenna/takingdmg_sprite.png",
+	"SFrames": 5, "RFrames":5, "JFrames":5, "w": 49, "h": 49,
+	"SLoop": 0, "RLoop": 0, "JLoop": 0}
 }

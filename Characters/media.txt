@@ -22,5 +22,6 @@
 	"2": 	{"player_id": 2, "x": 50, "y":   30, "red": 50, "green": 50, "blue": 255},
 	"3": 	{"player_id": 3, "x": 250, "y":   60, "red": 255, "green": 255, "blue": 50},
 	"4":	{"player_id": 4, "x": 250, "y":   30, "red": 50, "green": 255, "blue": 50}
-	}
+	},
+"heart": {"img": "Characters/heart.png", "w": 10, "h":10}
 }

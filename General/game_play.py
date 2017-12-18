@@ -12,6 +12,7 @@ from Characters import char_select
 file_name = "Gameplay"
 pause_game = None
 char, map = None, None
+winner = None
 boxes = None
 show_boxes = False
 
@@ -30,13 +31,20 @@ def init_map_and_chars():
 def enter():
    init_map_and_chars()
 
+
 def exit(): pass
 
 
 def update(frame_time):
     map.update(frame_time)
+    alive = []
     for i in range(len(char)):
-        char[i].update(frame_time, boxes)
+        if char[i].update(frame_time, boxes):
+            alive.append(i)
+
+    if len(alive) == 1:
+        pass  # here process win
+
     boxes.update()
 
 
@@ -46,7 +54,7 @@ def draw(frame_time):
     for i in range(len(char)):
         char[len(char)-i-1].draw()  # reversed drawing. Player 1 drawn at the top
     if show_boxes: boxes.draw()
-    #boxes.draw()
+    boxes.draw()
     update_canvas()
 
 
