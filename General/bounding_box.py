@@ -2,11 +2,11 @@ from pico2d import *
 
 
 class BoundingBox:
-    LEFT, TOP, RIGHT, BOTTOM, DAMAGE = range(5)
+    LEFT, TOP, RIGHT, BOTTOM, DAMAGE, HEAL = range(6)
 
-    def __init__(self, char, map : object):
-        global LEFT, TOP, RIGHT, BOTTOM, DAMAGE
-        LEFT, TOP, RIGHT, BOTTOM, DAMAGE = range(5)
+    def __init__(self, char, map: object):
+        global LEFT, TOP, RIGHT, BOTTOM, DAMAGE, HEAL
+        LEFT, TOP, RIGHT, BOTTOM, DAMAGE, HEAL = range(6)
         self.char = char
         self.map = map
         self.map_object_id = []

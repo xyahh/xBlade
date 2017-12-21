@@ -27,7 +27,7 @@ def init_sounds():
     global main_theme
     main_theme = load_music('Menu/menu_theme.mp3')
     main_theme.set_volume(64)
-    #main_theme.repeat_play()
+    main_theme.repeat_play()
 
 
 def init_menu():

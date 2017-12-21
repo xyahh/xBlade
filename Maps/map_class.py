@@ -20,49 +20,34 @@ class Map:
                 for obj_name in object_info:
                     img = None
                     has_img = object_info[obj_name]['has_img']
-                    if has_img: img = load_image(object_info[obj_name]['img'])
-                    self.map_objects.append({"name": obj_name, "img": img, "has_img": has_img,
-                                             "start_x": object_info[obj_name]['start_x'],
-                                             "start_y": object_info[obj_name]['start_y'],
-                                             "pos_x": object_info[obj_name]['start_x'],
-                                             "pos_y": object_info[obj_name]['start_y'],
-                                             "dir_x": object_info[obj_name]['dir_x'],
-                                             "dir_y": object_info[obj_name]['dir_y'],
-                                             "limit_x1": object_info[obj_name]['limit_x1'],
-                                             "limit_y1": object_info[obj_name]['limit_y1'],
-                                             "limit_x2": object_info[obj_name]['limit_x2'],
-                                             "limit_y2": object_info[obj_name]['limit_y2'],
-                                             "new": object_info[obj_name]['new'],
-                                             "factor_x": object_info[obj_name]['factor_x'],
-                                             "factor_y": object_info[obj_name]['factor_y'],
-                                             "has_bbox": object_info[obj_name]['has_bbox'],
-                                             "bounding_box": (object_info[obj_name]['bounding_box']['left'],
-                                                               object_info[obj_name]['bounding_box']['top'],
-                                                               object_info[obj_name]['bounding_box']['right'],
-                                                               object_info[obj_name]['bounding_box']['bottom'])
-                                             })
-                    self.map = {"name": name,
-                            "dsp_img": load_image(map_info[name]['dsp_img']),
-                            "x": map_info[name]['x'],
-                            "y": map_info[name]['y'],
-                            "map_img": load_image(map_info[name]['map_img']),
-                            "objects": self.map_objects}
+                    if has_img:
+                        img = load_image(object_info[obj_name]['img'])
+
+                    this_object = object_info[obj_name]
+                    this_object.update({"name": obj_name, "img": img, "has_img": has_img,
+                                        "pos_x": this_object['start_x'],
+                                        "pos_y": this_object['start_y'],
+                                        "bounding_box": (this_object['bounding_box']['left'],
+                                                         this_object['bounding_box']['top'],
+                                                         this_object['bounding_box']['right'],
+                                                         this_object['bounding_box']['bottom'])})
+                    self.map_objects.append(this_object)
+                    self.map = {"name": name, "dsp_img": load_image(map_info[name]['dsp_img']),
+                                "x": map_info[name]['x'],
+                                "y": map_info[name]['y'],
+                                "map_img": load_image(map_info[name]['map_img']), "objects": self.map_objects}
 
     def init_spawn(self, map_name, num_of_players):
         spawn_file = open('Maps/spawn.txt', 'r')
         spawn_info = json.load(spawn_file)
         spawn_file.close()
-
         self.spawn = []
-        
         for name in spawn_info:
             if name == map_name and len(spawn_info[name]) >= num_of_players:
                 for i in spawn_info[name]:
-                    self.spawn.append({"player_id": int(i),
-                                       "x": spawn_info[name][i]['x'],
-                                       "y": spawn_info[name][i]['y'],
-                                       "state": spawn_info[name][i]['state'],
-                                       "action": spawn_info[name][i]['action']})
+                    spawn_dict = spawn_info[name][i]
+                    spawn_dict.update({"player_id": int(i)})
+                    self.spawn.append(spawn_dict)
 
     def __init__(self, map_name, num_of_players):
         self.init_map(map_name)
@@ -123,8 +108,12 @@ class MapSelect:
 
     def handle_events(self, event, left_key, right_key):
         if event.key == left_key:
-            if self.id == 0: self.id = len(self.map) -1
-            else: self.id -= 1
+            if self.id == 0:
+                self.id = len(self.map) -1
+            else:
+                self.id -= 1
         if event.key == right_key:
-            if self.id == len(self.map)-1: self.id = 0
-            else: self.id += 1
+            if self.id == len(self.map)-1:
+                self.id = 0
+            else:
+                self.id += 1

@@ -39,6 +39,7 @@ def update(frame_time):
     map.update(frame_time)
     alive = []
     for i in range(len(char)):
+
         if char[i].update(frame_time, boxes):
             alive.append(i)
 
@@ -53,8 +54,8 @@ def draw(frame_time):
     map.draw()
     for i in range(len(char)):
         char[len(char)-i-1].draw()  # reversed drawing. Player 1 drawn at the top
-    if show_boxes: boxes.draw()
-    boxes.draw()
+    if show_boxes:
+        boxes.draw()
     update_canvas()
 
 
@@ -67,13 +68,15 @@ def handle_events(frame_time):
                 char[i].handle_events(frame_time, event, key.controls[i]['player_id'],
                                       key.controls[i]['left'], key.controls[i]['right'],
                                       key.controls[i]['up'], key.controls[i]['down'],
-                                      key.controls[i]['attack1'])
+                                      key.controls[i]['ability1'], key.controls[i]['ability2'])
             if event.key == key.controls[i]['pause']:
                 pFramework.pop_state()
 
         if event.key == SDLK_F1 and event.type == SDL_KEYDOWN:
-            if show_boxes: show_boxes = False
-            else: show_boxes = True
+            if show_boxes:
+                show_boxes = False
+            else:
+                show_boxes = True
         if event.type == SDL_QUIT:
             pFramework.quit()
 

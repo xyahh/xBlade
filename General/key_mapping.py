@@ -43,11 +43,8 @@ def bind_keys():
 
     controls = []
     for id in control_info:
-        controls.append({"player_id": int(id),
-                         "up": map_key(control_info[id]['up']),
-                         "down": map_key(control_info[id]['down']),
-                         "left": map_key(control_info[id]['left']),
-                         "right": map_key(control_info[id]['right']),
-                         "pause": map_key(control_info[id]['pause']),
-                         "submit": map_key(control_info[id]['submit']),
-                         "attack1": map_key(control_info[id]['attack1'])})
+        controls_dict = control_info[id]
+        for i in controls_dict:
+            controls_dict[i] = map_key(controls_dict[i])
+        controls_dict.update({"player_id": int(id)})
+        controls.append(controls_dict)
