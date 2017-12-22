@@ -1,4 +1,26 @@
 {
 "Move": {"path": "Characters/zero/move_sprite.png",
-	"SFrames": 4, "RFrames": 11, "JFrames": 6, "w":45, "h":45}
+	"has_sound": 0, "sound":"",
+	"SFrames":	{"frames": 4, "loop": 1, "action_time_ratio":1.0, "extra_jump": 0}, 
+	"RFrames":{"frames":11,"loop": 1, "action_time_ratio":1.0, "extra_jump": 0}, 
+	"JFrames":	{"frames": 6, "loop": 1, "action_time_ratio":1.0, "extra_jump": 0}, 
+	"w":45, "h":45},
+"Ability1": {"path": "Characters/zero/ability1_sprite.png",
+	"has_sound": 1,  "sound":"sword_slash",
+	"SFrames": {"frames": 7, "loop": 0, "action_time_ratio":1.2, "extra_jump": 0}, 
+	"RFrames": {"frames": 7, "loop": 0, "action_time_ratio":1.2, "extra_jump": 0}, 
+	"JFrames": {"frames": 6, "loop": 0, "action_time_ratio":1.4, "extra_jump": 0}, 
+	"w":61, "h":52},
+"Ability2": {"path": "Characters/zero/ability1_sprite.png",
+	"has_sound": 1,  "sound":"sword_slash",
+	"SFrames": {"frames": 7, "loop": 0, "action_time_ratio":1.5, "extra_jump": 0}, 
+	"RFrames": {"frames": 7, "loop": 0, "action_time_ratio":1.5, "extra_jump": 0}, 
+	"JFrames": {"frames": 6, "loop": 0, "action_time_ratio":1.2, "extra_jump": 0}, 
+	"w":61, "h":52},
+"Im_Hit": {"path": "Characters/zero/imhit_sprite.png",
+	"has_sound": 0, "sound":"",
+	"SFrames":  {"frames": 4, "loop": 0, "action_time_ratio":2.0, "extra_jump": 0}, 
+	"RFrames": {"frames": 4, "loop": 0, "action_time_ratio":2.0, "extra_jump": 0}, 
+	"JFrames":  {"frames": 4, "loop": 0, "action_time_ratio":2.0, "extra_jump": 0}, 
+	"w": 39, "h": 37}
 }

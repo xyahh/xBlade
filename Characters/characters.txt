@@ -10,5 +10,11 @@
 		"bounding_boxes":"Characters/xyan/bounding_boxes.txt",
 		"hp": {	"dx": 0, "dy": 60, "hp": 100,
 			"bar":"Characters/hp_bar.png", 
+			"red":"Characters/hp.png"}},
+"Zero" :		{"img": "Characters/zero/img.png", 
+		"sprite": "Characters/zero/sprite.txt",
+		"bounding_boxes":"Characters/zero/bounding_boxes.txt",
+		"hp": {	"dx": 0, "dy": 60, "hp": 100,
+			"bar":"Characters/hp_bar.png", 
 			"red":"Characters/hp.png"}}
 }

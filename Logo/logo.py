@@ -32,10 +32,12 @@ def init_window():
 def init_media():
     global images
 
-    sound.add("main", "Sound/menu_theme.wav", is_bgm=True)
-    sound.add("submit", "Sound/button_submit.wav", is_bgm=False)
-    sound.add("change", "Sound/button_change.wav", is_bgm=False)
-    sound.add("back", "Sound/button_back.wav", is_bgm=False)
+    sound_file = open('Sound/sound.txt', 'r')
+    sound_info = json.load(sound_file)
+    sound_file.close()
+
+    for sound_name in sound_info:
+        sound.add(sound_name, sound_info[sound_name]['path'], sound_info[sound_name]['is_bgm'])
 
     image_file = open('Logo/image.txt', 'r')
     image_info = json.load(image_file)

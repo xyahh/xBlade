@@ -256,6 +256,8 @@ class Character:
 
     def process_action(self, ACTION_NAME):
         self.action = ACTIONS[ACTION_NAME]
+        if self.char['sprite'][self.action]['has_sound']:
+            sound.play(self.char['sprite'][self.action]['sound'])
         self.i_hit = False
         self.total_frames = 0.0
         if self.char['sprite'][self.action][STATES[self.state]]['extra_jump'] and not self.extra_jump:
