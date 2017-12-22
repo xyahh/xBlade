@@ -54,7 +54,7 @@ class Character:
 
         STATES = {}
         for i in constants['States']:
-            STATES.update({i: constants['States'][i]})
+            STATES.update({i: constants['States'][i], constants['States'][i]: constants['StateMap'][i]})
 
         ACTIONS = {}
         for i in constants['Actions']:
@@ -72,7 +72,7 @@ class Character:
         self.spawn_x, self.spawn_y = (spawn_x, spawn_y)
         self.x, self.y = (spawn_x, spawn_y)
         self.curr_time = self.start_time = 0
-        self.i_hit, self.im_hit = False, False
+        self.i_hit, self.im_hit, self.extra_jump = False, False, False
         self.action = spawn_action
         self.player_id = player_id
         self.lives = LIVES_PER_CHAR
@@ -199,14 +199,9 @@ class Character:
                             self.i_hit = True
 
     def update_frames(self, frame_time):
-        state_frames = None
-        if self.state in (STATES['STAND_R'], STATES['STAND_L']):
-            state_frames = 'SFrames'
-        elif self.state in (STATES['RUN_R'], STATES['RUN_L']):
-            state_frames = 'RFrames'
-        elif self.state in (STATES['JUMP_R'], STATES['JUMP_L']):
-            state_frames = 'JFrames'
-        self.total_frames += self.char['sprite'][self.action][state_frames]['frames'] * ACTION_PER_TIME * frame_time
+        state_frames = STATES[self.state]
+        self.total_frames += self.char['sprite'][self.action][state_frames]['frames'] * ACTION_PER_TIME * \
+                             frame_time * self.char['sprite'][self.action][state_frames]['action_time_ratio']
         self.frame = int(self.total_frames) % self.char['sprite'][self.action][state_frames]['frames']
         if self.action != ACTIONS['MOVE'] \
                 and self.total_frames > self.char['sprite'][self.action][state_frames]['frames']\
@@ -243,7 +238,7 @@ class Character:
                 self.last_y = self.y  # update position for the next jump / fall
                 self.x += boxes.map.map['objects'][boxes.map_object_id[i]]['dir_x'] * frame_time  # update direction
                 self.accel = 0
-                self.jump_key_down = False
+                self.jump_key_down, self.extra_jump = False, False
                 break
 
         distance = RUN_SPEED_PPS * frame_time
@@ -258,15 +253,20 @@ class Character:
     def get_name(self):
         return self.char['name']
 
+    def process_action(self, ACTION_NAME):
+        self.action = ACTIONS[ACTION_NAME]
+        self.i_hit = False
+        self.total_frames = 0.0
+        if self.char['sprite'][self.action][STATES[self.state]]['extra_jump'] and not self.extra_jump:
+            self.extra_jump, self.jump_key_down = True, True
+            self.start_time = self.curr_time = 0.0
+            self.last_y = self.y
+
     def handle_actions(self, frame_time, event, ability1_key, ability2_key):
         if event.key == ability1_key and event.type == SDL_KEYDOWN and self.action != ACTIONS['ABILITY1']:
-            self.action = ACTIONS['ABILITY1']
-            self.i_hit = False
-            self.total_frames = 0.0
+            self.process_action('ABILITY1')
         if event.key == ability2_key and event.type == SDL_KEYDOWN and self.action != ACTIONS['ABILITY2']:
-            self.action = ACTIONS['ABILITY2']
-            self.i_hit = False
-            self.total_frames = 0.0
+            self.process_action('ABILITY2')
 
     def handle_moves(self, frame_time, event, left_key, right_key, jump_key):
         if event.key == left_key:

@@ -1,0 +1,22 @@
+{
+"Move": {"path": "Characters/xyan/move_sprite.png",
+	"SFrames":	{"frames": 4, "loop": 1, "action_time_ratio":1.0, "extra_jump": 0}, 
+	"RFrames":{"frames":11,"loop": 1, "action_time_ratio":1.0, "extra_jump": 0}, 
+	"JFrames":	{"frames": 6, "loop": 1, "action_time_ratio":1.0, "extra_jump": 0}, 
+	"w":38, "h":47},
+"Ability1": {"path": "Characters/xyan/ability1_sprite.png",
+	"SFrames": {"frames": 6, "loop": 0, "action_time_ratio":1.5, "extra_jump": 0}, 
+	"RFrames": {"frames": 5, "loop": 0, "action_time_ratio":1.5, "extra_jump": 0}, 
+	"JFrames": {"frames": 11, "loop": 0, "action_time_ratio":1.2, "extra_jump": 0}, 
+	"w":80, "h":65},
+"Ability2": {"path": "Characters/xyan/ability2_sprite.png",
+	"SFrames": {"frames": 10, "loop": 0, "action_time_ratio":1.0, "extra_jump": 1}, 
+	"RFrames": {"frames": 10, "loop": 0, "action_time_ratio":1.0, "extra_jump": 1}, 
+	"JFrames": {"frames": 10, "loop": 0, "action_time_ratio":1.0, "extra_jump": 1}, 
+	"w":57, "h":66},
+"Im_Hit": {"path": "Characters/xyan/imhit_sprite.png",
+	"SFrames":  {"frames": 7, "loop": 0, "action_time_ratio":2.0, "extra_jump": 0}, 
+	"RFrames": {"frames": 7, "loop": 0, "action_time_ratio":2.0, "extra_jump": 0}, 
+	"JFrames":  {"frames": 7, "loop": 0, "action_time_ratio":2.0, "extra_jump": 0}, 
+	"w": 49, "h": 49}
+}

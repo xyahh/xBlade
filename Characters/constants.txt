@@ -14,6 +14,11 @@
 	"RUN_R": 2, 	"RUN_L": 3,
 	"JUMP_R": 4, 	"JUMP_L": 5
 	},
+"StateMap":{
+	"STAND_R": "SFrames",  	"STAND_L": "SFrames",
+	"RUN_R": "RFrames", 	"RUN_L": "RFrames",
+	"JUMP_R": "JFrames", 	"JUMP_L": "JFrames"
+	},
 "Actions":	{
 	"MOVE": 		{"name":"Move", 	"is_attack": 0}, 
 	"ABILITY1": 	{"name":"Ability1", 	"is_attack": 1}, 
