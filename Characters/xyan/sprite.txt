@@ -18,5 +18,5 @@
 	"SFrames":  {"frames": 7, "loop": 0, "action_time_ratio":2.0, "extra_jump": 0}, 
 	"RFrames": {"frames": 7, "loop": 0, "action_time_ratio":2.0, "extra_jump": 0}, 
 	"JFrames":  {"frames": 7, "loop": 0, "action_time_ratio":2.0, "extra_jump": 0}, 
-	"w": 49, "h": 49}
+	"w": 35, "h": 42}
 }

@@ -15,12 +15,12 @@
 	"JUMP_L": 	{"damage": 8, "heal": 0, "left":-75, "right": 15, "top":30, "bottom": -75}
 	},
 "Ability2": {
-	"STAND_R": 	{"damage": 0, "heal": 5, "left":-80, "right": 80, "top":60, "bottom": -45},
-	"STAND_L": 	{"damage": 0, "heal": 5, "left":-80, "right": 80, "top":60, "bottom": -45},
-	"RUN_R": 	{"damage": 0, "heal": 5, "left":-80, "right": 80, "top":60, "bottom": -45},
-	"RUN_L": 	{"damage": 0, "heal": 5, "left":-80, "right": 80, "top":60, "bottom": -45},
-	"JUMP_R": 	{"damage": 0, "heal": 5, "left":-80, "right": 80, "top":60, "bottom": -60},
-	"JUMP_L": 	{"damage": 0, "heal": 5, "left":-80, "right": 80, "top":60, "bottom": -60}
+	"STAND_R": 	{"damage": 0, "heal": 5, "left":-130, "right": 130, "top":80, "bottom": -45},
+	"STAND_L": 	{"damage": 0, "heal": 5, "left":-130, "right": 130, "top":80, "bottom": -45},
+	"RUN_R": 	{"damage": 0, "heal": 5, "left":-130, "right": 130, "top":80, "bottom": -45},
+	"RUN_L": 	{"damage": 0, "heal": 5, "left":-130, "right": 130, "top":80, "bottom": -45},
+	"JUMP_R": 	{"damage": 0, "heal": 5, "left":-130, "right": 130, "top":80, "bottom": -60},
+	"JUMP_L": 	{"damage": 0, "heal": 5, "left":-130, "right": 130, "top":80, "bottom": -60}
 	},
 "Im_Hit": {
 	"STAND_R": 	{"damage": 0, "heal": 0, "left":-15, "right": 15, "top":-30, "bottom": -45},

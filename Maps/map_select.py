@@ -2,6 +2,7 @@ from pico2d import *
 
 from General import game_play, pFramework
 from General import key_mapping as key
+from Sound import sound_manager as sound
 from Maps.map_class import MapSelect
 from Characters import char_select
 from Menu import main_menu
@@ -116,9 +117,11 @@ def handle_events(frame_time):
             for i in range(len(key.controls)):
                 map_sel.handle_events(event, key.controls[i]['left'], key.controls[i]['right'])
                 if event.key == key.controls[i]['pause']:
+                    sound.play("back")
                     pFramework.pop_state()
                     break
                 if event.key == key.controls[i]['submit']:
+                    sound.play("submit")
                     pFramework.push_state(game_play)
         elif event.type == SDL_QUIT:
             pFramework.quit()

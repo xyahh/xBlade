@@ -75,12 +75,5 @@
 		"new": 0, "factor_x": 1, "factor_y": -1,
 	"has_bbox": 1,
 	"bounding_box": {"left": -35, "top": 48, "right": 35, "bottom": 25}
-	},
-"platform3" :{"img": "Maps/platform.png", "has_img": 1,
-		"start_x":700, "start_y":550, "dir_x": 0, "dir_y": 0,
-		"limit_x1": 0,  "limit_x2": 0, "limit_y1": 200, "limit_y2": 500,
-		"new": 0, "factor_x": 1, "factor_y": -1,
-	"has_bbox": 1,
-	"bounding_box": {"left": -35, "top": 48, "right": 35, "bottom": 25}
 	}
 }

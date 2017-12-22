@@ -1,4 +1,5 @@
 from pico2d import *
+from Sound import sound_manager as sound
 file_name = "MapClass"
 
 
@@ -22,7 +23,6 @@ class Map:
                     has_img = object_info[obj_name]['has_img']
                     if has_img:
                         img = load_image(object_info[obj_name]['img'])
-
                     this_object = object_info[obj_name]
                     this_object.update({"name": obj_name, "img": img, "has_img": has_img,
                                         "pos_x": this_object['start_x'],
@@ -108,11 +108,13 @@ class MapSelect:
 
     def handle_events(self, event, left_key, right_key):
         if event.key == left_key:
+            sound.play("change")
             if self.id == 0:
                 self.id = len(self.map) -1
             else:
                 self.id -= 1
         if event.key == right_key:
+            sound.play("change")
             if self.id == len(self.map)-1:
                 self.id = 0
             else:

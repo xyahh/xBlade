@@ -1,5 +1,6 @@
 from pico2d import *
 from General.bounding_box import BoundingBox
+from Sound import sound_manager as sound
 from Logo import logo
 file_name = "CharacterClass"
 
@@ -263,9 +264,10 @@ class Character:
             self.last_y = self.y
 
     def handle_actions(self, frame_time, event, ability1_key, ability2_key):
-        if event.key == ability1_key and event.type == SDL_KEYDOWN and self.action != ACTIONS['ABILITY1']:
+        ability_list = (ACTIONS['ABILITY1'], ACTIONS['ABILITY2'])
+        if event.key == ability1_key and event.type == SDL_KEYDOWN and self.action not in ability_list:
             self.process_action('ABILITY1')
-        if event.key == ability2_key and event.type == SDL_KEYDOWN and self.action != ACTIONS['ABILITY2']:
+        if event.key == ability2_key and event.type == SDL_KEYDOWN and self.action not in ability_list:
             self.process_action('ABILITY2')
 
     def handle_moves(self, frame_time, event, left_key, right_key, jump_key):
@@ -277,8 +279,10 @@ class Character:
                 self.last_key = STATES['STAND_L']
         if event.key == right_key:
             self.right_key_down = event.type == SDL_KEYDOWN and not self.im_hit
-            if self.right_key_down: self.last_key = STATES['RUN_R']
-            else: self.last_key = STATES['STAND_R']
+            if self.right_key_down:
+                self.last_key = STATES['RUN_R']
+            else:
+                self.last_key = STATES['STAND_R']
         if event.key == jump_key and event.type == SDL_KEYDOWN and not self.jump_key_down and not self.im_hit:
             self.start_time = self.curr_time =  self.total_frames = 0
             self.jump_key_down = True
@@ -309,6 +313,7 @@ class Character:
             self.handle_moves(frame_time, event, left_key, right_key, jump_key)
             self.handle_actions(frame_time, event, ability1_key, ability2_key)
 
+
 class CharacterSelect:
 
     def init_chars(self):
@@ -323,12 +328,7 @@ class CharacterSelect:
         selection_file = open('Characters/selection_format.txt', 'r')
         selection_info = json.load(selection_file)
         selection_file.close()
-
-        self.chars_per_row = selection_info['chars_per_row']
-        self.col_dist_diff = selection_info['col_dist_diff']
-        self.row_dist_diff = selection_info['row_dist_diff']
-        self.start_x = selection_info['start_x']
-        self.start_y = selection_info['start_y']
+        self.__dict__.update(selection_info)
 
     def init_players(self, player_num):
         self.player_choice = []
@@ -354,13 +354,17 @@ class CharacterSelect:
             i = player_id - 1
             if event.key == left_key:
                 if self.player_choice[i] > 0:
+                    sound.play("change")
                     self.player_choice[i] -= 1
             if event.key == right_key:
                 if self.player_choice[i] < self.size() - 1:
+                    sound.play("change")
                     self.player_choice[i] += 1
             if event.key == down_key:
                 if self.player_choice[i] < self.size() - self.chars_per_row:
+                    sound.play("change")
                     self.player_choice[i] += self.chars_per_row
             if event.key == up_key:
                 if self.player_choice[i] > self.chars_per_row - 1:
+                    sound.play("change")
                     self.player_choice[i] -= self.chars_per_row

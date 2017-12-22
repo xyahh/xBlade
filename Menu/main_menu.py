@@ -2,6 +2,7 @@ from pico2d import *
 from Characters import char_select
 from General import pFramework
 from General import key_mapping as key
+from Sound import sound_manager as sound
 
 file_name = "MainMenu"
 
@@ -24,10 +25,7 @@ def init_images():
 
 
 def init_sounds():
-    global main_theme
-    main_theme = load_music('Menu/menu_theme.mp3')
-    main_theme.set_volume(64)
-    main_theme.repeat_play()
+    sound.play("main")
 
 
 def init_menu():
@@ -84,10 +82,13 @@ def handle_events(frame_time):
         if event.type == SDL_KEYDOWN:
             for i in range(len(key.controls)):  # can add the control id check if only one player needs to control menu
                 if event.key == key.controls[i]['up']:
+                    sound.play("change")
                     choice= (choice + 1) % len(options)
                 elif event.key == key.controls[i]['down']:
+                    sound.play("change")
                     choice = (choice - 1) % len(options)
                 elif event.key == key.controls[i]['submit']:
+                    sound.play("submit")
                     if choice > 0:
                         num_of_players = num_of_players_choices[choice]
                         pFramework.push_state(char_select)

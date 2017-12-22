@@ -11,8 +11,8 @@
 	"STAND_L": 	{"damage": 2, "heal": 0, "left":-70, "right": 70, "top":70, "bottom": -45},
 	"RUN_R": 	{"damage": 4, "heal": 0, "left":-15, "right": 60, "top":40, "bottom": -45},
 	"RUN_L": 	{"damage": 4, "heal": 0, "left":-60, "right": 15, "top":40, "bottom": -45},
-	"JUMP_R": 	{"damage": 8, "heal": 0, "left":-15, "right": 75, "top":30, "bottom": -75},
-	"JUMP_L": 	{"damage": 8, "heal": 0, "left":-75, "right": 15, "top":30, "bottom": -75}
+	"JUMP_R": 	{"damage": 8, "heal": 0, "left":-70, "right": 60, "top":60, "bottom": -75},
+	"JUMP_L": 	{"damage": 8, "heal": 0, "left":-60, "right": 70, "top":60, "bottom": -75}
 	},
 "Ability2": {
 	"STAND_R": 	{"damage": 2, "heal": 2, "left":-40, "right": 60, "top":50, "bottom": -45},

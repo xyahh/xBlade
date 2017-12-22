@@ -2,7 +2,7 @@ from pico2d import *
 
 from General import pFramework
 from Menu import main_menu
-
+from Sound import sound_manager as sound
 file_name = "StartState"
 
 images = None
@@ -28,8 +28,15 @@ def init_window():
 
     open_canvas(w=win_width, h=win_height, title=win_caption)
 
-def init_images():
+
+def init_media():
     global images
+
+    sound.add("main", "Sound/menu_theme.wav", is_bgm=True)
+    sound.add("submit", "Sound/button_submit.wav", is_bgm=False)
+    sound.add("change", "Sound/button_change.wav", is_bgm=False)
+    sound.add("back", "Sound/button_back.wav", is_bgm=False)
+
     image_file = open('Logo/image.txt', 'r')
     image_info = json.load(image_file)
     image_file.close()
@@ -58,7 +65,7 @@ def init_fade():
 
 def enter():
     init_window()
-    init_images()
+    init_media()
     init_fade()
 
 
