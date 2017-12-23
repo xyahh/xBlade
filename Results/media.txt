@@ -1,0 +1,7 @@
+{
+"font": {"path":"General/lotr_font.ttf", "size":50},
+"images":
+	{
+	"background": {"path": "Results/results_screen.png", "x": 400, "y":300}
+	}
+}

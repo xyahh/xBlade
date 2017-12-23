@@ -122,6 +122,8 @@ def handle_events(frame_time):
                     break
                 if event.key == key.controls[i]['submit']:
                     sound.play("submit")
+                    sound.stop("main")
+                    sound.play(map_sel.get_curr_map_theme())
                     pFramework.push_state(game_play)
         elif event.type == SDL_QUIT:
             pFramework.quit()

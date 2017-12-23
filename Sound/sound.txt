@@ -1,9 +1,14 @@
-{
+	{
 	"main":		{"path":"Sound/menu_theme.wav", 	"is_bgm":1},
 	"submit":		{"path":"Sound/button_submit.wav", 	"is_bgm":0},
 	"change":		{"path":"Sound/button_change.wav", 	"is_bgm":0},
 	"back":		{"path":"Sound/button_back.wav", 	"is_bgm":0},
 	"sword_slash":	{"path":"Sound/sword_slash.wav", 	"is_bgm":0},
 	"heal":		{"path":"Sound/heal.wav",		"is_bgm":0},
-	"fire_slash":	{"path":"Sound/fire_slash.wav",		"is_bgm":0}
+	"fire_slash":	{"path":"Sound/fire_slash.wav",		"is_bgm":0},
+	"take_dmg":	{"path":"Sound/take_dmg.wav",		"is_bgm":0},
+	"victory":		{"path":"Sound/victory.wav",		"is_bgm":0},
+	"airship":		{"path":"Sound/airship.wav",		"is_bgm":1},
+	"haunted":		{"path":"Sound/haunted.wav",		"is_bgm":1},
+	"power":		{"path":"Sound/power.wav",		"is_bgm":1}
 }

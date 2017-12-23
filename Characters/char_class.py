@@ -105,6 +105,7 @@ class Character:
         font_info = json.load(font_path)
         font_path.close()
         self.font = load_font(font_info['font']['path'], font_info['font']['size'])
+        self.font2 = load_font(font_info['font']['path'], int(font_info['font']['size'] * 0.5))
         self.player_colors = {}
         for id in font_info['player_colors']:
             self.player_colors[int(id)] = (font_info['player_colors'][id]['R'],
@@ -142,21 +143,29 @@ class Character:
         self.init_other_media()
         self.init_bounding_boxes()
 
-    def draw(self):
+    def draw(self, override_x=None, override_y=None):
+        coord_x = self.x
+        coord_y = self.y
+        if override_x is not None:
+            coord_x = override_x
+        if override_y is not None:
+            coord_y = override_y
         h = self.char['sprite'][self.action]['h']
         w = self.char['sprite'][self.action]['w']
         self.char['sprite'][self.action]['img'].clip_draw(self.frame * w, self.state * h,
-                                                          w, h, self.x, self.y, w * CHAR_SCALE,
+                                                          w, h, coord_x, coord_y, w * CHAR_SCALE,
                                                           h * CHAR_SCALE)
-        x = self.char['hp']['dx'] + self.x
-        y = self.char['hp']['dy'] + self.y
+        x = self.char['hp']['dx'] + coord_x
+        y = self.char['hp']['dy'] + coord_y
         self.char['hp']['bar'].draw(x, y)
         h_ = self.char['hp']['bar'].h
         w_ = self.char['hp']['bar'].w
         dw = w_*(self.hp / self.max_hp)
         self.char['hp']['red'].draw(x-0.5*w_+0.5*dw, y, dw, h_)
-        self.font.draw(x-w_, y+h_, str(self.player_id),
-                       color=self.player_colors[self.player_id])
+        if self.player_id > 0:
+            self.font.draw(x-w_, y+h_, str(self.player_id), color=self.player_colors[self.player_id])
+        else:
+            self.font2.draw(x - w_*1.3, y + h_*0.8, 'Test', color=(125, 125, 125))
         heart = Character.heart
         for i in range(self.lives):
             heart['img'].draw(x-w_*0.5+i*heart['w']*2, y+h_+heart['h']*0.5, heart['w'], heart['h'])
@@ -172,6 +181,7 @@ class Character:
             if self.im_hit:
                 self.im_hit = False
             return False
+        return False
 
     def update(self, frame_time, boxes):
         game_end = self.check_hp()
@@ -193,6 +203,8 @@ class Character:
                                 boxes.char[i].hp -= dmg
                                 boxes.char[i].im_hit = True
                                 boxes.char[i].action = ACTIONS['IM_HIT']
+                                if boxes.char[i].char['sprite'][boxes.char[i].action]['has_sound']:
+                                    sound.play(boxes.char[i].char['sprite'][boxes.char[i].action]['sound'])
                                 boxes.char[i].total_frames = 0.0
                             self.hp += self.bounding_box[self.action][self.state][sd.HEAL]
                             if self.hp > self.max_hp:

@@ -18,7 +18,7 @@
 	"JFrames": {"frames": 10, "loop": 0, "action_time_ratio":1.0, "extra_jump": 1}, 
 	"w":57, "h":66},
 "Im_Hit": {"path": "Characters/xyan/imhit_sprite.png",
-	"has_sound": 0, "sound":"",
+	"has_sound": 1, "sound":"take_dmg",
 	"SFrames":  {"frames": 4, "loop": 0, "action_time_ratio":2.0, "extra_jump": 0}, 
 	"RFrames": {"frames": 4, "loop": 0, "action_time_ratio":2.0, "extra_jump": 0}, 
 	"JFrames":  {"frames": 4, "loop": 0, "action_time_ratio":2.0, "extra_jump": 0}, 

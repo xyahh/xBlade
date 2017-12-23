@@ -74,6 +74,7 @@ def enter():
 def exit():
     global images
     del images
+    sound.delete_all()
     close_canvas()
 
 

@@ -1,11 +1,11 @@
 {
 "font": {"path":"General/lotr_font.ttf", "size":30},
-"rect_size": {"width": 150, "height":60},
+"rect_size": {"width": 200, "height":60},
 "options":
 	{
 		"Exit": {"x": 300, "start_y": 190, "diff_y": -70, 
 			"priority": 2, "num_of_players": 0},
-		"Solo": {"x": 300, "start_y": 190, "diff_y": -70, 
+		"Practice": {"x": 300, "start_y": 190, "diff_y": -70, 
 			"priority": 1, "num_of_players": 1},
 		"P v P": {"x": 300, "start_y": 190, "diff_y": -70, 
 			"priority": 0, "num_of_players": 2}

@@ -13,8 +13,9 @@ font = None
 char_sel, text = None, None
 player_colors = None
 
+
 def init_media():
-    global images, arrows, font, char_sel, text, player_colors
+    global images, arrows, font, font2, char_sel, text, player_colors
 
     char_sel = CharacterSelect(main_menu.num_of_players)
 
@@ -26,7 +27,6 @@ def init_media():
     font_info = json.load(font_path)
     font_path.close()
     font = load_font(font_info['font']['path'], font_info['font']['size'])
-
     player_colors = {}
     for id in font_info['player_colors']:
         player_colors[int(id)] = (font_info['player_colors'][id]['R'],
@@ -51,6 +51,7 @@ def init_media():
                            "player_id": media_info['arrows'][name]['player_id'],
                            "x_offset": media_info['arrows'][name]['x_offset'],
                            "y_offset" : media_info['arrows'][name]['y_offset']})
+
 
 def enter():
     init_media()

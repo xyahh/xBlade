@@ -98,13 +98,17 @@ class MapSelect:
         self.map = []
         self.id = 0
         for name in map_info:
-            self.map.append({"name": name, "dsp_img": load_image(map_info[name]['dsp_img'])})
+            self.map.append({"name": name, "dsp_img": load_image(map_info[name]['dsp_img']),
+                             "theme": map_info[name]['theme']})
 
     def draw(self, x, y):
         self.map[self.id]['dsp_img'].draw(x, y)
 
     def get_curr_map_name(self):
         return self.map[self.id]['name']
+
+    def get_curr_map_theme(self):
+        return self.map[self.id]['theme']
 
     def handle_events(self, event, left_key, right_key):
         if event.key == left_key:
